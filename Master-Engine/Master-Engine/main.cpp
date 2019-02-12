@@ -3,10 +3,13 @@
 
 #include "pch.h"
 #include <iostream>
+#include "GameEngine.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	GameEngine engine{};
+	engine.init("Master Engine", 800, 600);
+	engine.update();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
