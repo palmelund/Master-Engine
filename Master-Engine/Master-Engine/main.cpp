@@ -6,6 +6,7 @@
 #include "GameEngine.h"
 
 int main()
+
 {
 	GameEngine engine{};
 	engine.init("Master Engine", 800, 600);
