@@ -1,7 +1,6 @@
 #pragma once
 
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
+#include "SFML/Graphics.hpp"
 
 #include <string>
 #include <array>
@@ -42,10 +41,19 @@ public:
 	key_status get_key(key_code key);
 
 private:
-	GLFWwindow* window_;
+	sf::RenderWindow* window_;
 	std::array<key_status, (size_t)key_code::Count> key_statuses_;
 
 	void process_input();
-	inline void process_key_input(uint8_t gl_key, key_code key);
+	inline void process_key_input(sf::Keyboard::Key gl_key, key_code key);
+
+	std::vector<sf::Sprite*> sprites_;
+	std::vector<sf::Texture*> textures_;
+
+	void render();
+
+	float delta_time_;
+	unsigned long long program_start_time_;
+	unsigned long long program_current_time_;
 };
 

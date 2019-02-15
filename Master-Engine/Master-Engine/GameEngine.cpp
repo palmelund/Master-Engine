@@ -1,56 +1,86 @@
 #include "pch.h"
 #include "GameEngine.h"
+#include <chrono>
 
 GameEngine::GameEngine()
 {
+	
 }
 
 GameEngine::~GameEngine()
 {
-	glfwTerminate();
+
 }
+
+#define NOW std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()
 
 void GameEngine::init(const std::string& window_name, int window_width, int window_height)
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	window_ = new sf::RenderWindow(sf::VideoMode(window_width, window_width), window_name);
 
-	window_ = glfwCreateWindow(window_width, window_height, window_name.c_str(), NULL, NULL);
-	if (window_ == nullptr)
+	program_start_time_ = NOW;
+
+	sf::Texture* texture = new sf::Texture();
+	if (!texture->loadFromFile("awesomeface.png"))
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		exit(1);
+		return exit(EXIT_FAILURE);
 	}
 
-	glViewport(0, 0, window_width, window_height);
+	textures_.emplace_back(texture);
+
+	sf::Sprite* sprite = new sf::Sprite();
+	sprite->setTexture(*texture);
+	sprite->scale(0.5f, 0.5f);
+
+	sprites_.emplace_back(sprite);
 }
 
 void GameEngine::update()
 {
-	while (!glfwWindowShouldClose(window_))
+	while (window_->isOpen())
 	{
-		glfwSwapBuffers(window_);
-		glfwPollEvents();
+		const auto now = NOW;
+
+		delta_time_ = static_cast<float>(now - program_current_time_)/1000;
+		program_current_time_ = now;
+		
+		sf::Event event;
+		while(window_->pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window_->close();
+		}
 
 		process_input();
 
-		if (get_key(key_code::key_a) == key_status::pressed)
+		const auto pos = sprites_.at(0)->getPosition();
+		auto p_x = pos.x;
+		auto p_y = pos.y;
+
+		const auto tmp = p_x;
+
+
+		if (get_key(key_code::key_a) == key_status::hold)
 		{
-			std::cout << "A pressed." << std::endl;
+			p_x -= 30 * delta_time_;
 		}
 
 		if (get_key(key_code::key_d) == key_status::hold)
 		{
-			std::cout << "D hold." << std::endl;
+			p_x += 30 * delta_time_;
 		}
 
 		if(get_key(key_code::key_w) == key_status::lifted)
 		{
 			std::cout << "W lifted." << std::endl;
 		}
+
+		sprites_.at(0)->setPosition(p_x, p_y);
+
+		std::cout << tmp << " - " << p_x << std::endl;
+
+
+		render();
 	}
 }
 
@@ -61,15 +91,15 @@ key_status GameEngine::get_key(key_code key)
 
 void GameEngine::process_input()
 {
-	process_key_input(GLFW_KEY_W, key_code::key_w);
-	process_key_input(GLFW_KEY_A, key_code::key_a);
-	process_key_input(GLFW_KEY_S, key_code::key_s);
-	process_key_input(GLFW_KEY_D, key_code::key_d);
+	process_key_input(sf::Keyboard::W, key_code::key_w);
+	process_key_input(sf::Keyboard::A, key_code::key_a);
+	process_key_input(sf::Keyboard::S, key_code::key_s);
+	process_key_input(sf::Keyboard::D, key_code::key_d);
 }
 
-void GameEngine::process_key_input(uint8_t gl_key, key_code key)
+void GameEngine::process_key_input(sf::Keyboard::Key gl_key, key_code key)
 {
-	if (glfwGetKey(window_, gl_key) == GLFW_PRESS)
+	if (sf::Keyboard::isKeyPressed(gl_key))
 	{
 		if (key_statuses_[static_cast<unsigned long long>(key)] == key_status::unpressed || key_statuses_[static_cast<unsigned long long>(key)] == key_status::lifted)
 		{
@@ -80,7 +110,7 @@ void GameEngine::process_key_input(uint8_t gl_key, key_code key)
 			key_statuses_[static_cast<unsigned long long>(key)] = key_status::hold;
 		}
 	}
-	else if (glfwGetKey(window_, gl_key) == GLFW_RELEASE && (key_statuses_[static_cast<unsigned long long>(key)] == key_status::pressed || key_statuses_[static_cast<unsigned long long>(key)] == key_status::hold))
+	else if (!sf::Keyboard::isKeyPressed(gl_key) && (key_statuses_[static_cast<unsigned long long>(key)] == key_status::pressed || key_statuses_[static_cast<unsigned long long>(key)] == key_status::hold))
 	{
 		key_statuses_[static_cast<unsigned long long>(key)] = key_status::lifted;
 	}
@@ -88,4 +118,16 @@ void GameEngine::process_key_input(uint8_t gl_key, key_code key)
 	{
 		key_statuses_[static_cast<unsigned long long>(key)] = key_status::unpressed;
 	}
+}
+
+void GameEngine::render()
+{
+	window_->clear(sf::Color::Black);
+
+	for(const auto& s : sprites_)
+	{
+		window_->draw(*s);
+	}
+
+	window_->display();
 }

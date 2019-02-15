@@ -5,7 +5,8 @@
 Run the following commands in Powershell to get started.
 
 ```
-First go to the location you want to put the git project
+cd <location>
+
 git clone https://github.com/Microsoft/vcpkg.git
 
 cd vcpkg
