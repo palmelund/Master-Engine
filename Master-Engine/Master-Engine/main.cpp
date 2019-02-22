@@ -4,13 +4,86 @@
 #include "pch.h"
 #include <iostream>
 #include "GameEngine.h"
+#include "TestImplementGameObject.h"
+#include <thread>
+#include <unordered_set>
+#include <unordered_map>
+
+#define GENERATE_ASSIGNMENT_OPERATIONS(t,n) \
+	private: \
+		t generated_assignment_value_##t_##n_ = 0; \
+		int generated_assignment_priority_##t_##n_ = INT_MIN; \
+	public: \
+		void operator=(t val) { \
+			if(n == INT32_MIN + 1) { \
+			return; \
+			} \
+			generated_assignment_value_##t_##n_ = val; \
+			generated_assignment_priority_##t_##n_ = INT32_MIN; \
+		} \
+		void assign(##t val) { \
+			if(##n == INT32_MIN + 1) { \
+			return; \
+			} \
+			generated_assignment_value_##t_##n_ = val; \
+			generated_assignment_priority_##t_##n_ = INT32_MIN; \
+		} \
+		void assign(t val, int priority) { \
+			if(priority < generated_assignment_priority_##t_##n_) return; \
+			generated_assignment_value_##t_##n_ = val; \
+			generated_assignment_priority_##t_##n_ = priority; \
+		}
+
+struct m_int final : Updatable {
+GENERATE_ASSIGNMENT_OPERATIONS(int, val_)
+
+public:
+	m_int(int val) : val_(val) {}
+
+	m_int(const m_int&) = default;
+	m_int(m_int&&) noexcept = default;
+	m_int& operator=(const m_int&) = default;
+	m_int& operator=(m_int&&) noexcept = default;
+
+	void update() override {}
+
+	int get() const noexcept { return val_; }
+
+	virtual ~m_int() = default;
+private:
+	int val_;
+};
+
+std::unordered_map<int, std::unordered_set<Updatable*>> update_functions_;
 
 int main()
-
 {
+	m_int i1{ 0 };
+
+	i1 = 2;
+	i1.assign(3);
+	i1.assign(42, 42);
+
 	GameEngine engine{};
 	engine.init("Master Engine", 800, 600);
-	engine.update();
+
+	TestImplementGameObject tigo{};
+	TestImplementGameObject tigp{};
+
+	update_functions_[0].insert(&tigo);
+	update_functions_[0].insert(&tigo);
+	update_functions_[1].insert(&tigp);
+	update_functions_[1].insert(&tigo);
+
+	std::unordered_set<Updatable*> combined;
+	combined.insert(update_functions_[0].cbegin(), update_functions_[0].cend());
+	combined.insert(update_functions_[1].cbegin(), update_functions_[1].cend());
+
+	std::cout << update_functions_[0].size() << std::endl;
+	std::cout << update_functions_[1].size() << std::endl;
+	std::cout << combined.size() << std::endl;
+
+	//engine.run();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

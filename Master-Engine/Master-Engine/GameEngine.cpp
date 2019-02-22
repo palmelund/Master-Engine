@@ -35,7 +35,7 @@ void GameEngine::init(const std::string& window_name, int window_width, int wind
 	sprites_.emplace_back(sprite);
 }
 
-void GameEngine::update()
+void GameEngine::run()
 {
 	while (window_->isOpen())
 	{

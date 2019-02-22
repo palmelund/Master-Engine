@@ -36,7 +36,7 @@ public:
 	GameEngine& operator=(const GameEngine&) = delete;
 
 	void init(const std::string& window_name, int window_width, int window_height);
-	void update();
+	void run();
 
 	key_status get_key(key_code key);
 
