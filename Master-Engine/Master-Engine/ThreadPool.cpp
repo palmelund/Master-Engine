@@ -15,7 +15,7 @@ void ThreadPool::CreateThreadPool()
 {
 	int Num_Threads = std::thread::hardware_concurrency();
 
-	for (int ii = 0; ii < Num_Threads; ii++)
+ 	for (int ii = 0; ii < Num_Threads; ii++)
 	{
 		Pool.push_back(std::thread(InfiniteLoop));
 	}

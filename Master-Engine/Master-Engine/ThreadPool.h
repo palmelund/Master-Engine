@@ -11,6 +11,8 @@ public:
 
 	static void CreateThreadPool();
 	static void AddJob(void(*func)());
+	template<typename CONTAINER>
+	static void AddJob(const CONTAINER& container);
 private:
 	static void InfiniteLoop();
 
@@ -20,4 +22,15 @@ private:
 	static std::mutex Queue_Mutex;
 	static std::condition_variable condition;
 };
+
+template <typename CONTAINER>
+void ThreadPool::AddJob(const CONTAINER& container)
+{
+	std::unique_lock<std::mutex> lock(Queue_Mutex);
+	for (auto& func : container)
+	{
+		JobQueue.push(func);
+	}
+	condition.notify_all();		// TODO: ?
+}
 

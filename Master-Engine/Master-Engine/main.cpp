@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "GameEngine.h"
 #include <thread>
+#include "ThreadPool.h"
 
 #define GENERATE_ASSIGNMENT_OPERATIONS(t,n) \
 	private: \
@@ -30,6 +31,11 @@
 			generated_assignment_priority_##t_##n_ = priority; \
 		}
 
+void pp()
+{
+	std::cout << "0123456789" << std::endl;
+}
+
 struct m_int final {
 GENERATE_ASSIGNMENT_OPERATIONS(int, val_)
 
@@ -50,10 +56,25 @@ private:
 
 int main()
 {
-	GameEngine engine{};
-	engine.init("Master Engine", 800, 600);
+	ThreadPool::CreateThreadPool();
+	std::vector<void(*)()> funcs{};
 
-	engine.run();
+	for(auto i = 0; i < 10000; i++)
+	{
+		funcs.emplace_back(pp);
+	}
+
+	ThreadPool::AddJob(funcs);
+
+	while (true)
+	{
+		
+	}
+
+	//GameEngine engine{};
+	//engine.init("Master Engine", 800, 600);
+
+	//engine.run();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
