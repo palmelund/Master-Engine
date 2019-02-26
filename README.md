@@ -17,5 +17,5 @@ cd vcpkg
 
 .\vcpkg integrate powershell
 
-.\vcpkg install glm:x64-windows glew:x64-windows glfw3:x64-windows opengl:x64-windows soil:x64-windows
+.\vcpkg install glm:x64-windows glew:x64-windows glfw3:x64-windows opengl:x64-windows soil:x64-windows sfml:x64-windows
 ```
