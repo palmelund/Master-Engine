@@ -5,7 +5,11 @@
 #include <vector>
 #include <mutex>
 
+std::queue<void(*)()> ThreadPool::JobQueue{};
+std::vector<std::thread> ThreadPool::Pool{};
 
+std::mutex ThreadPool::Queue_Mutex{};
+std::condition_variable ThreadPool::condition{};
 
 void ThreadPool::CreateThreadPool()
 {
