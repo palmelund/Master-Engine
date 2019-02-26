@@ -156,6 +156,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="TestImplementGameObject.h" />
+    <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="WrappedValue.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     </ClCompile>
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="TestImplementGameObject.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
