@@ -10,7 +10,3 @@ TestImplementGameObject::TestImplementGameObject() : GameObject(true), Renderabl
 TestImplementGameObject::~TestImplementGameObject()
 {
 }
-
-void TestImplementGameObject::update()
-{
-}

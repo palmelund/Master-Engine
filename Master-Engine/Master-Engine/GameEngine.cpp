@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameEngine.h"
 #include <chrono>
+#include "ResourceManager.h"
 
 GameEngine::GameEngine()
 {
@@ -20,16 +21,16 @@ void GameEngine::init(const std::string& window_name, int window_width, int wind
 
 	program_start_time_ = NOW;
 
-	sf::Texture* texture = new sf::Texture();
-	if (!texture->loadFromFile("awesomeface.png"))
-	{
-		return exit(EXIT_FAILURE);
-	}
+	//sf::Texture* texture = new sf::Texture();
+	//if (!texture->loadFromFile("awesomeface.png"))
+	//{
+	//	return exit(EXIT_FAILURE);
+	//}
 
-	textures_.emplace_back(texture);
+	//textures_.emplace_back(texture);
 
 	sf::Sprite* sprite = new sf::Sprite();
-	sprite->setTexture(*texture);
+	sprite->setTexture(ResourceManager::get_texture("awesomeface.png"));
 	sprite->scale(0.5f, 0.5f);
 
 	sprites_.emplace_back(sprite);
@@ -59,20 +60,27 @@ void GameEngine::run()
 
 		const auto tmp = p_x;
 
+		const auto speed = 75;
+
 
 		if (get_key(key_code::key_a) == key_status::hold)
 		{
-			p_x -= 30 * delta_time_;
+			p_x -= speed * delta_time_;
 		}
 
 		if (get_key(key_code::key_d) == key_status::hold)
 		{
-			p_x += 30 * delta_time_;
+			p_x += speed * delta_time_;
 		}
 
-		if(get_key(key_code::key_w) == key_status::lifted)
+		if(get_key(key_code::key_w) == key_status::hold)
 		{
-			std::cout << "W lifted." << std::endl;
+			p_y -= speed * delta_time_;
+		}
+
+		if (get_key(key_code::key_s) == key_status::hold)
+		{
+			p_y += speed * delta_time_;
 		}
 
 		sprites_.at(0)->setPosition(p_x, p_y);

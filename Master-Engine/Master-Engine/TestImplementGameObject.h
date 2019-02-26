@@ -7,6 +7,5 @@ class TestImplementGameObject final : public GameObject , public RenderableObjec
 public:
 	TestImplementGameObject();
 	~TestImplementGameObject();
-	void update() override;
 };
 

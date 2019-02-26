@@ -155,6 +155,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="TestImplementGameObject.h" />
     <ClInclude Include="WrappedValue.h" />
   </ItemGroup>
@@ -169,6 +171,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TestImplementGameObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

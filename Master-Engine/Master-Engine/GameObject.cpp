@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(bool requires_input)
+GameObject::GameObject(bool requires_input) : requires_input_(requires_input)
 {
 
 }
