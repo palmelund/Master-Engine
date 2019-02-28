@@ -6,14 +6,14 @@ public:
 	~Time() = delete;
 
 	static float DeltaTime();
-	static long StartupTime();
-	static long SystemTime();
-	static long FrameTime();
+	static long long StartupTime();
+	static long long SystemTime();
+	static long long FrameTime();
 	static void Update();
 	static void StartUp();
 private:
 	static float deltaTime;
-	static long startTime;
-	static long frameTime;
+	static long long startTime;
+	static long long frameTime;
 };
 

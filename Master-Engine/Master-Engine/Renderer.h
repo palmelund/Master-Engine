@@ -21,6 +21,10 @@ public:
 	static void add_sprite(const sf::Sprite& sprite);
 
 	static void remove_sprite(const sf::Sprite& sprite);
+
+	static bool is_open();
+	static bool poll_event(sf::Event& event);
+	static void close();
 private:
 	static std::unordered_set<const sf::Sprite*> sprites_;
 	static sf::RenderWindow window_;

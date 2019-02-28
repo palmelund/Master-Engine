@@ -21,6 +21,24 @@ void ThreadPool::CreateThreadPool()
 	}
 }
 
+void ThreadPool::ClearThreadPool()
+{
+	std::queue<void(*)()> queue;
+	std::swap(JobQueue, queue);
+
+	for (auto i = 0; i < Pool.size(); i++)
+	{
+		JobQueue.push(nullptr);
+	}
+
+	condition.notify_all();
+
+	for(auto& t : Pool)
+	{
+		t.join();
+	}
+}
+
 void ThreadPool::AddJob(void(*func)())
 {
 	{
@@ -42,6 +60,13 @@ void ThreadPool::InfiniteLoop()
 			Job = JobQueue.front();
 			JobQueue.pop();
 		}
+		std::cout << ":D" << std::endl;
+
+		if(Job == nullptr)
+		{
+			return;
+		}
+
 		Job(); // function<void()> type
 	}
 }

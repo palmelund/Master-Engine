@@ -2,6 +2,10 @@
 #include "Time.h"
 #include <chrono>
 
+float Time::deltaTime{};
+long long Time::startTime{};
+long long Time::frameTime{ };
+
 #define NOW std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()
 
 float Time::DeltaTime()
@@ -9,17 +13,17 @@ float Time::DeltaTime()
 	return deltaTime;
 }
 
-long Time::StartupTime()
+long long Time::StartupTime()
 {
 	return startTime;
 }
 
-long Time::SystemTime()
+long long Time::SystemTime()
 {
 	return NOW;
 }
 
-long Time::FrameTime()
+long long Time::FrameTime()
 {
 	return frameTime;
 }

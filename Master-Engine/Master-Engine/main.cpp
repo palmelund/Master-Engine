@@ -7,6 +7,20 @@
 #include "ThreadPool.h"
 #include "Renderer.h"
 
+enum class A
+{
+	a,
+	b,
+};
+
+//#define DEFINE_TAGS(...) \
+//	enum class Tags { \
+//	no_tag, \
+//	##__VA_ARGS__; \
+//};
+//
+//DEFINE_TAGS(onmi_tag)
+
 #define GENERATE_ASSIGNMENT_OPERATIONS(t,n) \
 	private: \
 		t generated_assignment_value_##t_##n_ = 0; \
@@ -58,14 +72,12 @@ private:
 int main()
 {
 	ThreadPool::CreateThreadPool();
+
 	Renderer::init("Master Engine", 400, 300);
 	GameEngine engine{};
 	engine.run();
 
-	//GameEngine engine{};
-	//engine.init("Master Engine", 800, 600);
-
-	//engine.run();
+	ThreadPool::ClearThreadPool();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

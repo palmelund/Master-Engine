@@ -10,6 +10,7 @@ public:
 	~ThreadPool() = delete;
 
 	static void CreateThreadPool();
+	static void ClearThreadPool();
 	static void AddJob(void(*func)());
 	template<typename CONTAINER>
 	static void AddJob(const CONTAINER& container);

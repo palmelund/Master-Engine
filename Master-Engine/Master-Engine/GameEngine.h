@@ -4,6 +4,7 @@
 
 #include <string>
 #include <array>
+#include <unordered_set>
 
 enum class key_status
 {
@@ -35,25 +36,17 @@ public:
 	GameEngine(const GameEngine&) = delete;
 	GameEngine& operator=(const GameEngine&) = delete;
 
-	void init(const std::string& window_name, int window_width, int window_height);
 	void run();
 
 	key_status get_key(key_code key);
 
 private:
-	sf::RenderWindow* window_;
 	std::array<key_status, (size_t)key_code::Count> key_statuses_;
 
 	void process_input();
 	inline void process_key_input(sf::Keyboard::Key gl_key, key_code key);
 
-	std::vector<sf::Sprite*> sprites_;
-	std::vector<sf::Texture*> textures_;
-
-	void render();
-
 	float delta_time_;
 	unsigned long long program_start_time_;
 	unsigned long long program_current_time_;
 };
-
