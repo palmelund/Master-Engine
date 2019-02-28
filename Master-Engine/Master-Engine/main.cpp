@@ -5,6 +5,7 @@
 #include "GameEngine.h"
 #include <thread>
 #include "ThreadPool.h"
+#include "Renderer.h"
 
 #define GENERATE_ASSIGNMENT_OPERATIONS(t,n) \
 	private: \
@@ -57,19 +58,9 @@ private:
 int main()
 {
 	ThreadPool::CreateThreadPool();
-	std::vector<void(*)()> funcs{};
-
-	for(auto i = 0; i < 10000; i++)
-	{
-		funcs.emplace_back(pp);
-	}
-
-	ThreadPool::AddJob(funcs);
-
-	while (true)
-	{
-		
-	}
+	Renderer::init("Master Engine", 400, 300);
+	GameEngine engine{};
+	engine.run();
 
 	//GameEngine engine{};
 	//engine.init("Master Engine", 800, 600);
