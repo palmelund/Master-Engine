@@ -7,70 +7,12 @@
 #include "ThreadPool.h"
 #include "Renderer.h"
 
-enum class A
-{
-	a,
-	b,
-};
-
-//#define DEFINE_TAGS(...) \
-//	enum class Tags { \
-//	no_tag, \
-//	##__VA_ARGS__; \
-//};
-//
-//DEFINE_TAGS(onmi_tag)
-
-#define GENERATE_ASSIGNMENT_OPERATIONS(t,n) \
-	private: \
-		t generated_assignment_value_##t_##n_ = 0; \
-		int generated_assignment_priority_##t_##n_ = INT_MIN; \
-	public: \
-		void operator=(t val) { \
-			if(n == INT32_MIN + 1) { \
-			return; \
-			} \
-			generated_assignment_value_##t_##n_ = val; \
-			generated_assignment_priority_##t_##n_ = INT32_MIN; \
-		} \
-		void assign(##t val) { \
-			if(##n == INT32_MIN + 1) { \
-			return; \
-			} \
-			generated_assignment_value_##t_##n_ = val; \
-			generated_assignment_priority_##t_##n_ = INT32_MIN; \
-		} \
-		void assign(t val, int priority) { \
-			if(priority < generated_assignment_priority_##t_##n_) return; \
-			generated_assignment_value_##t_##n_ = val; \
-			generated_assignment_priority_##t_##n_ = priority; \
-		}
-
-void pp()
-{
-	std::cout << "0123456789" << std::endl;
-}
-
-struct m_int final {
-GENERATE_ASSIGNMENT_OPERATIONS(int, val_)
-
-public:
-	m_int(int val) : val_(val) {}
-
-	m_int(const m_int&) = default;
-	m_int(m_int&&) noexcept = default;
-	m_int& operator=(const m_int&) = default;
-	m_int& operator=(m_int&&) noexcept = default;
-
-	int get() const noexcept { return val_; }
-
-	virtual ~m_int() = default;
-private:
-	int val_;
-};
-
 int main()
 {
+#ifdef DETECT_MEMORY_LEAKS
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
 	ThreadPool::CreateThreadPool();
 
 	Renderer::init("Master Engine", 400, 300);
