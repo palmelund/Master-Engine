@@ -20,6 +20,12 @@ void GameObject::unset_sprite()
 	}
 }
 
+std::vector<Collider*>& GameObject::get_colliders()
+{
+	// TODO: insert return statement here
+	return colliders_;
+}
+
 GameObject::~GameObject()
 {
 	GameState::remove_game_object(this);
