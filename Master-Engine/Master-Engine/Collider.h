@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include"GameObject.h"
+#include "GameObject.h"
 #include "Transform.h"
+
 class Collider
 {
 public:
@@ -10,14 +11,12 @@ public:
 	sf::Vector2f LocalPosition;
 	sf::Vector2f Size;
 
-
-
 	Transform get_collider();
 	void collision_check();
 
 private:
-	GameObject *owner_;
-	bool ColliderOverLap(Transform obejct1, Transform Object2);
+	GameObject* owner_;
+	bool ColliderOverLap(Transform object1, Transform Object2);
 	
 };
 

@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "Tags.h"
 #include "Collider.h"
+#include "Collider.h"
 
 class GameObject
 {
@@ -26,8 +27,10 @@ public:
 	void unset_sprite();
 
 	void add_collider(Collider& collider);
+
 	template<typename CONTAINER>
-	void add_collider(const CONTAINER& collider);
+	void add_colliders(const CONTAINER& collider);
+	
 	std::vector<Collider*>& get_colliders();
 
 
@@ -55,12 +58,11 @@ private:
 	sf::Sprite sprite_;
 	bool draw_;
 
-	float scale_
+	float scale_;
 };
 
 template <typename CONTAINER>
-void GameObject::add_collider(const CONTAINER& container)
+void GameObject::add_colliders(const CONTAINER& collider)
 {
-	//TODO
 }
 

@@ -20,10 +20,34 @@ void GameObject::unset_sprite()
 	}
 }
 
+void GameObject::add_collider(Collider& collider)
+{
+}
+
 std::vector<Collider*>& GameObject::get_colliders()
 {
 	// TODO: insert return statement here
 	return colliders_;
+}
+
+void GameObject::set_position(sf::Vector2f)
+{
+}
+
+sf::Vector2f GameObject::get_position()
+{
+}
+
+Tags GameObject::get_tag()
+{
+}
+
+float GameObject::get_scale()
+{
+}
+
+void GameObject::set_scale(float)
+{
 }
 
 GameObject::~GameObject()
@@ -40,6 +64,18 @@ bool GameObject::requires_input() const noexcept
 unsigned long long GameObject::get_id() const noexcept
 {
 	return id_;
+}
+
+void GameObject::start_up()
+{
+}
+
+void GameObject::update()
+{
+}
+
+void GameObject::OnCollision(GameObject* collider)
+{
 }
 
 void GameObject::set_sprite(sf::Texture& texture)
