@@ -60,7 +60,6 @@ void ThreadPool::InfiniteLoop()
 			Job = JobQueue.front();
 			JobQueue.pop();
 		}
-		std::cout << ":D" << std::endl;
 
 		if(Job == nullptr)
 		{

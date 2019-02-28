@@ -9,6 +9,18 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define DETECT_MEMORY_LEAKS
+
+#ifdef DETECT_MEMORY_LEAKS
+#define _CRTDBG_MAP_ALLOC
+#include<iostream>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+#endif
+
 // TODO: add headers that you want to pre-compile here
 #include <iostream>
 
