@@ -18,3 +18,8 @@ void GameState::remove_game_object(GameObject* game_object)
 {
 	game_objects_.erase(game_object);
 }
+
+std::unordered_set<GameObject*>& GameState::get_gamestate()
+{
+	return game_objects_;
+}

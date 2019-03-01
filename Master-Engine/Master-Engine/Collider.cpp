@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "Collider.h"
-#include "GameState.h"
 #include "SFML/Graphics.hpp"
+#include "GameState.h"
 
-Collider::Collider(sf::Vector2f localPosition, sf::Vector2f size, GameObject* owner)
+Collider::Collider(sf::Vector2f localPosition, sf::Vector2f size)
 {
-	owner_ = owner;
 	LocalPosition = localPosition;
 	Size = size;
 }
@@ -27,13 +26,12 @@ Transform Collider::get_collider()
 
 void Collider::collision_check()
 {
-	//for (GameObject* colliders : GameState::get_gamestate()) {
-	//	auto& list = colliders->get_colliders();
-	//	for (Collider& collider : list) {
-	//		if(ColliderOverLap(get_collider(), collider))
-	//		owner_->OnCollision(colliders);
-	//	}
-	//}
+	for (GameObject* colliders : GameState::get_gamestate()) {
+		for (Collider* collider : colliders->get_colliders()) {
+			if(ColliderOverLap(get_collider(), collider->get_collider()))
+			owner_->OnCollision(colliders);
+		}
+	}
 }
 
 bool Collider::ColliderOverLap(Transform object1, Transform Object2)

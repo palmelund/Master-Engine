@@ -1,9 +1,9 @@
 #pragma once
-#include "GameEngine.h"
 #include "SFML/Graphics.hpp"
 #include "Tags.h"
 #include "Collider.h"
-#include "Collider.h"
+
+class Collider;//Needed to break cirkuler pointer.
 
 class GameObject
 {
@@ -16,8 +16,8 @@ public:
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
-	inline bool requires_input() const noexcept;
-	inline unsigned long long get_id() const noexcept;
+	bool requires_input() const noexcept;
+	unsigned long long get_id() const noexcept;
 
 	void start_up();
 	void update();
@@ -65,4 +65,3 @@ template <typename CONTAINER>
 void GameObject::add_colliders(const CONTAINER& collider)
 {
 }
-

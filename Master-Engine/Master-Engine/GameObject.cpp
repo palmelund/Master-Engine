@@ -36,14 +36,17 @@ void GameObject::set_position(sf::Vector2f)
 
 sf::Vector2f GameObject::get_position()
 {
+	return sf::Vector2f{};
 }
 
 Tags GameObject::get_tag()
 {
+	return Tags{};
 }
 
 float GameObject::get_scale()
 {
+	return  0.0f;
 }
 
 void GameObject::set_scale(float)
