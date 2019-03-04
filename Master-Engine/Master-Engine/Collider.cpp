@@ -29,7 +29,10 @@ void Collider::collision_check()
 	for (GameObject* colliders : GameState::get_gamestate()) {
 		for (Collider* collider : colliders->get_colliders()) {
 			if(ColliderOverLap(get_collider(), collider->get_collider()))
-			owner_->OnCollision(colliders);
+			{
+				owner_->OnCollision(colliders);
+				break;
+			}
 		}
 	}
 }
@@ -39,11 +42,11 @@ bool Collider::ColliderOverLap(Transform object1, Transform Object2)
 	float l1x = object1.posX;
 	float l1y = object1.posY;
 	float r1x = object1.posX + object1.sizeX;
-	float r1y = object1.posY - object1.sizeY;
+	float r1y = object1.posY + object1.sizeY;
 	float l2x = Object2.posX;
 	float l2y = Object2.posY;
 	float r2x = Object2.posX + Object2.sizeX;
-	float r2y = Object2.posY - Object2.sizeY;
+	float r2y = Object2.posY + Object2.sizeY;
 
 	// If one rectangle is on left side of other 
 	if (l1x > r2x || l2x > r1x) {
@@ -58,3 +61,4 @@ bool Collider::ColliderOverLap(Transform object1, Transform Object2)
 
 	return true;
 }
+
