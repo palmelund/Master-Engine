@@ -18,7 +18,7 @@ public:
 
 	static void render();
 
-	static void add_sprite(const sf::Sprite& sprite);
+	static void add_sprite(const sf::Sprite* sprite);
 
 	static void remove_sprite(const sf::Sprite& sprite);
 

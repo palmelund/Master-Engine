@@ -19,22 +19,9 @@ Transform Collider::get_collider()
 	sf::Vector2f owner_pos = owner_->get_position();
 	myTransform.posX = LocalPosition.x + owner_pos.x;
 	myTransform.posY = LocalPosition.y + owner_pos.y;
-	myTransform.sizeX = Size.x*owner_->get_scale();
-	myTransform.sizeY = Size.y*owner_->get_scale();
+	myTransform.sizeX = Size.x*owner_->get_width_scale();
+	myTransform.sizeY = Size.y*owner_->get_height_scale();
 	return myTransform;
-}
-
-void Collider::collision_check()
-{
-	for (GameObject* colliders : GameState::get_gamestate()) {
-		for (Collider* collider : colliders->get_colliders()) {
-			if(ColliderOverLap(get_collider(), collider->get_collider()))
-			{
-				owner_->OnCollision(colliders);
-				break;
-			}
-		}
-	}
 }
 
 bool Collider::ColliderOverLap(Transform object1, Transform Object2)
@@ -61,4 +48,3 @@ bool Collider::ColliderOverLap(Transform object1, Transform Object2)
 
 	return true;
 }
-

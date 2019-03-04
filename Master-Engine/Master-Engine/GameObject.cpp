@@ -3,10 +3,12 @@
 #include "GameEngine.h"
 #include "Renderer.h"
 #include "GameState.h"
+#include <SFML/Graphics.hpp>
 
 
 GameObject::GameObject(const bool requires_input) : requires_input_(requires_input), id_(GameState::get_new_id())
 {
+	draw_ = false;
 	GameState::add_game_object(this);
 }
 
@@ -20,23 +22,25 @@ void GameObject::unset_sprite()
 	}
 }
 
-void GameObject::add_collider(Collider& collider)
+void GameObject::add_collider(Collider* collider)
 {
+	colliders_.emplace_back(collider);
 }
 
 std::vector<Collider*>& GameObject::get_colliders()
 {
-	// TODO: insert return statement here
 	return colliders_;
 }
 
-void GameObject::set_position(sf::Vector2f)
+void GameObject::set_position(sf::Vector2f newposition)
 {
+	position_ = newposition;
+	sprite_.setPosition(newposition);
 }
 
 sf::Vector2f GameObject::get_position()
 {
-	return sf::Vector2f{};
+	return position_;
 }
 
 Tags GameObject::get_tag()
@@ -44,13 +48,29 @@ Tags GameObject::get_tag()
 	return Tags{};
 }
 
-float GameObject::get_scale()
+float GameObject::get_width_scale()
 {
-	return  0.0f;
+	return width_scale_;
 }
 
-void GameObject::set_scale(float)
+float GameObject::get_height_scale()
 {
+	return height_scale_;
+}
+
+void GameObject::set_scale(float h_scale, float w_scale)
+{
+	height_scale_ = h_scale;
+	width_scale_ = w_scale;
+	sprite_.setScale(sf::Vector2f{ h_scale, w_scale });
+}
+
+void GameObject::set_size(float width, float height)
+{
+	sf::IntRect rect = sprite_.getTextureRect();
+	height_scale_ = width/rect.height;
+	width_scale_ = height/rect.width;
+	sprite_.setScale(sf::Vector2f{ height_scale_, width_scale_ });
 }
 
 GameObject::~GameObject()
@@ -86,7 +106,30 @@ void GameObject::set_sprite(sf::Texture& texture)
 	sprite_.setTexture(texture);
 	if(!draw_)
 	{
-		Renderer::add_sprite(sprite_);
+		Renderer::add_sprite(&sprite_);
 		draw_ = true;
+	}
+}
+
+void GameObject::collision_check()
+{
+	for (GameObject* colliders : GameState::get_gamestate()) {
+		bool collisiondetected = false;
+		for (Collider* myCollider : get_colliders()) {
+			for (Collider* collider : colliders->get_colliders()) {
+				if (Collider::ColliderOverLap(myCollider->get_collider(), collider->get_collider()))
+				{
+					collisiondetected = true;
+					break;
+				}
+			}
+			if (collisiondetected)
+			{
+				OnCollision(colliders);
+				break;
+			}
+		}
+
+		
 	}
 }

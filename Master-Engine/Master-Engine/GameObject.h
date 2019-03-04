@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Tags.h"
 #include "Collider.h"
+#include "Transform.h"
 
 class Collider;//Needed to break cirkuler pointer.
 
@@ -9,6 +10,7 @@ class GameObject
 {
 public:
 	explicit GameObject(bool requires_input);
+	~GameObject();
 
 	GameObject(const GameObject&) = delete;
 	GameObject& operator=(const GameObject&) = delete;
@@ -19,14 +21,15 @@ public:
 	bool requires_input() const noexcept;
 	unsigned long long get_id() const noexcept;
 
-	void start_up();
-	void update();
-	void OnCollision(GameObject* collider);
+	virtual void start_up();
+	virtual void update();
+	virtual void OnCollision(GameObject* collider);
+	void collision_check();
 
 	void set_sprite(sf::Texture& texture);
 	void unset_sprite();
 
-	void add_collider(Collider& collider);
+	void add_collider(Collider* collider);
 
 	template<typename CONTAINER>
 	void add_colliders(const CONTAINER& collider);
@@ -39,13 +42,10 @@ public:
 
 	Tags get_tag();
 
-	float get_scale();
-	void set_scale(float);
-
-
-
-protected:
-	~GameObject();
+	float get_width_scale();
+	float get_height_scale();
+	void set_scale(float, float);
+	void set_size(float, float);
 
 private:
 	bool requires_input_;
@@ -53,12 +53,14 @@ private:
 
 
 	std::vector<Collider*> colliders_;
+	bool ColliderOverLap(Transform object1, Transform Object2);
 	Tags tag_;
 	sf::Vector2f position_;
 	sf::Sprite sprite_;
 	bool draw_;
 
-	float scale_;
+	float height_scale_;
+	float width_scale_;
 };
 
 template <typename CONTAINER>
