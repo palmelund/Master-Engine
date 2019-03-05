@@ -14,10 +14,10 @@ public:
 	sf::Vector2f Size;
 
 	Transform get_collider();
-	void collision_check();
+
+	static bool ColliderOverLap(Transform object1, Transform Object2);
 
 private:
 	GameObject* owner_;
-	bool ColliderOverLap(Transform object1, Transform Object2);
 	
 };

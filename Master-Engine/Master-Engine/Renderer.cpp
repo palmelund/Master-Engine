@@ -25,10 +25,9 @@ void Renderer::render()
 	window_.display();
 }
 
-void Renderer::add_sprite(const sf::Sprite& sprite)
+void Renderer::add_sprite(const sf::Sprite* sprite)
 {
-	const auto ptr = &sprite;
-	sprites_.insert(ptr);
+	sprites_.insert(sprite);
 }
 
 void Renderer::remove_sprite(const sf::Sprite& sprite)

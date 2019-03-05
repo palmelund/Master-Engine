@@ -4,6 +4,8 @@
 #include "Time.h"
 #include "Renderer.h"
 #include "Input.h"
+#include "GameObject.h"
+#include "GameState.h"
 
 GameEngine::GameEngine()
 {
@@ -18,6 +20,13 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
 	Time::StartUp();
+	GameObject* testing = new GameObject{ false };
+	testing->set_sprite(ResourceManager::get_texture("awesomeface.png"));
+	testing->set_size(10, 10);
+
+	for (GameObject* object : GameState::get_gamestate()) {
+		object->start_up();
+	}
 }
 
 void GameEngine::run()
@@ -38,6 +47,15 @@ void GameEngine::run()
 
 		Input::process_input();
 		
+		for (GameObject* object : GameState::get_gamestate()) {
+			object->update();
+		}
+
+		for (GameObject* object : GameState::get_gamestate()) {
+			object->collision_check();
+		}
+
+
 		//if (get_key(KeyCode::key_a) == KeyStatus::hold)
 		//{
 		//	p_x -= speed * delta_time_;
