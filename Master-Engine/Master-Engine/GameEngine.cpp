@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "GameObject.h"
 #include "GameState.h"
+#include "Player.h"
 
 GameEngine::GameEngine()
 {
@@ -20,7 +21,7 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
 	Time::StartUp();
-	GameObject* testing = new GameObject{ false };
+	GameObject* testing = new Player{};
 	testing->set_sprite(ResourceManager::get_texture("awesomeface.png"));
 	testing->set_size(10, 10);
 

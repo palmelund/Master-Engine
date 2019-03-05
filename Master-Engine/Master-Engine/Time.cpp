@@ -39,4 +39,5 @@ void Time::Update()
 void Time::StartUp()
 {
 	startTime = NOW;
+	frameTime = startTime;
 }

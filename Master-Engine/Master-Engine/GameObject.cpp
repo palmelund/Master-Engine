@@ -9,6 +9,7 @@
 GameObject::GameObject(const bool requires_input) : requires_input_(requires_input), id_(GameState::get_new_id())
 {
 	draw_ = false;
+	position_ = sf::Vector2f{ 0, 0};
 	GameState::add_game_object(this);
 }
 
@@ -34,6 +35,7 @@ std::vector<Collider*>& GameObject::get_colliders()
 
 void GameObject::set_position(sf::Vector2f newposition)
 {
+	
 	position_ = newposition;
 	sprite_.setPosition(newposition);
 }
