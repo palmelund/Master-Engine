@@ -16,7 +16,7 @@ public:
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
-	bool requires_input() const noexcept;
+	inline bool requires_input() const noexcept;
 	unsigned long long get_id() const noexcept;
 
 	void start_up();
