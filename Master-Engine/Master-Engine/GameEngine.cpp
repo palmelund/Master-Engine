@@ -7,10 +7,11 @@
 #include "GameObject.h"
 #include "GameState.h"
 #include "Player.h"
+#include "Wall.h"
 
 GameEngine::GameEngine()
 {
-	
+	delta_list = std::vector<float>{};
 }
 
 GameEngine::~GameEngine()
@@ -21,10 +22,18 @@ GameEngine::~GameEngine()
 void GameEngine::init()
 {
 	Time::StartUp();
-	GameObject* testing = new Player{};
-	testing->set_sprite(ResourceManager::get_texture("awesomeface.png"));
-	testing->set_size(10, 10);
+	new Player{"awesomeface.png"};
+	
+	for(int i = 0; i < 10; i++)
+	{
+		new Wall{ "wall.png" , sf::Vector2f{200.0f, 0.0f + (20.0f * i)}, 20.0f };
+	}
 
+	for (int i = 0; i < 11; i++)
+	{
+		new Wall{ "wall.png" , sf::Vector2f{200.0f-(20*i), 220.0f}, 20.0f };
+	}
+	
 	for (GameObject* object : GameState::get_gamestate()) {
 		object->start_up();
 	}
@@ -32,10 +41,24 @@ void GameEngine::init()
 
 void GameEngine::run()
 {
+	float com_delta = 0;
+	int framecount = 0;
+
 	while (Renderer::is_open())
 	{
 		//Create delta for this frame
 		Time::Update();
+
+		delta_list.emplace_back(Time::DeltaTime());
+		com_delta += Time::DeltaTime();
+		framecount++;
+		if(com_delta > 1.0f)
+		{
+			com_delta -= 1.0f;
+			std::cout << "Frame per second: " << framecount << std::endl;
+			framecount = 0;
+		}
+
 		
 		sf::Event event;
 		while(Renderer::poll_event(event))
@@ -55,27 +78,6 @@ void GameEngine::run()
 		for (GameObject* object : GameState::get_gamestate()) {
 			object->collision_check();
 		}
-
-
-		//if (get_key(KeyCode::key_a) == KeyStatus::hold)
-		//{
-		//	p_x -= speed * delta_time_;
-		//}
-
-		//if (get_key(KeyCode::key_d) == KeyStatus::hold)
-		//{
-		//	p_x += speed * delta_time_;
-		//}
-
-		//if(get_key(KeyCode::key_w) == KeyStatus::hold)
-		//{
-		//	p_y -= speed * delta_time_;
-		//}
-
-		//if (get_key(KeyCode::key_s) == KeyStatus::hold)
-		//{
-		//	p_y += speed * delta_time_;
-		//}
 
 		Renderer::render();
 	}

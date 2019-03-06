@@ -25,7 +25,11 @@ public:
 	static bool is_open();
 	static bool poll_event(sf::Event& event);
 	static void close();
+
+	static sf::Vector2i* get_window_size();
+
 private:
 	static std::unordered_set<const sf::Sprite*> sprites_;
 	static sf::RenderWindow window_;
+	static sf::Vector2i* window_size;
 };

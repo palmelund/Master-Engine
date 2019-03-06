@@ -4,13 +4,14 @@
 
 std::unordered_set<const sf::Sprite*> Renderer::sprites_{};
 sf::RenderWindow Renderer::window_{};
+sf::Vector2i* Renderer::window_size{};
 
 void Renderer::init(std::string window_name, int width, int height)
 {
 	const auto& v2 = sf::Vector2u(width, height);
 	window_.setSize(v2);  // = sf::RenderWindow{ sf::VideoMode(width, height), window_name };
 	window_.setTitle(window_name);
-
+	Renderer::window_size = new sf::Vector2i(width, height);
 	window_.create(sf::VideoMode(width, height), window_name);
 }
 
@@ -49,4 +50,9 @@ bool Renderer::poll_event(sf::Event& event)
 void Renderer::close()
 {
 	window_.close();
+}
+
+sf::Vector2i* Renderer::get_window_size()
+{
+	return Renderer::window_size;
 }

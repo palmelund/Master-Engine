@@ -40,12 +40,16 @@ public:
 	void set_position(sf::Vector2f);
 	sf::Vector2f get_position();
 
+	void set_tag(Tags);
 	Tags get_tag();
 
 	float get_width_scale();
 	float get_height_scale();
 	void set_scale(float, float);
 	void set_size(float, float);
+
+protected:
+	sf::Sprite sprite_;
 
 private:
 	bool requires_input_;
@@ -56,7 +60,7 @@ private:
 	bool ColliderOverLap(Transform object1, Transform Object2);
 	Tags tag_;
 	sf::Vector2f position_;
-	sf::Sprite sprite_;
+	
 	bool draw_;
 
 	float height_scale_;

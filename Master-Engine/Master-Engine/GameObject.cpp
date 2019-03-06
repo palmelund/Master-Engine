@@ -25,6 +25,7 @@ void GameObject::unset_sprite()
 
 void GameObject::add_collider(Collider* collider)
 {
+	collider->set_owner(this);
 	colliders_.emplace_back(collider);
 }
 
@@ -47,7 +48,7 @@ sf::Vector2f GameObject::get_position()
 
 Tags GameObject::get_tag()
 {
-	return Tags{};
+	return tag_;
 }
 
 float GameObject::get_width_scale()
@@ -73,6 +74,11 @@ void GameObject::set_size(float width, float height)
 	height_scale_ = width/rect.height;
 	width_scale_ = height/rect.width;
 	sprite_.setScale(sf::Vector2f{ height_scale_, width_scale_ });
+}
+
+void GameObject::set_tag(Tags tag)
+{
+	tag_ = tag;
 }
 
 GameObject::~GameObject()
@@ -116,18 +122,18 @@ void GameObject::set_sprite(sf::Texture& texture)
 void GameObject::collision_check()
 {
 	for (GameObject* colliders : GameState::get_gamestate()) {
-		bool collisiondetected = false;
+		Collider* collisiondetected = nullptr;
 		for (Collider* myCollider : get_colliders()) {
 			for (Collider* collider : colliders->get_colliders()) {
 				if (Collider::ColliderOverLap(myCollider->get_collider(), collider->get_collider()))
 				{
-					collisiondetected = true;
+					collisiondetected = collider;
 					break;
 				}
 			}
-			if (collisiondetected)
+			if (collisiondetected != nullptr)
 			{
-				OnCollision(colliders);
+				OnCollision(collisiondetected->get_owner());
 				break;
 			}
 		}

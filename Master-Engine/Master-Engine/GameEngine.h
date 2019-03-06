@@ -24,8 +24,6 @@ public:
 	void run();
 
 private:
+	std::vector<float> delta_list;
 
-	float delta_time_;
-	unsigned long long program_start_time_;
-	unsigned long long program_current_time_;
 };

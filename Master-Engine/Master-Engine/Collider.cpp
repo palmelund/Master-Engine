@@ -24,6 +24,16 @@ Transform Collider::get_collider()
 	return myTransform;
 }
 
+void Collider::set_owner(GameObject* owner)
+{
+	owner_ = owner;
+}
+
+GameObject* Collider::get_owner()
+{
+	return owner_;
+}
+
 bool Collider::ColliderOverLap(Transform object1, Transform Object2)
 {
 	float l1x = object1.posX;
@@ -41,7 +51,7 @@ bool Collider::ColliderOverLap(Transform object1, Transform Object2)
 	}
 
 	// If one rectangle is above other 
-	if (l1y < r2y || l2y < r1y) {
+	if (l1y > r2y || l2y > r1y) {
 
 		return false;
 	}

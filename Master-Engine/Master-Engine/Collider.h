@@ -15,6 +15,8 @@ public:
 
 	Transform get_collider();
 
+	void set_owner(GameObject*);
+	GameObject* get_owner();
 	static bool ColliderOverLap(Transform object1, Transform Object2);
 
 private:
