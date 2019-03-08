@@ -15,7 +15,7 @@ int main()
 
 	ThreadPool::CreateThreadPool();
 
-	Renderer::init("Master Engine", 400, 300);
+	Renderer::init("Master Engine", 800, 600);
 	GameEngine engine{};
 	engine.init();
 	engine.run();

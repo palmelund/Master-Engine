@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include <unordered_set>
+#include <queue>
 
 
 class GameState
@@ -20,9 +21,11 @@ public:
 	static void remove_game_object(GameObject* game_object);
 
 	static std::unordered_set<GameObject*>& get_gamestate();
+	static std::queue<GameObject*>& get_destroyid_game_object();
 
 private:
 	static unsigned long long incremental_id_;
 	static std::unordered_set<GameObject*> game_objects_;
+	static std::queue<GameObject*> destroyid_game_object_;
 
 };

@@ -13,6 +13,16 @@ GameObject::GameObject(const bool requires_input) : requires_input_(requires_inp
 	GameState::add_game_object(this);
 }
 
+GameObject::~GameObject()
+{
+	GameState::get_gamestate().erase(this);
+	unset_sprite();
+	for (Collider* collider : colliders_)
+	{
+		delete collider;
+	}
+}
+
 
 void GameObject::unset_sprite()
 {
@@ -79,12 +89,6 @@ void GameObject::set_size(float width, float height)
 void GameObject::set_tag(Tags tag)
 {
 	tag_ = tag;
-}
-
-GameObject::~GameObject()
-{
-	GameState::remove_game_object(this);
-	unset_sprite();
 }
 
 bool GameObject::requires_input() const noexcept

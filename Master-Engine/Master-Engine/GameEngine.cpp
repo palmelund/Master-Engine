@@ -8,6 +8,7 @@
 #include "GameState.h"
 #include "Player.h"
 #include "Wall.h"
+#include "partical.h"
 
 GameEngine::GameEngine()
 {
@@ -26,12 +27,17 @@ void GameEngine::init()
 	
 	for(int i = 0; i < 10; i++)
 	{
-		new Wall{ "wall.png" , sf::Vector2f{200.0f, 0.0f + (20.0f * i)}, 20.0f };
+		new Wall{ "wall.png" , sf::Vector2f{300.0f, 0.0f + (30.0f * i)}, 30.0f };
 	}
 
 	for (int i = 0; i < 11; i++)
 	{
-		new Wall{ "wall.png" , sf::Vector2f{200.0f-(20*i), 220.0f}, 20.0f };
+		new Wall{ "wall.png" , sf::Vector2f{300.0f-(30.0f*i), 330.0f}, 30.0f };
+	}
+
+	for(int i = 0; i < 200; i++)
+	{
+		new partical{ "snowflake.jpg" , sf::Vector2f{0.0f,0.0f}, sf::Vector2f{2.0f*i,0.0f} };
 	}
 	
 	for (GameObject* object : GameState::get_gamestate()) {
@@ -79,6 +85,12 @@ void GameEngine::run()
 			object->collision_check();
 		}
 
+		while (!GameState::get_destroyid_game_object().empty())
+		{
+			GameObject* remove = GameState::get_destroyid_game_object().front();
+			GameState::get_destroyid_game_object().pop();
+			delete remove;
+		}
 		Renderer::render();
 	}
 }

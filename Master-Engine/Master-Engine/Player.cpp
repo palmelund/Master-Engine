@@ -8,8 +8,8 @@
 
 Player::Player(const std::string& texture) : GameObject(true)
 {
-	size_ = 10;
-	velocity = sf::Vector2f{ 50.0,50.0 };
+	size_ = 20;
+	velocity = sf::Vector2f{ 100.0, 100.0};
 	GameObject::set_sprite(ResourceManager::get_texture(texture));
 	GameObject::set_size(size_, size_);
 	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
