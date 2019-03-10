@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "GameState.h"
 
 unsigned long long GameState::incremental_id_{};

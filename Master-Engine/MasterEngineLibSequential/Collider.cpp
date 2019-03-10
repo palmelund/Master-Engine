@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "Collider.h"
 #include "SFML/Graphics.hpp"
 #include "GameState.h"

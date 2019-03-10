@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "Input.h"
 
 std::array<KeyStatus, static_cast<size_t>(KeyCode::Count)> Input::key_statuses_;

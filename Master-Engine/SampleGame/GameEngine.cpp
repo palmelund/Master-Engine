@@ -1,14 +1,12 @@
 #include "pch.h"
 #include "GameEngine.h"
-#include "ResourceManager.h"
-#include "Time.h"
-#include "Renderer.h"
-#include "Input.h"
-#include "GameObject.h"
-#include "GameState.h"
 #include "Player.h"
 #include "Wall.h"
-#include "partical.h"
+#include "../MasterEngineLibSequential/partical.h"
+#include "../MasterEngineLibShared/Time.h"
+#include "../MasterEngineLibSequential/GameState.h"
+#include "../MasterEngineLibSequential/Renderer.h"
+#include "../MasterEngineLibShared/Input.h"
 
 GameEngine::GameEngine()
 {

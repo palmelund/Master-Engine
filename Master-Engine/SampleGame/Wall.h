@@ -1,5 +1,6 @@
 #pragma once
-#include "GameObject.h"
+#include "../MasterEngineLibSequential/GameObject.h"
+
 class Wall :
 	public GameObject
 {

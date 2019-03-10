@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "partical.h"
 #include "ResourceManager.h"
 #include "Renderer.h"

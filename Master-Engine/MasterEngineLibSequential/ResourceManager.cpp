@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "ResourceManager.h"
 #include <SFML/Graphics/Texture.hpp>
 

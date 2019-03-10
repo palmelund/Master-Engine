@@ -1,11 +1,11 @@
-// Master-Engine.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// SampleGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "pch.h"
+#include <iostream>
 #include "GameEngine.h"
-#include <thread>
-#include "ThreadPool.h"
-#include "Renderer.h"
+#include "../MasterEngineLibShared/ThreadPool.h"
+#include "../MasterEngineLibSequential/Renderer.h"
 
 int main()
 {

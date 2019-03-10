@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "Wall.h"
-#include "GameObject.h"
-#include "ResourceManager.h"
-
+#include "../MasterEngineLibSequential/ResourceManager.h"
+#include "../MasterEngineLibShared/Tags.h"
 
 Wall::Wall(const std::string& texture, sf::Vector2f position, float size) : GameObject(false)
 {

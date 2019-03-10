@@ -1,6 +1,5 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "GameObject.h"
-#include "GameEngine.h"
 #include "Renderer.h"
 #include "GameState.h"
 #include <SFML/Graphics.hpp>

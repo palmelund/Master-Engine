@@ -2,11 +2,7 @@
 
 #include "SFML/Graphics.hpp"
 
-#include <string>
 #include <array>
-#include <unordered_set>
-#include "KeyStatus.h"
-#include "KeyCode.h"
 
 class GameEngine
 {

@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Player.h"
-#include "Time.h"
-#include "Input.h"
-#include  "ResourceManager.h"
-#include "Renderer.h"
-#include <algorithm>
+#include "../MasterEngineLibSequential/ResourceManager.h"
+#include "../MasterEngineLibShared/Input.h"
+#include "../MasterEngineLibSequential/Renderer.h"
+#include "../MasterEngineLibShared/Time.h"
+#include "../MasterEngineLibShared/Tags.h"
 
 Player::Player(const std::string& texture) : GameObject(true)
 {

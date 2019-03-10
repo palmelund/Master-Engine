@@ -1,9 +1,9 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Tags.h"
 #include "Collider.h"
 #include "Transform.h"
 
+enum class Tags;
 class Collider;//Needed to break cirkuler pointer.
 
 class GameObject
