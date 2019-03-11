@@ -148,8 +148,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameState.h" />
     <ClInclude Include="partical.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -159,8 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="partical.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

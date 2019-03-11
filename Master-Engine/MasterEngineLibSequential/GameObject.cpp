@@ -1,20 +1,20 @@
 #include "stdafx.h"
 #include "GameObject.h"
 #include "Renderer.h"
-#include "GameState.h"
 #include <SFML/Graphics.hpp>
+#include "GameEngine.h"
 
 
-GameObject::GameObject(const bool requires_input) : requires_input_(requires_input), id_(GameState::get_new_id())
+GameObject::GameObject(const bool requires_input) : requires_input_(requires_input), id_(GameEngine::get_new_id())
 {
 	draw_ = false;
 	position_ = sf::Vector2f{ 0, 0};
-	GameState::add_game_object(this);
+	GameEngine::add_game_object(this);
 }
 
 GameObject::~GameObject()
 {
-	GameState::get_gamestate().erase(this);
+	GameEngine::get_gamestate().erase(this);
 	unset_sprite();
 	for (Collider* collider : colliders_)
 	{
@@ -124,7 +124,7 @@ void GameObject::set_sprite(sf::Texture& texture)
 
 void GameObject::collision_check()
 {
-	for (GameObject* colliders : GameState::get_gamestate()) {
+	for (GameObject* colliders : GameEngine::get_gamestate()) {
 		Collider* collisiondetected = nullptr;
 		for (Collider* myCollider : get_colliders()) {
 			for (Collider* collider : colliders->get_colliders()) {

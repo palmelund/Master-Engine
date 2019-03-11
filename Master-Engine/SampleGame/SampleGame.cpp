@@ -2,10 +2,12 @@
 //
 
 #include "pch.h"
-#include <iostream>
-#include "GameEngine.h"
 #include "../MasterEngineLibShared/ThreadPool.h"
 #include "../MasterEngineLibSequential/Renderer.h"
+#include "../MasterEngineLibSequential/GameEngine.h"
+#include "../MasterEngineLibSequential/partical.h"
+#include "Wall.h"
+#include "Player.h"
 
 int main()
 {
@@ -16,9 +18,28 @@ int main()
 	ThreadPool::CreateThreadPool();
 
 	Renderer::init("Master Engine", 800, 600);
-	GameEngine engine{};
-	engine.init();
-	engine.run();
+	new Player{ "awesomeface.png" };
+
+	for (int i = 0; i < 10; i++)
+	{
+		new Wall{ "wall.png" , sf::Vector2f{300.0f, 0.0f + (30.0f * i)}, 30.0f };
+	}
+
+	for (int i = 0; i < 11; i++)
+	{
+		new Wall{ "wall.png" , sf::Vector2f{300.0f - (30.0f*i), 330.0f}, 30.0f };
+	}
+
+	for (int i = 0; i < 200; i++)
+	{
+		new partical{ "snowflake.jpg" , sf::Vector2f{0.0f,0.0f}, sf::Vector2f{2.0f*i,0.0f} };
+	}
+	
+	GameEngine::init();
+
+
+
+	GameEngine::run();
 
 	ThreadPool::ClearThreadPool();
 }

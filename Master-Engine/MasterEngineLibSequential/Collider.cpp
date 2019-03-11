@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Collider.h"
 #include "SFML/Graphics.hpp"
-#include "GameState.h"
 
 Collider::Collider(sf::Vector2f localPosition, sf::Vector2f size)
 {

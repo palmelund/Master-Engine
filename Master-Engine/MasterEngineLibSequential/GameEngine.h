@@ -1,18 +1,21 @@
 #pragma once
+
+#include "SFML/Graphics.hpp"
+
+#include <array>
 #include "GameObject.h"
-#include <unordered_set>
 #include <queue>
+#include <unordered_set>
 
+#define LOG_DELTA_TIMES
 
-class GameState
+class GameEngine
 {
 public:
-	GameState() = delete;
-	~GameState() = delete;
-	GameState(const GameState&) = delete;
-	GameState(GameState&&) = delete;
-	GameState& operator=(const GameState&) = delete;
-	GameState& operator=(GameState&&) = delete;
+	GameEngine() = delete;
+	~GameEngine() = delete;
+	static void init();
+	static void run();
 
 	static unsigned long long get_new_id();
 
@@ -28,4 +31,7 @@ private:
 	static std::unordered_set<GameObject*> game_objects_;
 	static std::queue<GameObject*> destroyid_game_object_;
 
+#ifdef LOG_DELTA_TIMES
+	static std::vector<float> delta_list_;
+#endif
 };
