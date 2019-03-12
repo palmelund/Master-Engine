@@ -2,11 +2,21 @@
 //
 
 #include "pch.h"
-#include <iostream>
+#include "../MasterEngineLibSequential/GameEngine.h"
+#include "../MasterEngineLibSequential/Renderer.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Renderer::init("Master Engine", 800, 600);
+
+
+
+
+	GameEngine::init();
+
+
+
+	GameEngine::run();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
