@@ -36,10 +36,13 @@
     <ClInclude Include="EnemyBullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ForceBullet.h">
+    <ClInclude Include="BackgroundElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BackgroundElement.h">
+    <ClInclude Include="GravityWell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,10 +71,13 @@
     <ClCompile Include="EnemyBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ForceBullet.cpp">
+    <ClCompile Include="BackgroundElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BackgroundElement.cpp">
+    <ClCompile Include="GravityWell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

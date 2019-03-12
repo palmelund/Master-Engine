@@ -5,10 +5,12 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "../MasterEngineLibShared/Input.h"
 #include <iostream>
+#include "../CaptainEverythingSequential/Spawner.h"
 
 unsigned long long GameEngine::incremental_id_{};
 std::unordered_set<GameObject*> GameEngine::game_objects_{};
-std::queue<GameObject*> GameEngine::destroyid_game_object_{};
+std::unordered_set<GameObject*> GameEngine::collision_game_object_{};
+std::unordered_set<GameObject*> GameEngine::destroyid_game_object_{};
 std::vector<float> GameEngine::delta_list_{};
 
 void GameEngine::init()
@@ -18,10 +20,7 @@ void GameEngine::init()
 #endif
 
 	Time::StartUp();
-	
-	for (GameObject* object : get_gamestate()) {
-		object->start_up();
-	}
+
 }
 
 void GameEngine::run()
@@ -63,16 +62,15 @@ void GameEngine::run()
 			object->update();
 		}
 
-		for (GameObject* object : get_gamestate()) {
+		for (GameObject* object : collision_game_object_) {
 			object->collision_check();
 		}
 
-		while (!get_destroyid_game_object().empty())
+		for (GameObject* game_object : get_destroyid_game_object())
 		{
-			GameObject* remove = get_destroyid_game_object().front();
-			get_destroyid_game_object().pop();
-			delete remove;
+			delete game_object;
 		}
+		get_destroyid_game_object().clear();
 		Renderer::render();
 	}
 }
@@ -82,14 +80,30 @@ unsigned long long GameEngine::get_new_id()
 	return ++incremental_id_;
 }
 
+void GameEngine::Instantiate(GameObject* game_object, sf::Vector2f position)
+{
+	game_object->set_position(position);
+	game_object->start_up();
+}
+
 void GameEngine::add_game_object(GameObject* game_object)
 {
 	game_objects_.insert(game_object);
 }
 
+void GameEngine::add_collider(GameObject * game_object)
+{
+	collision_game_object_.insert(game_object);
+}
+
+void GameEngine::remove_collider(GameObject * game_object)
+{
+	collision_game_object_.erase(game_object);
+}
+
 void GameEngine::remove_game_object(GameObject* game_object)
 {
-	destroyid_game_object_.push(game_object);
+	destroyid_game_object_.insert(game_object);
 }
 
 std::unordered_set<GameObject*>& GameEngine::get_gamestate()
@@ -97,7 +111,7 @@ std::unordered_set<GameObject*>& GameEngine::get_gamestate()
 	return game_objects_;
 }
 
-std::queue<GameObject*>& GameEngine::get_destroyid_game_object()
+std::unordered_set<GameObject*>& GameEngine::get_destroyid_game_object()
 {
 	return destroyid_game_object_;
 }

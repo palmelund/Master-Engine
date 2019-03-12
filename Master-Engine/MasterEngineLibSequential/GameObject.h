@@ -9,7 +9,7 @@ class Collider;//Needed to break cirkuler pointer.
 class GameObject
 {
 public:
-	explicit GameObject(bool requires_input);
+	explicit GameObject(bool requires_input, bool collision_code = false);
 	~GameObject();
 
 	GameObject(const GameObject&) = delete;
@@ -45,6 +45,8 @@ public:
 
 	float get_width_scale();
 	float get_height_scale();
+	float get_width_size();
+	float get_height_size();
 	void set_scale(float, float);
 	void set_size(float, float);
 
@@ -53,6 +55,7 @@ protected:
 
 private:
 	bool requires_input_;
+	bool collision_code_;
 	unsigned long long id_;
 
 

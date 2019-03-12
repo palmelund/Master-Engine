@@ -6,5 +6,13 @@ class Boss :
 public:
 	Boss();
 	~Boss();
+
+	void start_up() override;
+	void update() override;
+
+	sf::Vector2f velocity;
+
+private:
+	int size_;
 };
 

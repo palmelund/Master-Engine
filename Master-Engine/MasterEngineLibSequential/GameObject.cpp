@@ -3,13 +3,22 @@
 #include "Renderer.h"
 #include <SFML/Graphics.hpp>
 #include "GameEngine.h"
+#include "../MasterEngineLibShared/Tags.h"
 
 
-GameObject::GameObject(const bool requires_input) : requires_input_(requires_input), id_(GameEngine::get_new_id())
+GameObject::GameObject(const bool requires_input, const bool collision_code) : requires_input_(requires_input), id_(GameEngine::get_new_id())
 {
 	draw_ = false;
 	position_ = sf::Vector2f{ 0, 0};
 	GameEngine::add_game_object(this);
+	colliders_ = std::vector<Collider*>{};
+	tag_ = Tags::Defualt;
+
+	if(collision_code)
+	{
+		collision_code_ = collision_code;
+		GameEngine::add_collider(this);
+	}
 }
 
 GameObject::~GameObject()
@@ -19,6 +28,10 @@ GameObject::~GameObject()
 	for (Collider* collider : colliders_)
 	{
 		delete collider;
+	}
+	if(collision_code_)
+	{
+		GameEngine::remove_collider(this);
 	}
 }
 
@@ -68,6 +81,16 @@ float GameObject::get_width_scale()
 float GameObject::get_height_scale()
 {
 	return height_scale_;
+}
+
+float GameObject::get_width_size()
+{
+	return width_scale_ * sprite_.getTextureRect().width;
+}
+
+float GameObject::get_height_size()
+{
+	return height_scale_*sprite_.getTextureRect().height;
 }
 
 void GameObject::set_scale(float h_scale, float w_scale)
@@ -125,18 +148,22 @@ void GameObject::set_sprite(sf::Texture& texture)
 void GameObject::collision_check()
 {
 	for (GameObject* colliders : GameEngine::get_gamestate()) {
-		Collider* collisiondetected = nullptr;
+		GameObject* collisiondetected = nullptr;
+		if (this == colliders)
+		{
+			continue;
+		}
 		for (Collider* myCollider : get_colliders()) {
 			for (Collider* collider : colliders->get_colliders()) {
 				if (Collider::ColliderOverLap(myCollider->get_collider(), collider->get_collider()))
 				{
-					collisiondetected = collider;
+					collisiondetected = colliders;
 					break;
 				}
 			}
 			if (collisiondetected != nullptr)
 			{
-				OnCollision(collisiondetected->get_owner());
+				OnCollision(collisiondetected);
 				break;
 			}
 		}

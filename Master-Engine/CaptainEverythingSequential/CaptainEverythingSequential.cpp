@@ -4,17 +4,14 @@
 #include "pch.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
 #include "../MasterEngineLibSequential/Renderer.h"
+#include "Spawner.h"
 
 int main()
 {
-	Renderer::init("Master Engine", 800, 600);
-
-
-
-
+	Renderer::init("Master Engine", 800, 500);
 	GameEngine::init();
 
-
+	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();
 }

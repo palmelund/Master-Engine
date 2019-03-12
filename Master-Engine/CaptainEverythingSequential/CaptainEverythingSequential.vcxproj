@@ -156,10 +156,11 @@
     <ClInclude Include="BossShield.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
-    <ClInclude Include="ForceBullet.h" />
+    <ClInclude Include="GravityWell.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="Spawner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundElement.cpp" />
@@ -168,7 +169,7 @@
     <ClCompile Include="CaptainEverythingSequential.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
-    <ClCompile Include="ForceBullet.cpp" />
+    <ClCompile Include="GravityWell.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,6 +178,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MasterEngineLibSequential\MasterEngineLibSequential.vcxproj">

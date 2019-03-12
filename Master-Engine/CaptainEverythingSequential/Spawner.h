@@ -1,18 +1,17 @@
 #pragma once
 #include "G:\Git\Master-Engine\Master-Engine\MasterEngineLibSequential\GameObject.h"
-class EnemyBullet :
+class Spawner :
 	public GameObject
 {
 public:
-	EnemyBullet();
-	~EnemyBullet();
+	Spawner();
+	~Spawner();
 
 	void start_up() override;
 	void update() override;
-
-	sf::Vector2f velocity;
-
 private:
-	int size_;
+	float internal_timer;
+	float spawn_time;
+	float spawn_position_;
 };
 
