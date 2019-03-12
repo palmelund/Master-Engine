@@ -3,6 +3,8 @@
 #include <unordered_set>
 #include <SFML/Window/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class Renderer
 {
@@ -22,6 +24,8 @@ public:
 
 	static void remove_sprite(const sf::Sprite& sprite);
 
+	static void draw_text(const std::string& txt, int x_pos, int y_pos, int size);
+
 	static bool is_open();
 	static bool poll_event(sf::Event& event);
 	static void close();
@@ -32,4 +36,8 @@ private:
 	static std::unordered_set<const sf::Sprite*> sprites_;
 	static sf::RenderWindow window_;
 	static sf::Vector2i* window_size;
+
+	static sf::Font font_;
+
+	static std::vector<sf::Text> text_vector_;
 };

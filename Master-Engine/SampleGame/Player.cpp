@@ -5,6 +5,7 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
+#include <sstream>
 
 Player::Player(const std::string& texture) : GameObject(true)
 {
@@ -54,6 +55,15 @@ void Player::update()
 	}
 	GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x*Time::DeltaTime()), GameObject::get_position().y + (velocity.y*Time::DeltaTime()) });
 
+	const auto n_pos = get_position();
+
+	std::ostringstream ss;
+	ss << "x: ";
+	ss << n_pos.x;
+	ss << " y: ";
+	ss << n_pos.y;
+
+	Renderer::draw_text(ss.str(),10,10,24);
 }
 
 void Player::OnCollision(GameObject * collider)

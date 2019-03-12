@@ -5,6 +5,8 @@
 std::unordered_set<const sf::Sprite*> Renderer::sprites_{};
 sf::RenderWindow Renderer::window_{};
 sf::Vector2i* Renderer::window_size{};
+sf::Font Renderer::font_{};
+std::vector<sf::Text> Renderer::text_vector_{};
 
 void Renderer::init(std::string window_name, int width, int height)
 {
@@ -13,6 +15,11 @@ void Renderer::init(std::string window_name, int width, int height)
 	window_.setTitle(window_name);
 	Renderer::window_size = new sf::Vector2i(width, height);
 	window_.create(sf::VideoMode(width, height), window_name);
+
+	if(!font_.loadFromFile("Roboto-Regular.ttf"))
+	{
+		throw std::exception("Failed to load font!");
+	}
 }
 
 void Renderer::render()
@@ -22,6 +29,12 @@ void Renderer::render()
 	{
 		window_.draw(*sprite);
 	}
+
+	for (auto& text : text_vector_)
+	{
+		window_.draw(text);
+	}
+	text_vector_.clear();
 
 	window_.display();
 }
@@ -55,4 +68,17 @@ void Renderer::close()
 sf::Vector2i* Renderer::get_window_size()
 {
 	return Renderer::window_size;
+}
+
+void Renderer::draw_text(const std::string& txt, int x_pos, int y_pos, int size)
+{
+	sf::Text text;
+	text.setFont(font_);
+	text.setString(txt);
+	text.setCharacterSize(size);
+	text.setFillColor(sf::Color::Magenta);
+
+	text.setPosition(x_pos, y_pos);
+
+	text_vector_.emplace_back(text);
 }
