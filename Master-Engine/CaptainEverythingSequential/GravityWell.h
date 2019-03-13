@@ -7,5 +7,7 @@ class GravityWell :
 public:
 	GravityWell();
 	~GravityWell();
+
+	void OnCollision(GameObject* collider) override;
 };
 

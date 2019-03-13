@@ -62,7 +62,7 @@ private:
 	std::vector<Collider*> colliders_;
 	bool ColliderOverLap(Transform object1, Transform Object2);
 	Tags tag_;
-	sf::Vector2f position_;
+	sf::Vector2f position_;	
 	
 	bool draw_;
 

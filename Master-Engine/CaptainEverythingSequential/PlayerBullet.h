@@ -1,8 +1,9 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
+#include "M_Transform.h"
 
 class PlayerBullet :
-	public GameObject
+	public GameObject, M_Transform
 {
 public:
 	PlayerBullet();
@@ -10,8 +11,6 @@ public:
 
 	void update() override;
 	void OnCollision(GameObject* collider) override;
-
-	sf::Vector2f velocity;
 
 private:
 	int size_;

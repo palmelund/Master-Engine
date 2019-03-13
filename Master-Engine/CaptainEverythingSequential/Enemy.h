@@ -1,8 +1,9 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
+#include "M_Transform.h"
 
 class Enemy :
-	public GameObject
+	public GameObject, M_Transform
 {
 public:
 	Enemy(std::string);
@@ -10,8 +11,6 @@ public:
 
 	void start_up() override;
 	void update() override;
-
-	sf::Vector2f velocity;
 
 private:
 	int size_;

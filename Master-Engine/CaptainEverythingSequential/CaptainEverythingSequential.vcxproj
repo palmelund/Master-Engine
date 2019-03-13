@@ -161,6 +161,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="M_Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundElement.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="M_Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MasterEngineLibSequential\MasterEngineLibSequential.vcxproj">
