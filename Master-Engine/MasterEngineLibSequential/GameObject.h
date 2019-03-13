@@ -49,11 +49,15 @@ public:
 	float get_height_size();
 	void set_scale(float, float);
 	void set_size(float, float);
+	void add_velocity(sf::Vector2f);
+	void set_velocity(sf::Vector2f);
 
+	sf::Vector2f get_velocity();
 protected:
 	sf::Sprite sprite_;
 
 private:
+	sf::Vector2f velocity_;
 	bool requires_input_;
 	bool collision_code_;
 	unsigned long long id_;

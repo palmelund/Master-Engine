@@ -6,13 +6,12 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "BossShield.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
-#include "M_Transform.h"
 
-Boss::Boss() : GameObject(false, true), M_Transform()
+Boss::Boss() : GameObject(false, true)
 {
 	size_ = 50;
 	shield_amount_ = 3;
-	M_Transform::set_velocity(sf::Vector2f{ 0.0f, 100.0f });
+	GameObject::set_velocity(sf::Vector2f{ 0.0f, 100.0f });
 	GameObject::set_sprite(ResourceManager::get_texture("boss.png"));
 	GameObject::set_size(size_, size_);
 	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
@@ -34,7 +33,7 @@ void Boss::start_up()
 
 void Boss::update()
 {
-	sf::Vector2f velocity = M_Transform::get_velocity();
+	sf::Vector2f velocity = GameObject::get_velocity();
 	GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x*Time::DeltaTime()), GameObject::get_position().y + (velocity.y*Time::DeltaTime()) });
 	if (GameObject::get_position().y < 50)
 	{
@@ -52,7 +51,7 @@ void Boss::update()
 	{
 		velocity.x = 0;
 	}
-	M_Transform::set_velocity(velocity);
+	GameObject::set_velocity(velocity);
 }
 
 void Boss::OnCollision(GameObject * collider)

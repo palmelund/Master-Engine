@@ -13,7 +13,7 @@ GameObject::GameObject(const bool requires_input, const bool collision_code) : r
 	GameEngine::add_game_object(this);
 	colliders_ = std::vector<Collider*>{};
 	tag_ = Tags::Defualt;
-
+	velocity_ = sf::Vector2f{ 0, 0 };
 	if (collision_code)
 	{
 		GameEngine::add_collider(this);
@@ -167,4 +167,19 @@ void GameObject::collision_check()
 			}
 		}
 	}
+}
+
+void GameObject::add_velocity(sf::Vector2f force)
+{
+	velocity_ = sf::Vector2f{ velocity_.x + force.x, velocity_.y + force.y };
+}
+
+void GameObject::set_velocity(sf::Vector2f velocity)
+{
+	velocity_ = velocity;
+}
+
+sf::Vector2f GameObject::get_velocity()
+{
+	return velocity_;
 }

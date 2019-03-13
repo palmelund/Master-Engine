@@ -26,7 +26,7 @@ PlayerBullet::~PlayerBullet()
 
 void PlayerBullet::update()
 {
-	sf::Vector2f velocity = M_Transform::get_velocity();
+	sf::Vector2f velocity = GameObject::get_velocity();
 	GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x*Time::DeltaTime()), GameObject::get_position().y + (velocity.y*Time::DeltaTime()) });
 	if (GameObject::get_position().x > Renderer::get_window_size()->x)
 	{

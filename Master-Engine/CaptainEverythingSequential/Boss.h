@@ -1,9 +1,8 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
-#include "M_Transform.h"
 
 class Boss :
-	public GameObject, M_Transform
+	public GameObject
 {
 public:
 	Boss();

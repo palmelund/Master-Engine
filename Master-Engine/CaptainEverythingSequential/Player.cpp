@@ -52,7 +52,7 @@ void Player::update()
 	{
 		return;
 	}
-	sf::Vector2f velocity = M_Transform::get_velocity();
+	sf::Vector2f velocity = GameObject::get_velocity();
 	if (closes->get_position().y > GameObject::get_position().y)
 	{
 		if (velocity.y < 0)
@@ -71,7 +71,7 @@ void Player::update()
 		velocity.y -= speed * Time::DeltaTime();
 	}
 	GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x*Time::DeltaTime()), GameObject::get_position().y + (velocity.y*Time::DeltaTime()) });
-	M_Transform::set_velocity(velocity);
+	GameObject::set_velocity(velocity);
 }
 
 void Player::OnCollision(GameObject * collider)
