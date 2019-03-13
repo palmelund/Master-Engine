@@ -1,5 +1,6 @@
 #pragma once
-#include "G:\Git\Master-Engine\Master-Engine\MasterEngineLibSequential\GameObject.h"
+#include "../MasterEngineLibSequential/GameObject.h"
+
 class BossShield :
 	public GameObject
 {

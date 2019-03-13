@@ -24,20 +24,20 @@ Player::~Player()
 void Player::update()
 {
 	sf::Vector2f newVector = sf::Vector2f{ 0, 0};
-	if (Input::get_key_hold(KeyCode::key_w))
+	if (Input::get_key_hold(sf::Keyboard::W))
 	{
 		newVector.y = -50;
 	}
-	else if (Input::get_key_hold(KeyCode::key_s))
+	else if (Input::get_key_hold(sf::Keyboard::S))
 	{
 		newVector.y = 50;
 	}
 
-	if (Input::get_key_hold(KeyCode::key_a))
+	if (Input::get_key_hold(sf::Keyboard::A))
 	{
 		newVector.x = -50;
 	}
-	else if (Input::get_key_hold(KeyCode::key_d))
+	else if (Input::get_key_hold(sf::Keyboard::D))
 	{
 		newVector.x = 50;
 	}

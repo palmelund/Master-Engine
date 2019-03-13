@@ -6,17 +6,16 @@
 #include "../MasterEngineLibShared/Tags.h"
 
 
-GameObject::GameObject(const bool requires_input, const bool collision_code) : requires_input_(requires_input), id_(GameEngine::get_new_id())
+GameObject::GameObject(const bool requires_input, const bool collision_code) : requires_input_(requires_input), collision_code_(collision_code), id_(GameEngine::get_new_id())
 {
 	draw_ = false;
-	position_ = sf::Vector2f{ 0, 0};
+	position_ = sf::Vector2f{ 0, 0 };
 	GameEngine::add_game_object(this);
 	colliders_ = std::vector<Collider*>{};
 	tag_ = Tags::Defualt;
 
-	if(collision_code)
+	if (collision_code)
 	{
-		collision_code_ = collision_code;
 		GameEngine::add_collider(this);
 	}
 }
@@ -29,7 +28,7 @@ GameObject::~GameObject()
 	{
 		delete collider;
 	}
-	if(collision_code_)
+	if (collision_code_)
 	{
 		GameEngine::remove_collider(this);
 	}
@@ -38,7 +37,7 @@ GameObject::~GameObject()
 
 void GameObject::unset_sprite()
 {
-	if(draw_)
+	if (draw_)
 	{
 		Renderer::remove_sprite(sprite_);
 		draw_ = false;
@@ -58,7 +57,7 @@ std::vector<Collider*>& GameObject::get_colliders()
 
 void GameObject::set_position(sf::Vector2f newposition)
 {
-	
+
 	position_ = newposition;
 	sprite_.setPosition(newposition);
 }
@@ -90,7 +89,7 @@ float GameObject::get_width_size()
 
 float GameObject::get_height_size()
 {
-	return height_scale_*sprite_.getTextureRect().height;
+	return height_scale_ * sprite_.getTextureRect().height;
 }
 
 void GameObject::set_scale(float h_scale, float w_scale)
@@ -103,8 +102,8 @@ void GameObject::set_scale(float h_scale, float w_scale)
 void GameObject::set_size(float width, float height)
 {
 	sf::IntRect rect = sprite_.getTextureRect();
-	height_scale_ = width/rect.height;
-	width_scale_ = height/rect.width;
+	height_scale_ = width / rect.height;
+	width_scale_ = height / rect.width;
 	sprite_.setScale(sf::Vector2f{ height_scale_, width_scale_ });
 }
 
@@ -138,7 +137,7 @@ void GameObject::OnCollision(GameObject* collider)
 void GameObject::set_sprite(sf::Texture& texture)
 {
 	sprite_.setTexture(texture);
-	if(!draw_)
+	if (!draw_)
 	{
 		Renderer::add_sprite(&sprite_);
 		draw_ = true;
@@ -167,7 +166,5 @@ void GameObject::collision_check()
 				break;
 			}
 		}
-
-		
 	}
 }

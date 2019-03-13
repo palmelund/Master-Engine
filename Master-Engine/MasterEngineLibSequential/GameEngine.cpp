@@ -46,7 +46,7 @@ void GameEngine::run()
 			framecount = 0;
 		}
 #endif
-		
+
 		sf::Event event;
 		while(Renderer::poll_event(event))
 		{

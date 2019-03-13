@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Input.h" />
-    <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyStatus.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tags.h" />

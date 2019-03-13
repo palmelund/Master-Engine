@@ -8,6 +8,7 @@
 #include "../MasterEngineLibSequential/partical.h"
 #include "Wall.h"
 #include "Player.h"
+#include "../MasterEngineLibShared/Input.h"
 
 int main()
 {
@@ -16,7 +17,10 @@ int main()
 #endif
 
 	ThreadPool::CreateThreadPool();
-
+	
+	const std::vector<sf::Keyboard::Key> keys = {sf::Keyboard::W, sf::Keyboard::A ,sf::Keyboard::S ,sf::Keyboard::D };
+	
+	Input::init(keys);
 	Renderer::init("Master Engine", 800, 600);
 	new Player{ "awesomeface.png" };
 

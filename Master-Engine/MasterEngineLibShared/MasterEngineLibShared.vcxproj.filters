@@ -24,9 +24,6 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyCode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="KeyStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
