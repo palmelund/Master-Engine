@@ -17,6 +17,7 @@ public:
 	~Input() = delete;
 
 	static void init(const std::vector<sf::Keyboard::Key>& enabled_keys);
+	static void init(std::vector<sf::Keyboard::Key>&& enabled_keys);
 
 	static KeyStatus get_input_state(sf::Keyboard::Key key_code);
 	static bool get_key_pressed(sf::Keyboard::Key key_code);

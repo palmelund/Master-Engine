@@ -8,7 +8,7 @@
 #include "Spawner.h"
 
 
-Player::Player() : GameObject(false, true)
+Player::Player() : GameObject(true)
 {
 	size_ = 20;
 	GameObject::set_sprite(ResourceManager::get_texture("player.png"));

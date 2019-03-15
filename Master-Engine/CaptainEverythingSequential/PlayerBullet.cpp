@@ -8,7 +8,7 @@
 #include "Spawner.h"
 
 
-PlayerBullet::PlayerBullet() : GameObject(false, true)
+PlayerBullet::PlayerBullet() : GameObject(true)
 {
 	size_ = 20;
 M_Transform:;set_velocity(sf::Vector2f{ 300.0f, 0.0f });

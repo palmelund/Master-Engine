@@ -13,7 +13,6 @@ public:
 private:
 	sf::Vector2f velocity;
 	int size_;
-	sf::Vector2f rotate_vector(sf::Vector2f);
 
 	template<
 		typename T, //real type

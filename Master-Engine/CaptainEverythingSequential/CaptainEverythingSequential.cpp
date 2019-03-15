@@ -8,6 +8,10 @@
 
 int main()
 {
+#ifdef DETECT_MEMORY_LEAKS
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
 	Renderer::init("Master Engine", 800, 500);
 	GameEngine::init();
 

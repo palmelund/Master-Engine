@@ -32,6 +32,11 @@ void Input::init(const std::vector<sf::Keyboard::Key>& enabled_keys)
 	enabled_keys_ = enabled_keys;
 }
 
+void Input::init(std::vector<sf::Keyboard::Key>&& enabled_keys)
+{
+	enabled_keys_ = std::move(enabled_keys);
+}
+
 KeyStatus Input::get_input_state(sf::Keyboard::Key key_code)
 {
 	return key_statuses_[static_cast<long long int>(key_code)];

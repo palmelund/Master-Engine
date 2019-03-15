@@ -4,12 +4,15 @@
 #include <vector>
 #include <mutex>
 #include "ThreadPool.h"
+#include <map>
 
 std::queue<void(*)()> ThreadPool::JobQueue{};
 std::vector<std::thread> ThreadPool::Pool{};
 
 std::mutex ThreadPool::Queue_Mutex{};
 std::condition_variable ThreadPool::condition{};
+
+std::map<void*, std::vector<void(*)()>*> ThreadPool::barred_functions_{};
 
 void ThreadPool::CreateThreadPool()
 {
@@ -48,6 +51,16 @@ void ThreadPool::AddJob(void(*func)())
 	condition.notify_one();
 }
 
+void ThreadPool::AddJobWithBarrier(void(*barrier)(), std::vector<void(*)()>* functions)
+{
+	{
+		std::unique_lock<std::mutex> lock(Queue_Mutex);
+		JobQueue.push(barrier);
+		barred_functions_[barrier] = functions;
+	}
+	condition.notify_one();
+}
+
 void ThreadPool::InfiniteLoop()
 {
 	while (true)
@@ -67,5 +80,12 @@ void ThreadPool::InfiniteLoop()
 		}
 
 		Job(); // function<void()> type
+
+		if(barred_functions_.find(Job) != barred_functions_.end())
+		{
+			JobQueue.emplace(barred_functions_[Job]);
+			delete barred_functions_[Job];
+			barred_functions_.erase(Job);
+		}
 	}
 }

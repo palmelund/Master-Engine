@@ -6,7 +6,7 @@
 #include "../MasterEngineLibShared/Tags.h"
 
 
-GameObject::GameObject(const bool requires_input, const bool collision_code) : requires_input_(requires_input), collision_code_(collision_code), id_(GameEngine::get_new_id())
+GameObject::GameObject(const bool collision_code) : collision_code_(collision_code), id_(GameEngine::get_new_id())
 {
 	draw_ = false;
 	position_ = sf::Vector2f{ 0, 0 };
@@ -110,11 +110,6 @@ void GameObject::set_size(float width, float height)
 void GameObject::set_tag(Tags tag)
 {
 	tag_ = tag;
-}
-
-bool GameObject::requires_input() const noexcept
-{
-	return requires_input_;
 }
 
 unsigned long long GameObject::get_id() const noexcept

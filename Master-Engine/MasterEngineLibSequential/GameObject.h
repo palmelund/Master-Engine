@@ -9,8 +9,8 @@ class Collider;//Needed to break cirkuler pointer.
 class GameObject
 {
 public:
-	explicit GameObject(bool requires_input, bool collision_code = false);
-	~GameObject();
+	explicit GameObject(bool collision_code = false);
+	virtual ~GameObject();
 
 	GameObject(const GameObject&) = delete;
 	GameObject& operator=(const GameObject&) = delete;
@@ -18,7 +18,6 @@ public:
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
-	inline bool requires_input() const noexcept;
 	unsigned long long get_id() const noexcept;
 
 	virtual void start_up();
@@ -58,13 +57,11 @@ protected:
 
 private:
 	sf::Vector2f velocity_;
-	bool requires_input_;
 	bool collision_code_;
 	unsigned long long id_;
 
 
 	std::vector<Collider*> colliders_;
-	bool ColliderOverLap(Transform object1, Transform Object2);
 	Tags tag_;
 	sf::Vector2f position_;	
 	

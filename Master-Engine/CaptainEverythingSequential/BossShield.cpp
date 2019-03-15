@@ -6,15 +6,17 @@
 #include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
 
-# define M_PI 3.14159265358979323846  /* pi */
-# define Boss_Distance 75.0f 
-# define Speed 100.0f 
-# define Size 50.0f 
+const float M_PI = 3.14159265358979323846f;  /* pi */
+const float Boss_Distance = 75.0f;
+const float Speed = 100.0f;
+const float Size = 50.0f;
 
-BossShield::BossShield(Boss* boss, int position) : GameObject(false, true)
+BossShield::BossShield(Boss* boss, int position) : GameObject( true)
 {
+	
+
 	circumference_ = M_PI * 2.0f * Boss_Distance;
-	position_ = (M_PI * 2.0f) * ((float)(position) / 3.0f);
+	position_ = (M_PI * 2.0f) * (static_cast<float>(position) / 3.0f);
 	boss_ = boss;
 	GameObject::set_sprite(ResourceManager::get_texture("shield.png"));
 	GameObject::set_size(Size, Size);
