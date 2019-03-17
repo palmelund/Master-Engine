@@ -12,15 +12,15 @@ std::vector<std::thread> ThreadPool::Pool{};
 std::mutex ThreadPool::Queue_Mutex{};
 std::condition_variable ThreadPool::condition{};
 
-std::map<void*, std::vector<void(*)()>*> ThreadPool::barred_functions_{};
+std::map<void(*)(), std::vector<void(*)()>*> ThreadPool::barred_functions_{};
 
 void ThreadPool::CreateThreadPool()
 {
-	int Num_Threads = std::thread::hardware_concurrency();
+	const int Num_Threads = std::thread::hardware_concurrency();
 
  	for (int ii = 0; ii < Num_Threads; ii++)
 	{
-		Pool.push_back(std::thread(InfiniteLoop));
+		Pool.emplace_back(InfiniteLoop);
 	}
 }
 
@@ -83,7 +83,11 @@ void ThreadPool::InfiniteLoop()
 
 		if(barred_functions_.find(Job) != barred_functions_.end())
 		{
-			JobQueue.emplace(barred_functions_[Job]);
+			for(auto* element : *barred_functions_[Job])
+			{
+				JobQueue.push(element);
+			}
+
 			delete barred_functions_[Job];
 			barred_functions_.erase(Job);
 		}

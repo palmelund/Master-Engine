@@ -24,7 +24,7 @@ private:
 
 	static std::mutex Queue_Mutex;
 	static std::condition_variable condition;
-	static std::map<void*, std::vector<void(*)()>*> barred_functions_;
+	static std::map<void(*)(), std::vector<void(*)()>*> barred_functions_;
 };
 
 template <typename CONTAINER>
@@ -35,6 +35,6 @@ void ThreadPool::AddJob(const CONTAINER& container)
 	{
 		JobQueue.push(func);
 	}
-	condition.notify_all();
+	condition.notify_all();		// TODO: ?
 }
 
