@@ -6,14 +6,15 @@
 #include "../MasterEngineLibShared/Tags.h"
 #include "PlayerBullet.h"
 #include "Spawner.h"
+#include "SpriteIndexes.h"
 
 
 Player::Player() : GameObject(true)
 {
 	size_ = 20;
-	GameObject::set_sprite(ResourceManager::get_texture("player.png"));
+	GameObject::set_sprite(PLAYER_SPRITE);
 	GameObject::set_size(size_, size_);
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 	speed = 900;
 	fire_rate_ = 0.3f;
 }

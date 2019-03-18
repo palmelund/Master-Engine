@@ -25,7 +25,7 @@ public:
 	virtual void OnCollision(GameObject* collider);
 	void collision_check();
 
-	void set_sprite(sf::Texture& texture);
+	void set_sprite(int sprite_position);
 	void unset_sprite();
 
 	void add_collider(Collider* collider);
@@ -42,8 +42,6 @@ public:
 	void set_tag(Tags);
 	Tags get_tag();
 
-	float get_width_scale();
-	float get_height_scale();
 	float get_width_size();
 	float get_height_size();
 	void set_scale(float, float);
@@ -51,9 +49,14 @@ public:
 	void add_velocity(sf::Vector2f);
 	void set_velocity(sf::Vector2f);
 
+	sf::Vector2f get_scaled_size() const;
+
 	sf::Vector2f get_velocity();
+
+	int sprite_pos() const noexcept;
+
 protected:
-	sf::Sprite sprite_;
+	int sprite_pos_{};
 
 private:
 	sf::Vector2f velocity_;
@@ -61,14 +64,16 @@ private:
 	unsigned long long id_;
 
 
-	std::vector<Collider*> colliders_;
+	std::vector<Collider*> colliders_ = std::vector<Collider*>{};
 	Tags tag_;
-	sf::Vector2f position_;	
+	sf::Vector2f position_ = sf::Vector2f{0, 0};	
 	
-	bool draw_;
+	bool draw_ = false;
 
-	float height_scale_;
-	float width_scale_;
+	float height_scale_{};
+	float width_scale_{};
+
+	sf::Vector2f size_;
 };
 
 template <typename CONTAINER>

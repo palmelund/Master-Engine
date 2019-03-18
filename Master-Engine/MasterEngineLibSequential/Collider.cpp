@@ -18,8 +18,8 @@ Transform Collider::get_collider()
 	sf::Vector2f owner_pos = owner_->get_position();
 	myTransform.posX = LocalPosition.x + owner_pos.x;
 	myTransform.posY = LocalPosition.y + owner_pos.y;
-	myTransform.sizeX = Size.x*owner_->get_width_scale();
-	myTransform.sizeY = Size.y*owner_->get_height_scale();
+	myTransform.sizeX = Size.x;
+	myTransform.sizeY = Size.y;
 	return myTransform;
 }
 

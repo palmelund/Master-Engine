@@ -5,7 +5,6 @@
 #include "../MasterEngineLibShared/ThreadPool.h"
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
-#include "../MasterEngineLibSequential/partical.h"
 #include "Wall.h"
 #include "Player.h"
 #include "../MasterEngineLibShared/Input.h"
@@ -33,12 +32,7 @@ int main()
 	{
 		new Wall{ "wall.png" , sf::Vector2f{300.0f - (30.0f*i), 330.0f}, 30.0f };
 	}
-
-	for (int i = 0; i < 200; i++)
-	{
-		new partical{ "snowflake.jpg" , sf::Vector2f{0.0f,0.0f}, sf::Vector2f{2.0f*i,0.0f} };
-	}
-	
+		
 	GameEngine::init();
 
 

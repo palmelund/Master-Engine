@@ -5,6 +5,7 @@
 #include "../MasterEngineLibSequential/GameEngine.h"
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "Spawner.h"
+#include "../MasterEngineLibSequential/ResourceManager.h"
 
 int main()
 {
@@ -13,8 +14,9 @@ int main()
 #endif
 
 	Renderer::init("Master Engine", 800, 500);
+	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), 200, 200);
+	
 	GameEngine::init();
-
 	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();

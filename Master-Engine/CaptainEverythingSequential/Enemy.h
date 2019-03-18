@@ -5,7 +5,7 @@ class Enemy :
 	public GameObject
 {
 public:
-	Enemy(std::string);
+	Enemy();
 	~Enemy();
 
 	void start_up() override;

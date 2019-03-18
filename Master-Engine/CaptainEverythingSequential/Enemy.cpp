@@ -5,14 +5,15 @@
 #include "../MasterEngineLibShared/Tags.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
 #include "EnemyBullet.h"
+#include "SpriteIndexes.h"
 
-Enemy::Enemy( std::string texture) : GameObject(false)
+Enemy::Enemy() : GameObject(false)
 {
 	size_ = 20;
 	GameObject::set_velocity(sf::Vector2f{ -100.0f, 0.0f });
-	GameObject::set_sprite(ResourceManager::get_texture(texture));
+	GameObject::set_sprite(ENEMY_SPRITE);
 	GameObject::set_size(size_, size_);
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 	fire_rate_ = 1.3;
 	internal_timer = 0;
 	GameObject::set_tag(Tags::Enemy);

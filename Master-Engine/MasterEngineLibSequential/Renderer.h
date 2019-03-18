@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include "GameObject.h"
+#include "BatchDrawable.h"
 
 class Renderer
 {
@@ -20,9 +22,8 @@ public:
 
 	static void render();
 
-	static void add_sprite(const sf::Sprite* sprite);
-
-	static void remove_sprite(const sf::Sprite& sprite);
+	static void add_drawable_object(GameObject* drawable_object);
+	static void remove_drawable_object(GameObject* drawable_object);
 
 	static void draw_text(const std::string& txt, int x_pos, int y_pos, int size);
 
@@ -32,12 +33,16 @@ public:
 
 	static sf::Vector2i* get_window_size();
 
+	static void set_sprite_sheet(const sf::Texture& sprite_sheet, int sprite_width, int sprite_height);
+
+	static sf::Vector2f get_sprite_size();
+
+
 private:
-	static std::unordered_set<const sf::Sprite*> sprites_;
+	static BatchDrawable batch_drawable_;
 	static sf::RenderWindow window_;
 	static sf::Vector2i* window_size;
 
 	static sf::Font font_;
-
 	static std::vector<sf::Text> text_vector_;
 };

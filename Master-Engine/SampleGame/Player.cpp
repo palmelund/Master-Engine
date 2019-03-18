@@ -6,14 +6,15 @@
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
 #include <sstream>
+#include "../CaptainEverythingSequential/SpriteIndexes.h"
 
 Player::Player(const std::string& texture) : GameObject(true)
 {
 	size_ = 20;
 	velocity = sf::Vector2f{ 100.0, 100.0};
-	GameObject::set_sprite(ResourceManager::get_texture(texture));
+	GameObject::set_sprite(PLAYER_SPRITE);
 	GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0},   get_scaled_size() });
 }
 
 

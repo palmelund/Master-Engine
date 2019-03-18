@@ -2,7 +2,7 @@
 #include "Renderer.h"
 #include "SFML/Graphics.hpp"
 
-std::unordered_set<const sf::Sprite*> Renderer::sprites_{};
+BatchDrawable Renderer::batch_drawable_{};
 sf::RenderWindow Renderer::window_{};
 sf::Vector2i* Renderer::window_size{};
 sf::Font Renderer::font_{};
@@ -11,7 +11,7 @@ std::vector<sf::Text> Renderer::text_vector_{};
 void Renderer::init(std::string window_name, int width, int height)
 {
 	const auto& v2 = sf::Vector2u(width, height);
-	window_.setSize(v2);  // = sf::RenderWindow{ sf::VideoMode(width, height), window_name };
+	window_.setSize(v2);
 	window_.setTitle(window_name);
 	Renderer::window_size = new sf::Vector2i(width, height);
 	window_.create(sf::VideoMode(width, height), window_name);
@@ -24,11 +24,9 @@ void Renderer::init(std::string window_name, int width, int height)
 
 void Renderer::render()
 {
-	window_.clear(sf::Color::Black);
-	for (auto& sprite : sprites_)
-	{
-		window_.draw(*sprite);
-	}
+	window_.clear(sf::Color::Cyan);
+	batch_drawable_.update();
+	window_.draw(batch_drawable_);
 
 	for (auto& text : text_vector_)
 	{
@@ -39,15 +37,14 @@ void Renderer::render()
 	window_.display();
 }
 
-void Renderer::add_sprite(const sf::Sprite* sprite)
+void Renderer::add_drawable_object(GameObject* drawable_object)
 {
-	sprites_.insert(sprite);
+	batch_drawable_.add(drawable_object);
 }
 
-void Renderer::remove_sprite(const sf::Sprite& sprite)
+void Renderer::remove_drawable_object(GameObject* drawable_object)
 {
-	const auto ptr = &sprite;
-	sprites_.erase(ptr);
+	batch_drawable_.remove(drawable_object);
 }
 
 bool Renderer::is_open()
@@ -70,6 +67,16 @@ sf::Vector2i* Renderer::get_window_size()
 	return Renderer::window_size;
 }
 
+void Renderer::set_sprite_sheet(const sf::Texture& sprite_sheet, int sprite_width, int sprite_height)
+{
+	batch_drawable_.set_texture(sprite_sheet, sprite_sheet.getSize().x, sprite_sheet.getSize().y, sprite_width, sprite_height);
+}
+
+sf::Vector2f Renderer::get_sprite_size()
+{
+	return sf::Vector2f{static_cast<float>(batch_drawable_.get_sprite_width()), static_cast<float>(batch_drawable_.get_sprite_height())};
+}
+
 void Renderer::draw_text(const std::string& txt, int x_pos, int y_pos, int size)
 {
 	sf::Text text;
@@ -78,7 +85,7 @@ void Renderer::draw_text(const std::string& txt, int x_pos, int y_pos, int size)
 	text.setCharacterSize(size);
 	text.setFillColor(sf::Color::Magenta);
 
-	text.setPosition(x_pos, y_pos);
+	text.setPosition(static_cast<float>(x_pos), static_cast<float>(y_pos));
 
 	text_vector_.emplace_back(text);
 }

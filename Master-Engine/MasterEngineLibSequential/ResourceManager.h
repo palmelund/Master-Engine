@@ -1,7 +1,6 @@
 #pragma once
-#include <SFML/Graphics/Sprite.hpp>
-#include <map>
 #include <unordered_map>
+#include <SFML/Graphics/Texture.hpp>
 
 class ResourceManager
 {
@@ -13,9 +12,9 @@ public:
 	ResourceManager& operator=(ResourceManager&&) = delete;
 	~ResourceManager() = delete;
 
-	static sf::Texture& get_texture(const std::string&);
+	static sf::Texture& load_texture(const std::string& texture_name);
+
 private:
 	static std::unordered_map<std::string, sf::Texture> textures_;
-	static sf::Texture& load_texture(const std::string&);
 };
 

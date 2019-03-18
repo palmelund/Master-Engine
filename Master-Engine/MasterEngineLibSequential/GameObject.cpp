@@ -6,14 +6,11 @@
 #include "../MasterEngineLibShared/Tags.h"
 
 
-GameObject::GameObject(const bool collision_code) : collision_code_(collision_code), id_(GameEngine::get_new_id())
+GameObject::GameObject(const bool collision_code) 
+: sprite_pos_(-1), collision_code_(collision_code), id_(GameEngine::get_new_id()),
+  velocity_(sf::Vector2f{0, 0}), tag_(Tags::Default), size_(Renderer::get_sprite_size())
 {
-	draw_ = false;
-	position_ = sf::Vector2f{ 0, 0 };
 	GameEngine::add_game_object(this);
-	colliders_ = std::vector<Collider*>{};
-	tag_ = Tags::Defualt;
-	velocity_ = sf::Vector2f{ 0, 0 };
 	if (collision_code)
 	{
 		GameEngine::add_collider(this);
@@ -39,7 +36,7 @@ void GameObject::unset_sprite()
 {
 	if (draw_)
 	{
-		Renderer::remove_sprite(sprite_);
+		Renderer::remove_drawable_object(this);
 		draw_ = false;
 	}
 }
@@ -59,7 +56,6 @@ void GameObject::set_position(sf::Vector2f newposition)
 {
 
 	position_ = newposition;
-	sprite_.setPosition(newposition);
 }
 
 sf::Vector2f GameObject::get_position()
@@ -72,39 +68,27 @@ Tags GameObject::get_tag()
 	return tag_;
 }
 
-float GameObject::get_width_scale()
-{
-	return width_scale_;
-}
-
-float GameObject::get_height_scale()
-{
-	return height_scale_;
-}
 
 float GameObject::get_width_size()
 {
-	return width_scale_ * sprite_.getTextureRect().width;
+	return size_.x * width_scale_;
 }
 
 float GameObject::get_height_size()
 {
-	return height_scale_ * sprite_.getTextureRect().height;
+	return size_.y * height_scale_;
 }
 
 void GameObject::set_scale(float h_scale, float w_scale)
 {
 	height_scale_ = h_scale;
 	width_scale_ = w_scale;
-	sprite_.setScale(sf::Vector2f{ h_scale, w_scale });
 }
 
 void GameObject::set_size(float width, float height)
 {
-	sf::IntRect rect = sprite_.getTextureRect();
-	height_scale_ = width / rect.height;
-	width_scale_ = height / rect.width;
-	sprite_.setScale(sf::Vector2f{ height_scale_, width_scale_ });
+	height_scale_ = width / size_.y;
+	width_scale_ = height / size_.x;
 }
 
 void GameObject::set_tag(Tags tag)
@@ -129,12 +113,12 @@ void GameObject::OnCollision(GameObject* collider)
 {
 }
 
-void GameObject::set_sprite(sf::Texture& texture)
+void GameObject::set_sprite(int sprite_position)
 {
-	sprite_.setTexture(texture);
+	sprite_pos_ = sprite_position;
 	if (!draw_)
 	{
-		Renderer::add_sprite(&sprite_);
+		Renderer::add_drawable_object(this);
 		draw_ = true;
 	}
 }
@@ -174,7 +158,17 @@ void GameObject::set_velocity(sf::Vector2f velocity)
 	velocity_ = velocity;
 }
 
+sf::Vector2f GameObject::get_scaled_size() const
+{
+	return {size_.x * width_scale_, size_.y * height_scale_};
+}
+
 sf::Vector2f GameObject::get_velocity()
 {
 	return velocity_;
+}
+
+int GameObject::sprite_pos() const noexcept
+{
+	return sprite_pos_;
 }

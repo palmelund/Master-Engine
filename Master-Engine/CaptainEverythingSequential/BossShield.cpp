@@ -5,6 +5,7 @@
 #include "../MasterEngineLibShared/Tags.h"
 #include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
+#include "SpriteIndexes.h"
 
 const float M_PI = 3.14159265358979323846f;  /* pi */
 const float Boss_Distance = 75.0f;
@@ -18,9 +19,9 @@ BossShield::BossShield(Boss* boss, int position) : GameObject( true)
 	circumference_ = M_PI * 2.0f * Boss_Distance;
 	position_ = (M_PI * 2.0f) * (static_cast<float>(position) / 3.0f);
 	boss_ = boss;
-	GameObject::set_sprite(ResourceManager::get_texture("shield.png"));
+	GameObject::set_sprite(SHIELD_SPRITE);
 	GameObject::set_size(Size, Size);
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 	//GameObject::set_tag(Tags::Enemy);
 }
 

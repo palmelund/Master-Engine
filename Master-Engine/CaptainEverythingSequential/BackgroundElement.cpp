@@ -4,15 +4,16 @@
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
 #include "../MasterEngineLibSequential/Renderer.h"
+#include "SpriteIndexes.h"
 
 
 BackgroundElement::BackgroundElement() : GameObject(true)
 {
 	size_ = 20;
 	GameObject::set_velocity(sf::Vector2f{ 50.0f, -90.0f });
-	GameObject::set_sprite(ResourceManager::get_texture("backgroundElement.png"));
+	GameObject::set_sprite(BACKGROUND_SPRITE);
 	GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 	GameObject::set_tag(Tags::Background);
 }
 

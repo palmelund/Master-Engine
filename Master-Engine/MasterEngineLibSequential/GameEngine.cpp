@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "GameEngine.h"
-#include "../MasterEngineLibSequential/partical.h"
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "../MasterEngineLibShared/Input.h"
 #include <iostream>
-#include "../CaptainEverythingSequential/Spawner.h"
 
 unsigned long long GameEngine::incremental_id_{};
 std::unordered_set<GameObject*> GameEngine::game_objects_{};
@@ -61,7 +59,6 @@ void GameEngine::run()
 		for (GameObject* object : get_gamestate()) {
 			object->update();
 		}
-
 		for (GameObject* object : collision_game_object_) {
 			object->collision_check();
 		}
@@ -71,6 +68,7 @@ void GameEngine::run()
 			delete game_object;
 		}
 		get_destroyid_game_object().clear();
+
 		Renderer::render();
 	}
 }

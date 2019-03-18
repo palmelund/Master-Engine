@@ -4,23 +4,21 @@
 
 std::unordered_map<std::string, sf::Texture> ResourceManager::textures_{};
 
-sf::Texture& ResourceManager::get_texture(const std::string& sprite_name)
+sf::Texture& ResourceManager::load_texture(const std::string& texture_name)
 {
-	auto finding = textures_.find(sprite_name);
-	if(finding == textures_.end())
+	auto finding = textures_.find(texture_name);
+	if(finding != textures_.end())
 	{
-		return load_texture(sprite_name);
-	} else 	{
 		return finding->second;
 	}
-}
 
-sf::Texture& ResourceManager::load_texture(const std::string& sprite_name)
-{
-	auto pair = textures_.try_emplace(sprite_name, sf::Texture{});
+	auto pair = textures_.try_emplace(texture_name, sf::Texture{});
 	auto& texture = pair.first->second;
 
-	texture.loadFromFile(sprite_name);
+	if(!texture.loadFromFile(texture_name))
+	{
+		throw std::exception();
+	}
 
 	return texture;
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28711.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterEngineLibSequential", "MasterEngineLibSequential\MasterEngineLibSequential.vcxproj", "{3AE4C0F1-AED4-42E8-A680-079852239662}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterEngineLibAggregator", "MasterEngineLibAggregator\MasterEngineLibAggregator.vcxproj", "{83ABCFDE-58DC-4ED6-93F8-BD3F26ECB4BC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterEngineLibShared", "MasterEngineLibShared\MasterEngineLibShared.vcxproj", "{7EEDCEBB-F666-4B45-BB32-C7ED8DE7862E}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleGame", "SampleGame\SampleGame.vcxproj", "{6B9B89AA-FB45-4002-919C-F492EB6A59AA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaptainEverythingSequential", "CaptainEverythingSequential\CaptainEverythingSequential.vcxproj", "{03D577C9-4F40-434B-9592-A72A59658F65}"
 EndProject
@@ -53,13 +51,6 @@ Global
 		{7EEDCEBB-F666-4B45-BB32-C7ED8DE7862E}.Release|x64.Build.0 = Release|x64
 		{7EEDCEBB-F666-4B45-BB32-C7ED8DE7862E}.Release|x86.ActiveCfg = Release|Win32
 		{7EEDCEBB-F666-4B45-BB32-C7ED8DE7862E}.Release|x86.Build.0 = Release|Win32
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Debug|x64.ActiveCfg = Debug|x64
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Debug|x86.ActiveCfg = Debug|Win32
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Debug|x86.Build.0 = Debug|Win32
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Release|x64.ActiveCfg = Release|x64
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Release|x64.Build.0 = Release|x64
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Release|x86.ActiveCfg = Release|Win32
-		{6B9B89AA-FB45-4002-919C-F492EB6A59AA}.Release|x86.Build.0 = Release|Win32
 		{03D577C9-4F40-434B-9592-A72A59658F65}.Debug|x64.ActiveCfg = Debug|x64
 		{03D577C9-4F40-434B-9592-A72A59658F65}.Debug|x64.Build.0 = Debug|x64
 		{03D577C9-4F40-434B-9592-A72A59658F65}.Debug|x86.ActiveCfg = Debug|Win32

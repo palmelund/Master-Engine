@@ -1,7 +1,7 @@
 #pragma once
 
 enum class Tags {
-	Defualt,
+	Default,
 	Enemy,
 	EnemyBullet,
 	Player,

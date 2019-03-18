@@ -2,15 +2,16 @@
 #include "GravityWell.h"
 #include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../MasterEngineLibShared/Time.h"
+#include "SpriteIndexes.h"
 
 #define SIZE 160.0f
 #define pullforce 1.0f
 
 GravityWell::GravityWell() : GameObject(true)
 {
-	GameObject::set_sprite(ResourceManager::get_texture("gravitywell.png"));
+	GameObject::set_sprite(GRAVITY_WELL_SPRITE);
 	GameObject::set_size(SIZE, SIZE);
-	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, sf::Vector2f{sprite_.getLocalBounds().width, sprite_.getLocalBounds().height} });
+	GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 }
 
 
