@@ -2,14 +2,12 @@
 #include "Spawner.h"
 #include "../MasterEngineLibShared/Time.h"
 #include "Enemy.h"
-#include "../MasterEngineLibSequential/ResourceManager.h"
-#include "../MasterEngineLibSequential/Renderer.h"
-#include "../MasterEngineLibSequential/GameEngine.h"
+#include "../MasterEngineLibParallel/Renderer.h"
+#include "../MasterEngineLibParallel/GameEngine.h"
 #include "Player.h"
 #include "BackgroundElement.h"
 #include "Boss.h"
 #include "GravityWell.h"
-#include "../MasterEngineLibSequential/BatchDrawable.h"
 
 Spawner* Spawner::single_ton_ = nullptr;
 
@@ -64,11 +62,13 @@ void Spawner::update()
 
 void Spawner::add_player_hit()
 {
+	std::unique_lock<std::mutex> lock(player_hit_mutex_);
 	player_hits_++;
 }
 
 void Spawner::add_enemy_hit()
 {
+	std::unique_lock<std::mutex> lock(enemy_hit_mutex_);
 	enemy_kills_++;
 }
 

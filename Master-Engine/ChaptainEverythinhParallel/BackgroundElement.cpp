@@ -1,15 +1,14 @@
 #include "pch.h"
-#include "BackgroundElement.h"
-#include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
-#include "../MasterEngineLibSequential/Renderer.h"
+#include "../MasterEngineLibParallel/Renderer.h"
 #include "SpriteIndexes.h"
+#include "BackgroundElement.h"
 
 
 BackgroundElement::BackgroundElement() : GameObject(true)
 {
-	size_ = 10;
+	size_ = 20;
 	GameObject::set_velocity(sf::Vector2f{ 50.0f, -90.0f });
 	GameObject::set_sprite(BACKGROUND_SPRITE);
 	GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
@@ -20,10 +19,12 @@ BackgroundElement::BackgroundElement() : GameObject(true)
 
 BackgroundElement::~BackgroundElement()
 {
+
 }
 
 void BackgroundElement::update()
 {
+	std::unique_lock<std::mutex> lock(velocity_mutex_);
 	sf::Vector2f position = GameObject::get_position();
 	sf::Vector2f velocity = GameObject::get_velocity();
 	GameObject::set_position(sf::Vector2f{ position.x + (velocity.x*Time::DeltaTime()), position.y + (velocity.y*Time::DeltaTime()) });
@@ -52,6 +53,7 @@ void BackgroundElement::OnCollision(GameObject * collider)
 {
 	if (collider->get_tag() == Tags::Background)
 	{
+		std::unique_lock<std::mutex> lock(velocity_mutex_);
 		sf::Vector2f position = GameObject::get_position();
 		sf::Vector2f col_position = collider->get_position();
 		sf::Vector2f velocity = GameObject::get_velocity();
