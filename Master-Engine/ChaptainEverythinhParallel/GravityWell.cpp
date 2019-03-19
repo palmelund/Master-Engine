@@ -21,6 +21,7 @@ GravityWell::~GravityWell()
 
 void GravityWell::OnCollision(GameObject * collider)
 {
+	std::unique_lock<std::mutex> lock(collider->velocity_modify_mutex);
 	float side_a = (get_position().x + (SIZE / 2.0f)) - (collider->get_position().x + (collider->get_width_size() / 2.0f));
 	float side_b = (get_position().y + (SIZE / 2.0f)) - (collider->get_position().y + (collider->get_height_size() / 2.0f));
 	float side_c = std::sqrt(std::pow(side_a, 2) + std::pow(side_b, 2));

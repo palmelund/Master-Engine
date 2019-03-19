@@ -30,7 +30,7 @@ void Enemy::start_up()
 void Enemy::update()
 {
 	{	//Dont remove used for live time of the velocity_mutex_
-		std::unique_lock<std::mutex> lock(velocity_mutex_);
+		std::unique_lock<std::mutex> lock(GameObject::velocity_modify_mutex);
 		sf::Vector2f velocity = GameObject::get_velocity();
 		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x*Time::DeltaTime()), GameObject::get_position().y + (velocity.y*Time::DeltaTime()) });
 	}

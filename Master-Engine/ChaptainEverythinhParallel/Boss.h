@@ -19,7 +19,6 @@ private:
 	int size_;
 	int shield_amount_;
 
-	std::mutex velocity_mutex_;
 	std::mutex shield_amount_mutex_;
 };
 

@@ -16,7 +16,5 @@ private:
 	int size_;
 	float fire_rate_;
 	float internal_timer;
-
-	std::mutex velocity_mutex_;
 };
 

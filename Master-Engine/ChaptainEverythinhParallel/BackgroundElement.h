@@ -14,6 +14,5 @@ public:
 
 private:
 	int size_;
-	std::mutex velocity_mutex_;
 };
 

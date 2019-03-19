@@ -54,6 +54,7 @@ public:
 	sf::Vector2f get_velocity();
 
 	int sprite_pos() const noexcept;
+	std::mutex velocity_modify_mutex;
 
 protected:
 	int sprite_pos_{};
