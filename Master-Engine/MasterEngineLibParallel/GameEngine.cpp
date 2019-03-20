@@ -93,6 +93,9 @@ namespace MasterEngine {
 
 				Renderer::render();
 			}
+
+			ThreadPool::terminate();
+			
 		}
 
 		unsigned long long GameEngine::get_new_id()

@@ -167,7 +167,7 @@
     <ClCompile Include="BackgroundElement.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossShield.cpp" />
-    <ClCompile Include="ChaptainEverythinhParallel.cpp" />
+    <ClCompile Include="ChaptainEverythingParallel.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="GravityWell.cpp" />

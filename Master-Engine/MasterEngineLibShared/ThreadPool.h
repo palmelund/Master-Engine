@@ -3,6 +3,7 @@
 #include<queue>
 #include <mutex>
 #include <map>
+#include <atomic>
 
 namespace MasterEngine {
 	namespace LibShared {
@@ -23,12 +24,20 @@ namespace MasterEngine {
 			static std::mutex Queue_Mutex;
 			static std::queue<std::function<void()>> JobQueue;
 
+			static int thread_count() noexcept;
+			static void terminate();
+
 		private:
 			static void InfiniteLoop();
 			static std::condition_variable condition;
 			static std::vector<std::thread> Pool;
 
 			static std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
+			
+			static std::atomic<int> working_threads_;
+			static std::atomic<int> thread_count_;
+
+			static bool terminate_;
 		};
 
 		/*template <typename CONTAINER>
