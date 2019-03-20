@@ -27,6 +27,7 @@ namespace MasterEngine {
 			static int thread_count() noexcept;
 			static void terminate();
 
+			static std::atomic<int> working_threads_;
 		private:
 			static void InfiniteLoop();
 			static std::condition_variable condition;
@@ -34,7 +35,6 @@ namespace MasterEngine {
 
 			static std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
-			static int working_threads_;
 			static std::atomic<int> thread_count_;
 
 			static bool terminate_;

@@ -72,7 +72,7 @@ namespace MasterEngine {
 				}
 				{
 					std::unique_lock<std::mutex> lock(ThreadPool::Queue_Mutex);
-					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty(); });
+					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty() && ThreadPool::working_threads_ == 0; });
 				}
 
 				for (GameObject* object : collision_game_objects_) {
@@ -82,7 +82,8 @@ namespace MasterEngine {
 
 				{
 					std::unique_lock<std::mutex> lock(ThreadPool::Queue_Mutex);
-					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty(); });
+					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty() && ThreadPool::working_threads_ == 0; });
+					std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
 				for (GameObject* game_object : get_destroyid_game_object())
