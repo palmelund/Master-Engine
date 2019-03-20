@@ -1,17 +1,19 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
 
-class BackgroundElement :
-	public GameObject
-{
-public:
-	BackgroundElement();
-	~BackgroundElement();
+namespace CaptainEverythingSequential {
+	using namespace MasterEngine::LibSequential;
+	class BackgroundElement :
+		public GameObject
+	{
+	public:
+		BackgroundElement();
+		~BackgroundElement();
 
-	void update() override;
-	void OnCollision(GameObject* collider) override;
+		void update() override;
+		void OnCollision(GameObject* collider) override;
 
-private:
-	int size_;
-};
-
+	private:
+		int size_;
+	};
+}

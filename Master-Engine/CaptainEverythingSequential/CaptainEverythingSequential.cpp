@@ -7,6 +7,9 @@
 #include "Spawner.h"
 #include "../MasterEngineLibSequential/ResourceManager.h"
 
+using namespace MasterEngine::LibSequential;
+using namespace CaptainEverythingSequential;
+
 int main()
 {
 #ifdef DETECT_MEMORY_LEAKS
@@ -15,11 +18,13 @@ int main()
 
 	Renderer::init("Master Engine", 800, 500);
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), 200, 200);
-	
+
 	GameEngine::init();
 	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();
+
+	return EXIT_SUCCESS;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

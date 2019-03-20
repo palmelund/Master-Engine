@@ -3,23 +3,28 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-class  GameObject;
+namespace MasterEngine {
+	namespace LibParallel {
 
-class Collider
-{
-public:
-	Collider(sf::Vector2f localPosition, sf::Vector2f size);
-	~Collider();
-	sf::Vector2f LocalPosition;
-	sf::Vector2f Size;
+		class  GameObject;
 
-	Transform get_collider();
+		class Collider
+		{
+		public:
+			Collider(sf::Vector2f localPosition, sf::Vector2f size);
+			~Collider();
+			sf::Vector2f LocalPosition;
+			sf::Vector2f Size;
 
-	void set_owner(GameObject*);
-	GameObject* get_owner();
-	static bool ColliderOverLap(Transform object1, Transform Object2);
+			Transform get_collider();
 
-private:
-	GameObject* owner_;
-	
-};
+			void set_owner(GameObject*);
+			GameObject* get_owner();
+			static bool ColliderOverLap(Transform object1, Transform Object2);
+
+		private:
+			GameObject* owner_;
+
+		};
+	}
+}

@@ -2,81 +2,94 @@
 #include "SFML/Graphics.hpp"
 #include "Collider.h"
 #include "Transform.h"
+#include "../MasterEngineLibShared/ThreadPool.h"
 
-enum class Tags;
-class Collider;//Needed to break cirkuler pointer.
+namespace MasterEngine {
+	namespace LibShared {
+		enum class Tags;
+	}
+}
 
-class GameObject
-{
-public:
-	explicit GameObject(bool collision_code = false);
-	virtual ~GameObject();
+namespace MasterEngine {
+	namespace LibSequential {
+		using namespace LibShared;
 
-	GameObject(const GameObject&) = delete;
-	GameObject& operator=(const GameObject&) = delete;
+		class Collider;//Needed to break cirkuler pointer.
 
-	GameObject(GameObject&&) = default;
-	GameObject& operator=(GameObject&&) = default;
+		class GameObject
+		{
+		public:
+			explicit GameObject(bool collision_code = false);
+			virtual ~GameObject();
 
-	unsigned long long get_id() const noexcept;
+			GameObject(const GameObject&) = delete;
+			GameObject& operator=(const GameObject&) = delete;
 
-	virtual void start_up();
-	virtual void update();
-	virtual void OnCollision(GameObject* collider);
-	void collision_check();
+			GameObject(GameObject&&) = default;
+			GameObject& operator=(GameObject&&) = default;
 
-	void set_sprite(int sprite_position);
-	void unset_sprite();
+			unsigned long long get_id() const noexcept;
 
-	void add_collider(Collider* collider);
+			virtual void start_up();
+			virtual void update();
+			virtual void OnCollision(GameObject* collider);
+			void collision_check();
 
-	template<typename CONTAINER>
-	void add_colliders(const CONTAINER& collider);
-	
-	std::vector<Collider*>& get_colliders();
+			void set_sprite(int sprite_position);
+			void unset_sprite();
 
+			void add_collider(Collider* collider);
 
-	void set_position(sf::Vector2f);
-	sf::Vector2f get_position();
+			template<typename CONTAINER>
+			void add_colliders(const CONTAINER& collider);
 
-	void set_tag(Tags);
-	Tags get_tag();
-
-	float get_width_size();
-	float get_height_size();
-	void set_scale(float, float);
-	void set_size(float, float);
-	void add_velocity(sf::Vector2f);
-	void set_velocity(sf::Vector2f);
-
-	sf::Vector2f get_scaled_size() const;
-
-	sf::Vector2f get_velocity();
-
-	int sprite_pos() const noexcept;
-
-protected:
-	int sprite_pos_{};
-
-private:
-	sf::Vector2f velocity_;
-	bool collision_code_;
-	unsigned long long id_;
+			std::vector<Collider*>& get_colliders();
 
 
-	std::vector<Collider*> colliders_ = std::vector<Collider*>{};
-	Tags tag_;
-	sf::Vector2f position_ = sf::Vector2f{0, 0};	
-	
-	bool draw_ = false;
+			void set_position(sf::Vector2f);
+			sf::Vector2f get_position();
 
-	float height_scale_{};
-	float width_scale_{};
+			void set_tag(Tags);
+			Tags get_tag();
 
-	sf::Vector2f size_;
-};
+			float get_width_size();
+			float get_height_size();
+			void set_scale(float, float);
+			void set_size(float, float);
+			void add_velocity(sf::Vector2f);
+			void set_velocity(sf::Vector2f);
 
-template <typename CONTAINER>
-void GameObject::add_colliders(const CONTAINER& collider)
-{
+			sf::Vector2f get_scaled_size() const;
+
+			sf::Vector2f get_velocity();
+
+			int sprite_pos() const noexcept;
+
+		protected:
+			int sprite_pos_{};
+
+		private:
+			sf::Vector2f velocity_;
+			bool collision_code_;
+			unsigned long long id_;
+
+
+			std::vector<Collider*> colliders_ = std::vector<Collider*>{};
+			Tags tag_;
+			sf::Vector2f position_ = sf::Vector2f{ 0, 0 };
+
+			bool draw_ = false;
+
+			float height_scale_{};
+			float width_scale_{};
+
+			sf::Vector2f size_;
+		};
+
+		template <typename CONTAINER>
+		void GameObject::add_colliders(const CONTAINER& collider)
+		{
+		}
+
+	}
 }

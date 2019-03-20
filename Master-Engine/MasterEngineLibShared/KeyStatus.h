@@ -1,9 +1,16 @@
 ﻿#pragma once
 
-enum class KeyStatus
+namespace MasterEngine
 {
-	unpressed,
-	pressed,
-	hold,
-	lifted,
-};
+	namespace LibShared {
+
+		enum class KeyStatus
+		{
+			unpressed,
+			pressed,
+			hold,
+			lifted,
+		};
+
+	}
+}

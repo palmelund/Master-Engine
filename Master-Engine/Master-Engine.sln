@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MasterEngineLibSequential", "MasterEngineLibSequential\MasterEngineLibSequential.vcxproj", "{3AE4C0F1-AED4-42E8-A680-079852239662}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaptainEverythingSequential", "CaptainEverythingSequential\CaptainEverythingSequential.vcxproj", "{03D577C9-4F40-434B-9592-A72A59658F65}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaptainEverythingParallel", "ChaptainEverythinhParallel\ChaptainEverythinhParallel.vcxproj", "{F66C2A1C-513D-4796-9F96-950E39CAAC55}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaptainEverythingShared", "CaptainEverythingShared\CaptainEverythingShared.vcxproj", "{AF4279AC-7545-41D5-B443-3E2EA6C683E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,16 @@ Global
 		{F66C2A1C-513D-4796-9F96-950E39CAAC55}.Release|x64.Build.0 = Release|x64
 		{F66C2A1C-513D-4796-9F96-950E39CAAC55}.Release|x86.ActiveCfg = Release|Win32
 		{F66C2A1C-513D-4796-9F96-950E39CAAC55}.Release|x86.Build.0 = Release|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Debug|x64.ActiveCfg = Debug|x64
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Debug|x64.Build.0 = Debug|x64
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Debug|x86.ActiveCfg = Debug|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Debug|x86.Build.0 = Debug|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Release|Any CPU.ActiveCfg = Release|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Release|x64.ActiveCfg = Release|x64
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Release|x64.Build.0 = Release|x64
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Release|x86.ActiveCfg = Release|Win32
+		{AF4279AC-7545-41D5-B443-3E2EA6C683E9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

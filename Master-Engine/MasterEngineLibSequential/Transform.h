@@ -1,8 +1,14 @@
 #pragma once
 
-struct Transform {
-	float posX;
-	float posY;
-	float sizeX;
-	float sizeY;
-};
+namespace MasterEngine {
+	namespace LibSequential {
+
+		struct Transform {
+			float posX;
+			float posY;
+			float sizeX;
+			float sizeY;
+		};
+
+	}
+}

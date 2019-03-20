@@ -1,17 +1,21 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
 
-class PlayerBullet :
-	public GameObject
-{
-public:
-	PlayerBullet();
-	~PlayerBullet();
+namespace CaptainEverythingSequential {
+	using namespace MasterEngine::LibSequential;
 
-	void update() override;
-	void OnCollision(GameObject* collider) override;
+	class PlayerBullet :
+		public GameObject
+	{
+	public:
+		PlayerBullet();
+		~PlayerBullet();
 
-private:
-	int size_;
-};
+		void update() override;
+		void OnCollision(GameObject* collider) override;
 
+	private:
+		int size_;
+	};
+
+}

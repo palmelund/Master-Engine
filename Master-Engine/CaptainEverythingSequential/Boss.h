@@ -1,21 +1,24 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
 
-class Boss :
-	public GameObject
-{
-public:
-	Boss();
-	~Boss();
+namespace CaptainEverythingSequential {
+	using namespace MasterEngine::LibSequential;
+	class Boss :
+		public GameObject
+	{
+	public:
+		Boss();
+		~Boss();
 
-	void start_up() override;
-	void update() override;
-	void OnCollision(GameObject* collider) override;
+		void start_up() override;
+		void update() override;
+		void OnCollision(GameObject* collider) override;
 
-	void loss_shield();
+		void loss_shield();
 
-private:
-	int size_;
-	int shield_amount_;
-};
+	private:
+		int size_;
+		int shield_amount_;
+	};
 
+}

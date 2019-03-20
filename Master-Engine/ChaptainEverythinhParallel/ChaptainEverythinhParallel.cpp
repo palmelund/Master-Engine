@@ -7,6 +7,9 @@
 #include "../MasterEngineLibParallel/ResourceManager.h"
 #include "../MasterEngineLibParallel/Renderer.h"
 
+using namespace MasterEngine::LibParallel;
+using namespace CaptainEverythingParallel;
+
 int main()
 {
 	Renderer::init("Master Engine", 800, 500);

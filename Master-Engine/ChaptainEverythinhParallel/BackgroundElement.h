@@ -2,17 +2,21 @@
 #include "../MasterEngineLibParallel/GameObject.h"
 #include <mutex>
 
-class BackgroundElement :
-	public GameObject
-{
-public:
-	BackgroundElement();
-	~BackgroundElement();
+namespace CaptainEverythingParallel {
+	using namespace MasterEngine::LibParallel;
 
-	void update() override;
-	void OnCollision(GameObject* collider) override;
+	class BackgroundElement :
+		public GameObject
+	{
+	public:
+		BackgroundElement();
+		~BackgroundElement();
 
-private:
-	int size_;
-};
+		void update() override;
+		void OnCollision(GameObject* collider) override;
 
+	private:
+		int size_;
+	};
+
+}

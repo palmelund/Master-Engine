@@ -1,13 +1,17 @@
 #pragma once
 #include "../MasterEngineLibSequential/GameObject.h"
 
-class GravityWell :
-	public GameObject
-{
-public:
-	GravityWell();
-	~GravityWell();
+namespace CaptainEverythingSequential {
+	using namespace MasterEngine::LibSequential;
 
-	void OnCollision(GameObject* collider) override;
-};
+	class GravityWell :
+		public GameObject
+	{
+	public:
+		GravityWell();
+		~GravityWell();
 
+		void OnCollision(GameObject* collider) override;
+	};
+
+}

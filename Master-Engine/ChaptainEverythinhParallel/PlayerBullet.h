@@ -2,17 +2,19 @@
 #include "../MasterEngineLibParallel/GameObject.h"
 #include <mutex>
 
-class PlayerBullet :
-	public GameObject
-{
-public:
-	PlayerBullet();
-	~PlayerBullet();
+namespace CaptainEverythingParallel {
+	using namespace MasterEngine::LibParallel;
+	class PlayerBullet :
+		public GameObject
+	{
+	public:
+		PlayerBullet();
+		~PlayerBullet();
 
-	void update() override;
-	void OnCollision(GameObject* collider) override;
+		void update() override;
+		void OnCollision(GameObject* collider) override;
 
-private:
-	int size_;
-};
-
+	private:
+		int size_;
+	};
+}

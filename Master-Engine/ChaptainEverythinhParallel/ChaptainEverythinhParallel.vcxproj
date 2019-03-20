@@ -162,7 +162,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="Spawner.h" />
-    <ClInclude Include="SpriteIndexes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackgroundElement.cpp" />
@@ -183,6 +182,9 @@
     <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CaptainEverythingShared\CaptainEverythingShared.vcxproj">
+      <Project>{af4279ac-7545-41d5-b443-3e2ea6c683e9}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MasterEngineLibParallel\MasterEngineLibParallel.vcxproj">
       <Project>{b2102de5-b696-453b-9867-16fe5da25f07}</Project>
     </ProjectReference>
