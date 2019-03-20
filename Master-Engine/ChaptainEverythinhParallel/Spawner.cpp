@@ -29,7 +29,7 @@ namespace CaptainEverythingParallel {
 
 	void Spawner::start_up()
 	{
-		for (int i = 0; i < 1000; i++)
+		for (int i = 0; i < 50; i++)
 		{
 			;
 			GameEngine::Instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((70 * i) % Renderer::get_window_size()->x),(float)((30 * i) % Renderer::get_window_size()->y) });

@@ -13,7 +13,7 @@ namespace MasterEngine {
 		using namespace LibShared;
 
 		unsigned long long GameEngine::incremental_id_{};
-		std::unordered_set<GameObject*> GameEngine::game_objects_{};
+		std::vector<GameObject*> GameEngine::game_objects_{};
 		std::unordered_set<GameObject*> GameEngine::collision_game_objects_{};
 		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects_{};
 		std::vector<float> GameEngine::delta_list_{};
@@ -112,7 +112,7 @@ namespace MasterEngine {
 		void GameEngine::add_game_object(GameObject* game_object)
 		{
 			std::unique_lock<std::mutex> lock(add_game_object_mutex_);
-			game_objects_.insert(game_object);
+			game_objects_.emplace_back(game_object);
 		}
 
 		void GameEngine::add_collider(GameObject* game_object)
@@ -133,7 +133,7 @@ namespace MasterEngine {
 			destroyed_game_objects_.insert(game_object);
 		}
 
-		std::unordered_set<GameObject*>& GameEngine::get_gamestate()
+		std::vector<GameObject*>& GameEngine::get_gamestate()
 		{
 			return game_objects_;
 		}

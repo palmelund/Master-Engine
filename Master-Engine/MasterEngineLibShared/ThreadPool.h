@@ -34,10 +34,12 @@ namespace MasterEngine {
 
 			static std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
-			static std::atomic<int> working_threads_;
+			static int working_threads_;
 			static std::atomic<int> thread_count_;
 
 			static bool terminate_;
+
+			static std::mutex inc_dec_lock_;
 		};
 
 		/*template <typename CONTAINER>

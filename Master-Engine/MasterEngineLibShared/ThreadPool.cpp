@@ -19,11 +19,12 @@ namespace MasterEngine {
 
 		std::map<std::function<void()>, std::vector<std::function<void()>>*> ThreadPool::barred_functions_{};
 
-		std::atomic<int> ThreadPool::working_threads_ = 0;
+		int ThreadPool::working_threads_ = 0;
 
 		std::atomic<int> ThreadPool::thread_count_{};
 
 		bool ThreadPool::terminate_ = false;
+		std::mutex ThreadPool::inc_dec_lock_{};
 
 		void ThreadPool::CreateThreadPool()
 		{
@@ -98,20 +99,27 @@ namespace MasterEngine {
 
 					condition.wait(lock, [] {return !JobQueue.empty() || terminate_; });
 
-					if(terminate_)
+					if (terminate_)
 					{
+						--working_threads_;
 						return;
 					}
 
 					Job = JobQueue.front();
 					JobQueue.pop();
+
+					{
+						std::lock_guard<std::mutex> lock2(inc_dec_lock_);
+						++working_threads_;
+					}
 				}
 
-				++working_threads_;
 				Job(); // function<void()> type
+
+				std::lock_guard<std::mutex> lock(inc_dec_lock_);
 				--working_threads_;
 
-				if(working_threads_ == 0)
+				if (working_threads_ == 0)
 				{
 					condition_done.notify_one();
 				}
