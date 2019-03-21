@@ -7,6 +7,7 @@ namespace MasterEngine {
 
 		Collider::Collider(sf::Vector2f localPosition, sf::Vector2f size)
 		{
+			owner_ = nullptr;
 			LocalPosition = localPosition;
 			Size = size;
 		}

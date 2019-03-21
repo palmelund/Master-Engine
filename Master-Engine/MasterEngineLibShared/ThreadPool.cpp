@@ -6,25 +6,25 @@
 #include "ThreadPool.h"
 #include <map>
 #include <numeric>
+#include <condition_variable>
 
 namespace MasterEngine {
 	namespace LibShared {
 
-		std::queue<std::function<void()>> ThreadPool::JobQueue{};
-		std::vector<std::thread> ThreadPool::Pool{};
+		
 
-		std::mutex ThreadPool::Queue_Mutex{};
-		std::condition_variable ThreadPool::condition{};
-		std::condition_variable ThreadPool::condition_done{};
+		ThreadPool::ThreadPool()
+		{
+			JobQueue = {};
+			Pool = {};
+			barred_functions_ = {};
+			working_threads_ = 0;
+			thread_count_ = {};
+			terminate_ = false;
+		}
 
-		std::map<std::function<void()>, std::vector<std::function<void()>>*> ThreadPool::barred_functions_{};
-
-		std::atomic<int> ThreadPool::working_threads_ = 0;
-
-		std::atomic<int> ThreadPool::thread_count_{};
-
-		bool ThreadPool::terminate_ = false;
-		std::mutex ThreadPool::inc_dec_lock_{};
+		ThreadPool::~ThreadPool()
+		= default;
 
 		void ThreadPool::CreateThreadPool()
 		{
@@ -32,7 +32,7 @@ namespace MasterEngine {
 
 			for (int ii = 0; ii < thread_count_; ii++)
 			{
-				Pool.emplace_back(InfiniteLoop);
+				Pool.emplace_back(std::bind(&ThreadPool::InfiniteLoop, this));
 			}
 		}
 
@@ -71,10 +71,10 @@ namespace MasterEngine {
 				JobQueue.push(barrier);
 				barred_functions_[barrier] = functions;
 			}
-			condition.notify_one();*/
+			condition.notify_one();**/
 		}
 
-		int ThreadPool::thread_count() noexcept
+		int ThreadPool::thread_count() const noexcept
 		{
 			return thread_count_;
 		}
@@ -101,7 +101,7 @@ namespace MasterEngine {
 					{
 						condition_done.notify_one();
 					}
-					condition.wait(lock, [] {return !JobQueue.empty() || terminate_; });
+					condition.wait(lock, [this] {return !JobQueue.empty() || terminate_; });
 
 					if (terminate_)
 					{

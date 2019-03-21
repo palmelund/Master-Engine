@@ -5,6 +5,7 @@
 #include <queue>
 #include <unordered_set>
 #include <set>
+#include "../MasterEngineLibShared/ThreadPool.h"
 
 namespace MasterEngine
 {
@@ -45,6 +46,7 @@ namespace MasterEngine
 			static std::mutex add_game_object_mutex_;
 			static std::mutex remove_game_object_mutex_;
 			static std::mutex modify_collision_mutex_;
+			static ThreadPool thread_pool_;
 		};
 	}
 }

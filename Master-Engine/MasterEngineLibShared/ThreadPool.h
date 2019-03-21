@@ -11,35 +11,35 @@ namespace MasterEngine {
 		class ThreadPool
 		{
 		public:
-			ThreadPool() = delete;
-			~ThreadPool() = delete;
+			ThreadPool();
+			~ThreadPool();
 
-			static void CreateThreadPool();
-			static void ClearThreadPool();
-			static void AddJob(std::function<void()>);
-			static void AddJobWithBarrier(std::function<void()>, std::vector<std::function<void()>>* functions);
+			void CreateThreadPool();
+			void ClearThreadPool();
+			void AddJob(std::function<void()>);
+			void AddJobWithBarrier(std::function<void()>, std::vector<std::function<void()>>* functions);
 			/*template<typename CONTAINER>
 			static void AddJob(const CONTAINER& container);*/
-			static std::condition_variable condition_done;
-			static std::mutex Queue_Mutex;
-			static std::queue<std::function<void()>> JobQueue;
+			std::condition_variable condition_done;
+			std::mutex Queue_Mutex;
+			std::queue<std::function<void()>> JobQueue;
 
-			static int thread_count() noexcept;
-			static void terminate();
+			int thread_count() const noexcept;
+			void terminate();
 
-			static std::atomic<int> working_threads_;
+			std::atomic<int> working_threads_;
 		private:
-			static void InfiniteLoop();
-			static std::condition_variable condition;
-			static std::vector<std::thread> Pool;
+			void InfiniteLoop();
+			std::condition_variable condition;
+			std::vector<std::thread> Pool;
 
-			static std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
+			std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
-			static std::atomic<int> thread_count_;
+			std::atomic<int> thread_count_;
 
-			static bool terminate_;
+			bool terminate_;
 
-			static std::mutex inc_dec_lock_;
+			std::mutex inc_dec_lock_;
 		};
 
 		/*template <typename CONTAINER>

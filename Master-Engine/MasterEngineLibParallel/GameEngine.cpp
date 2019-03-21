@@ -21,13 +21,14 @@ namespace MasterEngine {
 		std::mutex GameEngine::add_game_object_mutex_{};
 		std::mutex GameEngine::remove_game_object_mutex_{};
 		std::mutex GameEngine::modify_collision_mutex_{};
+		ThreadPool GameEngine::thread_pool_{};
 
 		void GameEngine::init()
 		{
 #ifdef LOG_DELTA_TIMES
 			delta_list_ = std::vector<float>{};
 #endif
-			ThreadPool::CreateThreadPool();
+			thread_pool_.CreateThreadPool();
 			Time::StartUp();
 
 		}
@@ -68,22 +69,22 @@ namespace MasterEngine {
 				Input::process_input();
 
 				for (GameObject* object : get_gamestate()) {
-					ThreadPool::AddJob(std::bind(&GameObject::update, object));
+					thread_pool_.AddJob(std::bind(&GameObject::update, object));
 				}
 				{
-					std::unique_lock<std::mutex> lock(ThreadPool::Queue_Mutex);
-					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty() && ThreadPool::working_threads_ == 0; });
+					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
 				}
 
 				for (GameObject* object : collision_game_objects_) {
 					//object->collision_check();
-					ThreadPool::AddJob(std::bind(&GameObject::collision_check, object));
+					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
 				}
 
 				{
-					std::unique_lock<std::mutex> lock(ThreadPool::Queue_Mutex);
-					ThreadPool::condition_done.wait(lock, [] {return ThreadPool::JobQueue.empty() && ThreadPool::working_threads_ == 0; });
-					std::cout << ThreadPool::working_threads_ << std::endl;
+					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
+					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
 				for (GameObject* game_object : get_destroyid_game_object())
@@ -95,7 +96,7 @@ namespace MasterEngine {
 				Renderer::render();
 			}
 
-			ThreadPool::terminate();
+			thread_pool_.terminate();
 			
 		}
 
