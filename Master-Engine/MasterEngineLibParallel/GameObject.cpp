@@ -141,8 +141,12 @@ namespace MasterEngine {
 				{
 					continue;
 				}
-				for (Collider* myCollider : get_colliders()) {
-					for (Collider* collider : colliders->get_colliders()) {
+//				for (Collider* myCollider : get_colliders()) {
+				for(int j = 0; j < get_colliders().size(); j++) {
+					auto* myCollider = get_colliders()[j];
+//					for (Collider* collider : colliders->get_colliders()) {
+					for(int k = 0; k < colliders->get_colliders().size(); k++) {
+						auto* collider = colliders->get_colliders()[k];
 						if (Collider::ColliderOverLap(myCollider->get_collider(), collider->get_collider()))
 						{
 							collisiondetected = colliders;

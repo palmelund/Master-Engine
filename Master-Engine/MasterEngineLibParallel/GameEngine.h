@@ -38,7 +38,7 @@ namespace MasterEngine
 			static unsigned long long incremental_id_;
 			static std::vector<GameObject*> game_objects_;
 			static std::unordered_set<GameObject*> destroyed_game_objects_;
-			static std::unordered_set<GameObject*> collision_game_objects_;
+			static std::vector<GameObject*> collision_game_objects_;
 #ifdef LOG_DELTA_TIMES
 			static std::vector<float> delta_list_;
 #endif

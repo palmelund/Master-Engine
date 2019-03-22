@@ -15,7 +15,7 @@ namespace MasterEngine {
 
 		unsigned long long GameEngine::incremental_id_{};
 		std::vector<GameObject*> GameEngine::game_objects_{};
-		std::unordered_set<GameObject*> GameEngine::collision_game_objects_{};
+		std::vector<GameObject*> GameEngine::collision_game_objects_{};
 		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects_{};
 		std::vector<float> GameEngine::delta_list_{};
 
@@ -69,7 +69,11 @@ namespace MasterEngine {
 
 				Input::process_input();
 
-				for (GameObject* object : get_gamestate()) {
+				//for (GameObject* object : get_gamestate()) {
+				auto& game_state = get_gamestate();
+				for (auto i = 0; i < game_state.size(); i++) {
+					auto* object = game_state[i];
+
 					thread_pool_.AddJob(std::bind(&GameObject::update, object));
 				}
 				{
@@ -77,8 +81,10 @@ namespace MasterEngine {
 					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
 				}
 
-				for (GameObject* object : collision_game_objects_) {
-					//object->collision_check();
+				//for (GameObject* object : collision_game_objects_) {
+				for (auto i = 0; i < collision_game_objects_.size(); i++) {
+				//object->collision_check();
+					auto* object = collision_game_objects_[i];
 					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
 				}
 
@@ -88,9 +94,14 @@ namespace MasterEngine {
 					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
-				for (GameObject* game_object : get_destroyid_game_object())
+				/*for (int i = 0; i < destroyed_game_objects_.size(); i++)
 				{
-					delete game_object;
+					delete destroyed_game_objects_[i];
+				}*/
+
+				for (auto* go : destroyed_game_objects_)
+				{
+					delete go;
 				}
 				get_destroyid_game_object().clear();
 
@@ -133,13 +144,13 @@ namespace MasterEngine {
 		void GameEngine::add_collider(GameObject* game_object)
 		{
 			std::unique_lock<std::mutex> lock(modify_collision_mutex_);
-			collision_game_objects_.insert(game_object);
+			collision_game_objects_.emplace_back(game_object);
 		}
 
 		void GameEngine::remove_collider(GameObject* game_object)
 		{
 			std::unique_lock<std::mutex> lock(modify_collision_mutex_);
-			collision_game_objects_.erase(game_object);
+			collision_game_objects_.erase(std::find(collision_game_objects_.begin(), collision_game_objects_.end(), game_object));
 		}
 
 		void GameEngine::remove_game_object(GameObject* game_object)

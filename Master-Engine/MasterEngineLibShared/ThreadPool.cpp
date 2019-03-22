@@ -105,7 +105,7 @@ namespace MasterEngine {
 				}
 
 				Job(); // function<void()> type
-
+				
 				--working_threads_;
 
 				

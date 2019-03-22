@@ -26,7 +26,7 @@ namespace MasterEngine {
 
 			void terminate();
 
-			std::atomic<int> working_threads_;
+			std::atomic_int working_threads_;
 		private:
 			void InfiniteLoop();
 			std::condition_variable condition;
