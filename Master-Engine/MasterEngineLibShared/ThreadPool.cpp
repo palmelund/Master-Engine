@@ -15,11 +15,7 @@ namespace MasterEngine {
 
 		ThreadPool::ThreadPool()
 		{
-			JobQueue = {};
-			Pool = {};
-			barred_functions_ = {};
 			working_threads_ = 0;
-			thread_count_ = {};
 			terminate_ = false;
 		}
 
@@ -28,9 +24,9 @@ namespace MasterEngine {
 
 		void ThreadPool::CreateThreadPool()
 		{
-			thread_count_ = std::thread::hardware_concurrency();
+			const auto thread_count = std::thread::hardware_concurrency();
 
-			for (int ii = 0; ii < thread_count_; ii++)
+			for (int ii = 0; ii < thread_count; ii++)
 			{
 				Pool.emplace_back(std::bind(&ThreadPool::InfiniteLoop, this));
 			}
@@ -64,20 +60,15 @@ namespace MasterEngine {
 			condition.notify_one();
 		}
 
-		void ThreadPool::AddJobWithBarrier(std::function<void()> barrier, std::vector<std::function<void()>>* functions)
-		{
-			/*{
-				std::unique_lock<std::mutex> lock(Queue_Mutex);
-				JobQueue.push(barrier);
-				barred_functions_[barrier] = functions;
-			}
-			condition.notify_one();**/
-		}
-
-		int ThreadPool::thread_count() const noexcept
-		{
-			return thread_count_;
-		}
+		//void ThreadPool::AddJobWithBarrier(std::function<void()> barrier, std::vector<std::function<void()>>* functions)
+		//{
+		//	/*{
+		//		std::unique_lock<std::mutex> lock(Queue_Mutex);
+		//		JobQueue.push(barrier);
+		//		barred_functions_[barrier] = functions;
+		//	}
+		//	condition.notify_one();**/
+		//}
 
 		void ThreadPool::terminate()
 		{

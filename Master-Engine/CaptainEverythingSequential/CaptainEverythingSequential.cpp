@@ -6,6 +6,8 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "Spawner.h"
 #include "../MasterEngineLibSequential/ResourceManager.h"
+#include "../CaptainEverythingShared/Constants.h"
+#include "../CaptainEverythingShared/SpriteIndexes.h"
 
 using namespace MasterEngine::LibSequential;
 using namespace CaptainEverythingSequential;
@@ -16,8 +18,8 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	Renderer::init("Master Engine", 800, 500);
-	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), 200, 200);
+	Renderer::init("Master Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
+	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
 
 	GameEngine::init();
 	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });

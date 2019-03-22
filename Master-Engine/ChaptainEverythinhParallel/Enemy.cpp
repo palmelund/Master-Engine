@@ -6,14 +6,15 @@
 #include "EnemyBullet.h"
 #include <mutex>
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
 
 	Enemy::Enemy() : GameObject(false)
 	{
-		size_ = 20;
-		fire_rate_ = 1.3;
+		size_ = ENEMY_SIZE;
+		fire_rate_ = ENEMY_FIRE_RATE;
 		internal_timer = 0;
 		GameObject::set_velocity(sf::Vector2f{ -100.0f, 0.0f });
 		GameObject::set_sprite(ENEMY_SPRITE);

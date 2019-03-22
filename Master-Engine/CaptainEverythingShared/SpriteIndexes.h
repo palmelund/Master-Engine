@@ -2,6 +2,9 @@
 
 namespace CaptainEverythingShared
 {
+#define SPRITE_WIDTH 200
+#define SPRITE_HEIGHT 200
+
 #define PLAYER_SPRITE 0
 #define ENEMY_SPRITE 1
 #define GRAVITY_WELL_SPRITE 2

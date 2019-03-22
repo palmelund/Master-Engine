@@ -7,6 +7,7 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "Spawner.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingSequential {
 	using namespace CaptainEverythingShared;
@@ -14,7 +15,7 @@ namespace CaptainEverythingSequential {
 
 	PlayerBullet::PlayerBullet() : GameObject(true)
 	{
-		size_ = 20;
+		size_ = PLAYER_BULLET_SIZE;
 	M_Transform:; set_velocity(sf::Vector2f{ 300.0f, 0.0f });
 		GameObject::set_sprite(BULLET_SPRITE);
 		GameObject::set_size(size_, size_);

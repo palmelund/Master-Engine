@@ -7,6 +7,7 @@
 #include "BossShield.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingSequential {
 	using namespace CaptainEverythingShared;
@@ -14,8 +15,8 @@ namespace CaptainEverythingSequential {
 
 	Boss::Boss() : GameObject(true)
 	{
-		size_ = 50;
-		shield_amount_ = 3;
+		size_ = BOSS_SIZE;
+		shield_amount_ = BOSS_SHIELD_COUNT;
 		GameObject::set_velocity(sf::Vector2f{ 0.0f, 100.0f });
 		GameObject::set_sprite(BOSS_SPRITE);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));

@@ -17,14 +17,13 @@ namespace MasterEngine {
 			void CreateThreadPool();
 			void ClearThreadPool();
 			void AddJob(std::function<void()>);
-			void AddJobWithBarrier(std::function<void()>, std::vector<std::function<void()>>* functions);
+			//void AddJobWithBarrier(std::function<void()>, std::vector<std::function<void()>>* functions);
 			/*template<typename CONTAINER>
 			static void AddJob(const CONTAINER& container);*/
 			std::condition_variable condition_done;
 			std::mutex Queue_Mutex;
 			std::queue<std::function<void()>> JobQueue;
 
-			int thread_count() const noexcept;
 			void terminate();
 
 			std::atomic<int> working_threads_;
@@ -33,13 +32,9 @@ namespace MasterEngine {
 			std::condition_variable condition;
 			std::vector<std::thread> Pool;
 
-			std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
+			// std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
-			std::atomic<int> thread_count_;
-
 			bool terminate_;
-
-			std::mutex inc_dec_lock_;
 		};
 
 		/*template <typename CONTAINER>

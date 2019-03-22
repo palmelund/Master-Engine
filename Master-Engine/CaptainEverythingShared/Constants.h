@@ -1,0 +1,34 @@
+#pragma once
+
+namespace CaptainEverythingShared
+{
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 500
+
+#define BACKGROUND_ELEMENT_COUNT 300
+#define BOSS_SPAWN_THRESHOLD 50
+
+#define PLAYER_BULLET_SIZE 20
+#define PLAYER_SIZE 20
+#define PLAYER_SPEED 900.0f
+#define PLAYER_FIRE_RATE 0.3f
+
+#define GRAVITY_WELL_SIZE 160
+#define GRAVITY_WELL_PULL_FORCE 1.0f
+
+#define ENEMY_BULLET_SIZE 20
+#define ENEMY_SIZE 20
+#define ENEMY_FIRE_RATE 1.3f
+
+#define BOSS_SHIELD_DISTANCE 75.0f
+#define BOSS_SHIELD_SPEED 100
+#define BOSS_SHIELD_SIZE 50
+
+#define BOSS_SIZE 50
+#define BOSS_SHIELD_COUNT 3
+
+#define BACKGROUND_ELEMENT_SIZE 20
+
+#define ENEMY_SPAWN_TIME 0.8f
+
+}

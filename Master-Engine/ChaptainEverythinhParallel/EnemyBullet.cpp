@@ -4,13 +4,14 @@
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
 
 	EnemyBullet::EnemyBullet() : GameObject(false)
 	{
-		size_ = 20;
+		size_ = ENEMY_BULLET_SIZE;
 		GameObject::set_velocity(sf::Vector2f{ -300.0f, 0.0f });
 		GameObject::set_sprite(BULLET_SPRITE);
 		GameObject::set_size(size_, size_);

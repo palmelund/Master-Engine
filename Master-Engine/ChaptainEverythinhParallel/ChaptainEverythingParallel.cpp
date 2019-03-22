@@ -6,14 +6,16 @@
 #include "../MasterEngineLibParallel/GameEngine.h"
 #include "../MasterEngineLibParallel/ResourceManager.h"
 #include "../MasterEngineLibParallel/Renderer.h"
+#include "../CaptainEverythingShared/Constants.h"
+#include "../CaptainEverythingShared/SpriteIndexes.h"
 
 using namespace MasterEngine::LibParallel;
 using namespace CaptainEverythingParallel;
 
 int main()
 {
-	Renderer::init("Master Engine", 800, 500);
-	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), 200, 200);
+	Renderer::init("Master Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
+	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
 
 	GameEngine::init();
 	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });

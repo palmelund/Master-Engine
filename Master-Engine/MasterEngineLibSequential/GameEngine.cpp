@@ -4,6 +4,7 @@
 #include "../MasterEngineLibSequential/Renderer.h"
 #include "../MasterEngineLibShared/Input.h"
 #include <iostream>
+#include <numeric>
 
 namespace MasterEngine {
 	namespace LibSequential {
@@ -76,6 +77,17 @@ namespace MasterEngine {
 
 				Renderer::render();
 			}
+
+#ifdef LOG_DELTA_TIMES
+			const auto total_time = std::accumulate(delta_list_.begin(), delta_list_.end(), 0.0f);
+			const auto total_frames = delta_list_.size();
+			const auto frames_over_time = total_frames / total_time;
+
+			std::cout << "Total time: " << total_time << std::endl;
+			std::cout << "Total frames: " << total_frames << std::endl;
+			std::cout << "Total Frames/second: " << frames_over_time << std::endl;
+
+#endif
 		}
 
 		unsigned long long GameEngine::get_new_id()

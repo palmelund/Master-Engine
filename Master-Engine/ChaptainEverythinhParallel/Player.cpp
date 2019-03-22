@@ -6,18 +6,19 @@
 #include "PlayerBullet.h"
 #include "Spawner.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
 
 	Player::Player() : GameObject(true)
 	{
-		size_ = 20;
+		size_ = PLAYER_SIZE;
 		GameObject::set_sprite(PLAYER_SPRITE);
 		GameObject::set_size(size_, size_);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
-		speed = 900;
-		fire_rate_ = 0.3f;
+		speed = PLAYER_SPEED;
+		fire_rate_ = PLAYER_FIRE_RATE;
 	}
 
 

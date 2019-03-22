@@ -4,6 +4,7 @@
 #include "../MasterEngineLibParallel/Renderer.h"
 #include "BackgroundElement.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
@@ -11,7 +12,7 @@ namespace CaptainEverythingParallel {
 
 	BackgroundElement::BackgroundElement() : GameObject(true)
 	{
-		size_ = 20;
+		size_ = BACKGROUND_ELEMENT_SIZE;
 		GameObject::set_velocity(sf::Vector2f{ 50.0f, -90.0f });
 		GameObject::set_sprite(BACKGROUND_SPRITE);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));

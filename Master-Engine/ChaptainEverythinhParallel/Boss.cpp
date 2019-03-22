@@ -7,14 +7,15 @@
 #include "BossShield.h"
 #include <mutex>
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
 
 	Boss::Boss() : GameObject(true)
 	{
-		size_ = 50;
-		shield_amount_ = 3;
+		size_ = BOSS_SIZE;
+		shield_amount_ = BOSS_SHIELD_COUNT;
 		GameObject::set_velocity(sf::Vector2f{ 0.0f, 100.0f });
 		GameObject::set_sprite(BOSS_SPRITE);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));

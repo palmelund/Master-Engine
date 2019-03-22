@@ -8,6 +8,7 @@
 #include "BackgroundElement.h"
 #include "Boss.h"
 #include "GravityWell.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace CaptainEverythingParallel {
 
@@ -16,7 +17,7 @@ namespace CaptainEverythingParallel {
 	Spawner::Spawner() : GameObject(false)
 	{
 		internal_timer = 0;
-		spawn_time = 0.8f;
+		spawn_time = ENEMY_SPAWN_TIME;
 		spawn_position_ = 0.0f;
 		player_hits_ = 0;
 		enemy_kills_ = 0;
@@ -29,7 +30,7 @@ namespace CaptainEverythingParallel {
 
 	void Spawner::start_up()
 	{
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < BACKGROUND_ELEMENT_COUNT; i++)
 		{
 			;
 			GameEngine::Instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((70 * i) % Renderer::get_window_size()->x),(float)((30 * i) % Renderer::get_window_size()->y) });
@@ -49,7 +50,7 @@ namespace CaptainEverythingParallel {
 			spawn_position_ = int(spawn_position_) % (Renderer::get_window_size()->y - 30);
 			GameEngine::Instantiate(new Enemy(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, spawn_position_ });
 			spawn_count_++;
-			if (spawn_count_ > 50)
+			if (spawn_count_ > BOSS_SPAWN_THRESHOLD)
 			{
 				spawn_count_ = 0;
 				GameEngine::Instantiate(new Boss(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, Renderer::get_window_size()->y / 2.0f });
