@@ -4,9 +4,11 @@
 #include <mutex>
 #include <map>
 #include <atomic>
+#include <thread>
+#include "BaseWrapper.h"
 
 namespace MasterEngine {
-	namespace LibShared {
+	namespace LibAggregator {
 
 		class ThreadPool
 		{
@@ -27,11 +29,12 @@ namespace MasterEngine {
 			void terminate();
 
 			std::atomic_int working_threads_;
+
 		private:
 			void InfiniteLoop();
 			std::condition_variable condition;
 			std::vector<std::thread> Pool;
-
+			std::map<std::thread::id, std::map<void*, BaseWrapper>> deltas;
 			// std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
 			bool terminate_;

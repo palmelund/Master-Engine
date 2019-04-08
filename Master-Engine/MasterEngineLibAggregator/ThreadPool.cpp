@@ -5,11 +5,9 @@
 #include <mutex>
 #include "ThreadPool.h"
 #include <map>
-#include <numeric>
-#include <condition_variable>
 
 namespace MasterEngine {
-	namespace LibShared {
+	namespace LibAggregator {
 
 		
 
@@ -17,6 +15,7 @@ namespace MasterEngine {
 		{
 			working_threads_ = 0;
 			terminate_ = false;
+			deltas = {};
 		}
 
 		ThreadPool::~ThreadPool()
@@ -29,6 +28,7 @@ namespace MasterEngine {
 			for (int ii = 0; ii < thread_count; ii++)
 			{
 				Pool.emplace_back(std::bind(&ThreadPool::InfiniteLoop, this));
+				deltas[Pool[ii].get_id()] = {};
 			}
 		}
 

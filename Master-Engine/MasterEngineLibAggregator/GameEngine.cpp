@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "../MasterEngineLibShared/Input.h"
 #include <iostream>
-#include "../MasterEngineLibShared/ThreadPool.h"
+#include "ThreadPool.h"
 #include "GameObject.h"
 #include <numeric>
 

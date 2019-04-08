@@ -5,7 +5,7 @@
 #include <queue>
 #include <unordered_set>
 #include <set>
-#include "../MasterEngineLibShared/ThreadPool.h"
+#include "ThreadPool.h"
 
 namespace MasterEngine
 {
