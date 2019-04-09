@@ -37,7 +37,6 @@ namespace CaptainEverythingAggregator {
 
 	void Boss::update()
 	{
-		std::unique_lock<std::mutex> lock(GameObject::velocity_modify_mutex);
 		sf::Vector2f velocity = GameObject::get_velocity();
 		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::DeltaTime()), GameObject::get_position().y + (velocity.y * Time::DeltaTime()) });
 		if (GameObject::get_position().y < 50)

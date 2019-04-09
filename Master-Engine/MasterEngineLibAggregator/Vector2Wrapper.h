@@ -1,20 +1,24 @@
 #pragma once
-#include "BaseWrapper.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 
-class Vector2Wrapper : public BaseWrapper
+class Vector2Wrapper
 {
 public:
-	Vector2Wrapper(void*);
+	Vector2Wrapper();
 	~Vector2Wrapper();
 
 	void operator+=(const sf::Vector2f& rhs);
 
-	void reduce(void*) override;
-	void merge() override;
+	void operator=(const sf::Vector2f& rhs);
+
+	void assign(const sf::Vector2f& rhs, int priority);
+
+	const sf::Vector2f get_vector();
+
+	void set_vector(sf::Vector2f);
 private:
-	std::vector<sf::Vector2f> additions;
-	sf::Vector2f value;
+	sf::Vector2f value_;
+
 };
 

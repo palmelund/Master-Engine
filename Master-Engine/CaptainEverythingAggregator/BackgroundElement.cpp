@@ -29,7 +29,6 @@ namespace CaptainEverythingAggregator {
 
 	void BackgroundElement::update()
 	{
-		std::unique_lock<std::mutex> lock(GameObject::velocity_modify_mutex);
 		sf::Vector2f position = GameObject::get_position();
 		sf::Vector2f velocity = GameObject::get_velocity();
 		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::DeltaTime()), position.y + (velocity.y * Time::DeltaTime()) });
@@ -58,7 +57,6 @@ namespace CaptainEverythingAggregator {
 	{
 		if (collider->get_tag() == Tags::Background)
 		{
-			std::unique_lock<std::mutex> lock(GameObject::velocity_modify_mutex);
 			sf::Vector2f position = GameObject::get_position();
 			sf::Vector2f col_position = collider->get_position();
 			sf::Vector2f velocity = GameObject::get_velocity();

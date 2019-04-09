@@ -2,11 +2,22 @@
 //
 
 #include "pch.h"
-#include <iostream>
+#include "../MasterEngineLibAggregator/GameEngine.h"
+#include "../CaptainEverythingShared/SpriteIndexes.h"
+#include "../MasterEngineLibAggregator/Renderer.h"
+#include "../CaptainEverythingShared/Constants.h"
+#include "../MasterEngineLibAggregator/ResourceManager.h"
+#include "Spawner.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	MasterEngine::LibAggregator::Renderer::init("Master Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
+	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
+
+	MasterEngine::LibAggregator::GameEngine::init();
+	MasterEngine::LibAggregator::GameEngine::Instantiate(new CaptainEverythingAggregator::Spawner(), sf::Vector2f{ 0,0 });
+
+	MasterEngine::LibAggregator::GameEngine::run();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

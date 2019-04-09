@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BaseWrapper.h" />
+    <ClInclude Include="BaseDelta.h" />
     <ClInclude Include="BatchDrawable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="GameEngine.h" />
@@ -158,9 +158,11 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vector2Delta.h" />
+    <ClInclude Include="Vector2Wrapper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseWrapper.cpp" />
+    <ClCompile Include="BaseDelta.cpp" />
     <ClCompile Include="BatchDrawable.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -174,6 +176,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ThreadPool.cpp" />
+    <ClCompile Include="Vector2Delta.cpp" />
+    <ClCompile Include="Vector2Wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MasterEngineLibShared\MasterEngineLibShared.vcxproj">

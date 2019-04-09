@@ -5,7 +5,7 @@
 #include <map>
 #include <atomic>
 #include <thread>
-#include "BaseWrapper.h"
+#include "BaseDelta.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -30,11 +30,14 @@ namespace MasterEngine {
 
 			std::atomic_int working_threads_;
 
+			static std::map<std::thread::id, std::map<void*, BaseDelta*>> deltas;
+			static std::vector<std::thread::id> threads_ids;
+			const unsigned thread_count = std::thread::hardware_concurrency();
 		private:
 			void InfiniteLoop();
 			std::condition_variable condition;
 			std::vector<std::thread> Pool;
-			std::map<std::thread::id, std::map<void*, BaseWrapper>> deltas;
+			
 			// std::map<std::function<void()>, std::vector<std::function<void()>>*> barred_functions_;
 			
 			bool terminate_;

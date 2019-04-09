@@ -12,7 +12,7 @@ namespace MasterEngine {
 		
 		GameObject::GameObject(const bool collision_code)
 			: sprite_pos_(-1), collision_code_(collision_code), id_(GameEngine::get_new_id()),
-			velocity_(sf::Vector2f{ 0, 0 }), tag_(Tags::Default), size_(Renderer::get_sprite_size())
+			velocity_(Vector2Wrapper{}), tag_(Tags::Default), size_(Renderer::get_sprite_size())
 		{
 			GameEngine::add_game_object(this);
 			if (collision_code)
@@ -66,7 +66,7 @@ namespace MasterEngine {
 
 		sf::Vector2f GameObject::get_position()
 		{
-			return position_;
+			return position_.get_vector();
 		}
 
 		Tags GameObject::get_tag()
@@ -164,7 +164,7 @@ namespace MasterEngine {
 
 		void GameObject::add_velocity(sf::Vector2f force)
 		{
-			velocity_ = sf::Vector2f{ velocity_.x + force.x, velocity_.y + force.y };
+			velocity_ += sf::Vector2f{  force.x, force.y };
 		}
 
 		void GameObject::set_velocity(sf::Vector2f velocity)
@@ -179,7 +179,7 @@ namespace MasterEngine {
 
 		sf::Vector2f GameObject::get_velocity()
 		{
-			return velocity_;
+			return velocity_.get_vector();
 		}
 
 		int GameObject::sprite_pos() const noexcept

@@ -9,13 +9,13 @@
 namespace MasterEngine {
 	namespace LibAggregator {
 
-		
+		std::vector<std::thread::id> ThreadPool::threads_ids{};
+		std::map<std::thread::id, std::map<void*, BaseDelta*>> ThreadPool::deltas{};
 
 		ThreadPool::ThreadPool()
 		{
 			working_threads_ = 0;
 			terminate_ = false;
-			deltas = {};
 		}
 
 		ThreadPool::~ThreadPool()
@@ -23,12 +23,12 @@ namespace MasterEngine {
 
 		void ThreadPool::CreateThreadPool()
 		{
-			const auto thread_count = std::thread::hardware_concurrency();
 
 			for (int ii = 0; ii < thread_count; ii++)
 			{
 				Pool.emplace_back(std::bind(&ThreadPool::InfiniteLoop, this));
 				deltas[Pool[ii].get_id()] = {};
+				threads_ids.emplace_back(Pool[ii].get_id());
 			}
 		}
 

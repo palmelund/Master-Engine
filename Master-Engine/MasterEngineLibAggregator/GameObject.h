@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Collider.h"
 #include <mutex>
+#include "Vector2Wrapper.h"
 
 namespace MasterEngine {
 	namespace LibShared {
@@ -63,20 +64,20 @@ namespace MasterEngine
 			sf::Vector2f get_velocity();
 
 			int sprite_pos() const noexcept;
-			std::mutex velocity_modify_mutex;
 
 		protected:
 			int sprite_pos_{};
+			Vector2Wrapper velocity_;
+			Vector2Wrapper position_ = Vector2Wrapper{};
 
 		private:
-			sf::Vector2f velocity_;
 			bool collision_code_;
 			unsigned long long id_;
 
 
 			std::vector<Collider*> colliders_ = std::vector<Collider*>{};
 			Tags tag_;
-			sf::Vector2f position_ = sf::Vector2f{ 0, 0 };
+			
 
 			bool draw_ = false;
 

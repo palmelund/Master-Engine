@@ -33,7 +33,7 @@ namespace MasterEngine
 
 			static std::vector<GameObject*>& get_gamestate();
 			static std::unordered_set<GameObject*>& get_destroyid_game_object();
-
+			static void mergelist(std::thread::id, std::thread::id);
 		private:
 			static unsigned long long incremental_id_;
 			static std::vector<GameObject*> game_objects_;
@@ -47,6 +47,8 @@ namespace MasterEngine
 			static std::mutex remove_game_object_mutex_;
 			static std::mutex modify_collision_mutex_;
 			static ThreadPool thread_pool_;
+
+			
 		};
 	}
 }

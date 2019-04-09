@@ -55,6 +55,7 @@ namespace CaptainEverythingAggregator {
 		{
 			return;
 		}
+		//TODO Could be change to use addition instead of assign
 		sf::Vector2f velocity = GameObject::get_velocity();
 		if (closes->get_position().y > GameObject::get_position().y)
 		{
@@ -73,7 +74,7 @@ namespace CaptainEverythingAggregator {
 			}
 			velocity.y -= speed * Time::DeltaTime();
 		}
-		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::DeltaTime()), GameObject::get_position().y + (velocity.y * Time::DeltaTime()) });
+		GameObject::position_ += sf::Vector2f{ (velocity.x * Time::DeltaTime()), (velocity.y * Time::DeltaTime()) };
 		GameObject::set_velocity(velocity);
 	}
 

@@ -69,43 +69,57 @@ namespace MasterEngine {
 
 				Input::process_input();
 
-				//for (GameObject* object : get_gamestate()) {
 				auto& game_state = get_gamestate();
 				for (auto i = 0; i < game_state.size(); i++) {
 					auto* object = game_state[i];
 
 					thread_pool_.AddJob(std::bind(&GameObject::update, object));
 				}
-				{
-					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
-				}
 
-				//for (GameObject* object : collision_game_objects_) {
 				for (auto i = 0; i < collision_game_objects_.size(); i++) {
-				//object->collision_check();
+
 					auto* object = collision_game_objects_[i];
 					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
 				}
 
+				Renderer::render();
+
 				{
+					//Wait for every thing to be done
 					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
 					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
 					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
-				/*for (int i = 0; i < destroyed_game_objects_.size(); i++)
+				//TODO Impement the aggregator step
+				unsigned reducesteps = thread_pool_.thread_count;
+				while (reducesteps != 1)
 				{
-					delete destroyed_game_objects_[i];
-				}*/
+					unsigned halffloor = reducesteps / 2;
+					unsigned halfroff = (reducesteps + 1) / 2;
 
+					for (auto i = 0; i < halffloor; i++) {
+						thread_pool_.AddJob(std::bind(&GameEngine::mergelist, ThreadPool::threads_ids[i], ThreadPool::threads_ids[i+ halfroff]));
+					}
+
+					{
+						std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
+						thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
+						//std::cout << ThreadPool::working_threads_ << std::endl;
+					}
+					reducesteps = halfroff;
+				}
+				for (auto delta : thread_pool_.deltas[ThreadPool::threads_ids[0]]) {
+					BaseDelta* object = delta.second;
+					thread_pool_.AddJob(std::bind(&BaseDelta::merge, object));
+				}
 				for (auto* go : destroyed_game_objects_)
 				{
 					delete go;
 				}
 				get_destroyid_game_object().clear();
 
-				Renderer::render();
+				
 			}
 
 			thread_pool_.terminate();
@@ -167,6 +181,23 @@ namespace MasterEngine {
 		std::unordered_set<GameObject*>& GameEngine::get_destroyid_game_object()
 		{
 			return destroyed_game_objects_;
+		}
+		void GameEngine::mergelist(std::thread::id deltas1, std::thread::id deltas2)
+		{
+			auto* delta_list1 = &MasterEngine::LibAggregator::ThreadPool::deltas[deltas1];
+
+			for (auto deltas : ThreadPool::deltas[deltas2])
+			{
+				if (delta_list1->find(deltas.first) != delta_list1->end())
+				{
+					delta_list1->at(deltas.first)->reduce(deltas.second);
+					//TODO should delete element in deltas2
+				}
+				else
+				{
+					delta_list1->insert(std::pair<void*, BaseDelta*>(deltas.first, deltas.second));
+				}
+			}
 		}
 	}
 }

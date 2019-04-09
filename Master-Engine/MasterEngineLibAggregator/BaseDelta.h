@@ -1,13 +1,12 @@
 #pragma once
-class BaseWrapper
+class BaseDelta
 {
 public:
-	BaseWrapper(void*);
-	~BaseWrapper();
+	BaseDelta();
+	~BaseDelta();
 
 	void virtual reduce(void*) = 0;
 	void virtual merge() = 0;
 private:
-	void* orginal_pointer_;
 };
 
