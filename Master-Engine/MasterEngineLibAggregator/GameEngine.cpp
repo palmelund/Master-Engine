@@ -113,6 +113,20 @@ namespace MasterEngine {
 					BaseDelta* object = delta.second;
 					thread_pool_.AddJob(std::bind(&BaseDelta::merge, object));
 				}
+				{
+					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
+					//std::cout << ThreadPool::working_threads_ << std::endl;
+				}
+				for (auto delta: ThreadPool::deltas[ThreadPool::threads_ids[0]])
+				{
+					delete delta.second;
+				}
+				for (std::thread::id ids : ThreadPool::threads_ids)
+				{
+					ThreadPool::deltas[ids].clear();
+				}
+
 				for (auto* go : destroyed_game_objects_)
 				{
 					delete go;
@@ -191,7 +205,7 @@ namespace MasterEngine {
 				if (delta_list1->find(deltas.first) != delta_list1->end())
 				{
 					delta_list1->at(deltas.first)->reduce(deltas.second);
-					//TODO should delete element in deltas2
+					delete deltas.second;
 				}
 				else
 				{

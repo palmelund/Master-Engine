@@ -5,6 +5,7 @@ Vector2Delta::Vector2Delta(Vector2Wrapper* org_pointer)
 {
 	orginal_value = org_pointer;
 	assign_priority_ = 0;
+	additions_ = {};
 }
 
 Vector2Delta::~Vector2Delta()
@@ -35,5 +36,10 @@ void Vector2Delta::reduce(void* pointer)
 void Vector2Delta::merge()
 {
 	Vector2Wrapper* wrapper = static_cast<Vector2Wrapper*>(orginal_value);
+	if (assign_priority_ > 0)
+	{
+		wrapper->set_vector(assign_);
+		return;
+	}
 	wrapper->set_vector(sf::Vector2f{ wrapper->get_vector().x + additions_.x, wrapper->get_vector().y + additions_.y });
 }
