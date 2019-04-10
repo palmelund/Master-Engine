@@ -56,8 +56,8 @@ namespace CaptainEverythingAggregator {
 				GameEngine::Instantiate(new Boss(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, Renderer::get_window_size()->y / 2.0f });
 			}
 		}
-		Renderer::draw_text("Kills: " + std::to_string(enemy_kills_), 10, 10, 20);
-		Renderer::draw_text("Damage: " + std::to_string(player_hits_), 10, 30, 20);
+		/*Renderer::draw_text("Kills: " + std::to_string(enemy_kills_), 10, 10, 20);
+		Renderer::draw_text("Damage: " + std::to_string(player_hits_), 10, 30, 20);*/
 	}
 
 	void Spawner::add_player_hit()

@@ -162,7 +162,7 @@ namespace MasterEngine {
 		void GameEngine::Instantiate(GameObject* game_object, sf::Vector2f position)
 		{
 			game_object->set_position(position,10);
-			game_object->start_up();
+			thread_pool_.AddJob(std::bind(&GameObject::start_up, game_object));
 		}
 
 		void GameEngine::add_game_object(GameObject* game_object)
