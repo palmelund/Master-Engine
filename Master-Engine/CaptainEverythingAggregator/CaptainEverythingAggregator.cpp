@@ -15,7 +15,6 @@ int main()
 	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
 
 	MasterEngine::LibAggregator::GameEngine::init();
-	MasterEngine::LibAggregator::GameEngine::Instantiate(new CaptainEverythingAggregator::Spawner(), sf::Vector2f{ 0,0 });
 
 	MasterEngine::LibAggregator::GameEngine::run();
 }

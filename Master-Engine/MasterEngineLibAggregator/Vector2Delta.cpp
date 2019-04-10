@@ -31,6 +31,7 @@ void Vector2Delta::reduce(void* pointer)
 {
 	Vector2Delta* target = static_cast<Vector2Delta*>(pointer);
 	addition(target->additions_);
+	assign(target->assign_, target->assign_priority_);
 }
 
 void Vector2Delta::merge()

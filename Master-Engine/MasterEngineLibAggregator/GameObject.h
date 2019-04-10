@@ -47,6 +47,7 @@ namespace MasterEngine
 
 
 			void set_position(sf::Vector2f);
+			void set_position(sf::Vector2f newposition, int priorety);
 			sf::Vector2f get_position();
 
 			void set_tag(LibShared::Tags);

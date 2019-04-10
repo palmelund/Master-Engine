@@ -64,6 +64,12 @@ namespace MasterEngine {
 			position_ = newposition;
 		}
 
+		void GameObject::set_position(sf::Vector2f newposition, int priorety)
+		{
+
+			position_.assign( newposition, priorety);
+		}
+
 		sf::Vector2f GameObject::get_position()
 		{
 			return position_.get_vector();

@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "GameObject.h"
 #include <numeric>
+#include "../CaptainEverythingAggregator/Spawner.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -32,6 +33,7 @@ namespace MasterEngine {
 			thread_pool_.CreateThreadPool();
 			Time::StartUp();
 
+			MasterEngine::LibAggregator::GameEngine::Instantiate(new CaptainEverythingAggregator::Spawner(), sf::Vector2f{ 0,0 });
 		}
 
 		void GameEngine::run()
@@ -159,7 +161,7 @@ namespace MasterEngine {
 
 		void GameEngine::Instantiate(GameObject* game_object, sf::Vector2f position)
 		{
-			game_object->set_position(position);
+			game_object->set_position(position,10);
 			game_object->start_up();
 		}
 
