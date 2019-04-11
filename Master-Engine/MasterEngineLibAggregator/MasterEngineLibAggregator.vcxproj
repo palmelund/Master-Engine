@@ -162,6 +162,8 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2Delta.h" />
     <ClInclude Include="Vector2Wrapper.h" />
+    <ClInclude Include="VectorDelta.h" />
+    <ClInclude Include="VectorWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseDelta.cpp" />
@@ -182,6 +184,8 @@
     <ClCompile Include="ThreadPool.cpp" />
     <ClCompile Include="Vector2Delta.cpp" />
     <ClCompile Include="Vector2Wrapper.cpp" />
+    <ClCompile Include="VectorDelta.cpp" />
+    <ClCompile Include="VectorWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MasterEngineLibShared\MasterEngineLibShared.vcxproj">
