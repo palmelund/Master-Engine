@@ -15,14 +15,11 @@ namespace MasterEngine {
 		using namespace LibShared;
 
 		unsigned long long GameEngine::incremental_id_{};
-		std::vector<GameObject*> GameEngine::game_objects_{};
-		std::vector<GameObject*> GameEngine::collision_game_objects_{};
+		VectorWrapper<GameObject*> GameEngine::game_objects_{};
+		VectorWrapper<GameObject*> GameEngine::collision_game_objects_{};
 		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects_{};
 		std::vector<float> GameEngine::delta_list_{};
 
-		std::mutex GameEngine::add_game_object_mutex_{};
-		std::mutex GameEngine::remove_game_object_mutex_{};
-		std::mutex GameEngine::modify_collision_mutex_{};
 		ThreadPool GameEngine::thread_pool_{};
 
 		void GameEngine::init()
@@ -78,9 +75,9 @@ namespace MasterEngine {
 					thread_pool_.AddJob(std::bind(&GameObject::update, object));
 				}
 
-				for (auto i = 0; i < collision_game_objects_.size(); i++) {
+				for (auto i = 0; i < collision_game_objects_.get_value().size(); i++) {
 
-					auto* object = collision_game_objects_[i];
+					GameObject* object = collision_game_objects_.get_value()[i];
 					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
 				}
 
@@ -129,12 +126,6 @@ namespace MasterEngine {
 					ThreadPool::deltas[ids].clear();
 				}
 
-				for (auto* go : destroyed_game_objects_)
-				{
-					delete go;
-				}
-				get_destroyid_game_object().clear();
-
 				
 			}
 
@@ -167,37 +158,34 @@ namespace MasterEngine {
 
 		void GameEngine::add_game_object(GameObject* game_object)
 		{
-			std::unique_lock<std::mutex> lock(add_game_object_mutex_);
-			game_objects_.emplace_back(game_object);
+			game_objects_ += (game_object);
 		}
 
 		void GameEngine::add_collider(GameObject* game_object)
 		{
-			std::unique_lock<std::mutex> lock(modify_collision_mutex_);
-			collision_game_objects_.emplace_back(game_object);
+			collision_game_objects_ += (game_object);
 		}
 
 		void GameEngine::remove_collider(GameObject* game_object)
 		{
-			std::unique_lock<std::mutex> lock(modify_collision_mutex_);
-			collision_game_objects_.erase(std::find(collision_game_objects_.begin(), collision_game_objects_.end(), game_object));
+			collision_game_objects_ -= game_object;
 		}
 
 		void GameEngine::remove_game_object(GameObject* game_object)
 		{
-			std::unique_lock<std::mutex> lock(remove_game_object_mutex_);
-			destroyed_game_objects_.insert(game_object);
+			game_objects_ -= game_object;
 		}
 
 		std::vector<GameObject*>& GameEngine::get_gamestate()
 		{
-			return game_objects_;
+			return game_objects_.get_value();
 		}
 
 		std::unordered_set<GameObject*>& GameEngine::get_destroyid_game_object()
 		{
 			return destroyed_game_objects_;
 		}
+
 		void GameEngine::mergelist(std::thread::id deltas1, std::thread::id deltas2)
 		{
 			auto* delta_list1 = &MasterEngine::LibAggregator::ThreadPool::deltas[deltas1];

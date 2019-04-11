@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <set>
 #include "ThreadPool.h"
+#include "VectorWrapper.h"
 
 namespace MasterEngine
 {
@@ -36,16 +37,12 @@ namespace MasterEngine
 			static void mergelist(std::thread::id, std::thread::id);
 		private:
 			static unsigned long long incremental_id_;
-			static std::vector<GameObject*> game_objects_;
+			static VectorWrapper<GameObject*> game_objects_;
 			static std::unordered_set<GameObject*> destroyed_game_objects_;
-			static std::vector<GameObject*> collision_game_objects_;
+			static VectorWrapper<GameObject*> collision_game_objects_;
 #ifdef LOG_DELTA_TIMES
 			static std::vector<float> delta_list_;
 #endif
-
-			static std::mutex add_game_object_mutex_;
-			static std::mutex remove_game_object_mutex_;
-			static std::mutex modify_collision_mutex_;
 			static ThreadPool thread_pool_;
 
 			

@@ -2,6 +2,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <vector>
 #include "GameObject.h"
+#include "VectorWrapper.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -28,7 +29,7 @@ namespace MasterEngine {
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 		private:
-			std::vector<GameObject*> drawable_objects_;
+			VectorWrapper<GameObject*> drawable_objects_;
 
 			sf::VertexArray vertices_;
 			sf::Texture texture_;

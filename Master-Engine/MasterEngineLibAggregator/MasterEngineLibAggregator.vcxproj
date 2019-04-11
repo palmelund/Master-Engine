@@ -184,8 +184,6 @@
     <ClCompile Include="ThreadPool.cpp" />
     <ClCompile Include="Vector2Delta.cpp" />
     <ClCompile Include="Vector2Wrapper.cpp" />
-    <ClCompile Include="VectorDelta.cpp" />
-    <ClCompile Include="VectorWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MasterEngineLibShared\MasterEngineLibShared.vcxproj">

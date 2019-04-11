@@ -31,25 +31,26 @@ namespace CaptainEverythingAggregator {
 	{
 		sf::Vector2f position = GameObject::get_position();
 		sf::Vector2f velocity = GameObject::get_velocity();
+		sf::Vector2f force = {0,0};
 		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::DeltaTime()), position.y + (velocity.y * Time::DeltaTime()) });
 		position = GameObject::get_position();
-		if (position.x < 0)
+		if (position.x < 0 && velocity.x < 0)
 		{
-			velocity.x = std::abs(velocity.x);
+			force.x =2*  std::abs(velocity.x);
 		}
-		else if (position.x > Renderer::get_window_size()->x - size_)
+		else if (position.x > Renderer::get_window_size()->x - size_ && velocity.x > 0)
 		{
-			velocity.x = -1 * std::abs(velocity.x);
+			force.x -=2*  std::abs(velocity.x);
 		}
-		if (position.y < 0)
+		if (position.y < 0 && velocity.y < 0)
 		{
-			velocity.y = std::abs(velocity.y);
+			force.y = 2* std::abs(velocity.y);
 		}
-		else if (position.y > Renderer::get_window_size()->y - size_)
+		else if (position.y > Renderer::get_window_size()->y - size_ && velocity.y > 0)
 		{
-			velocity.y = -1 * std::abs(velocity.y);
+			force.y -= 2* std::abs(velocity.y);
 		}
-		GameObject::set_velocity(velocity);
+		GameObject::velocity_ += (force);
 
 	}
 
@@ -60,6 +61,7 @@ namespace CaptainEverythingAggregator {
 			sf::Vector2f position = GameObject::get_position();
 			sf::Vector2f col_position = collider->get_position();
 			sf::Vector2f velocity = GameObject::get_velocity();
+			sf::Vector2f force = { 0,0 };
 			sf::Vector2f relative_position = sf::Vector2f{ (position.x + (size_ / 2)) - (col_position.x + (collider->get_width_size() / 2)),(position.y + (size_ / 2)) - (col_position.y + (collider->get_height_size() / 2)) };
 
 			if (std::abs(relative_position.x) > std::abs(relative_position.y))
@@ -82,7 +84,7 @@ namespace CaptainEverythingAggregator {
 				}
 				else
 				{
-					velocity.y = -1 * std::abs(velocity.y);
+					velocity.y = -1* std::abs(velocity.y);
 				}
 			}
 			GameObject::set_velocity(velocity);

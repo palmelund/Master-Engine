@@ -25,16 +25,16 @@ namespace MasterEngine {
 
 		void BatchDrawable::add(GameObject* game_object)
 		{
-			drawable_objects_.emplace_back(game_object);
+			drawable_objects_ += (game_object);
 		}
 
 		void BatchDrawable::remove(GameObject* game_object)
 		{
-			const auto it = std::find(drawable_objects_.begin(), drawable_objects_.end(), game_object);
+			const auto it = std::find(drawable_objects_.get_value().begin(), drawable_objects_.get_value().end(), game_object);
 
-			if (it != drawable_objects_.end())
+			if (it != drawable_objects_.get_value().end())
 			{
-				drawable_objects_.erase(it);
+				drawable_objects_ -= game_object;
 			}
 		}
 

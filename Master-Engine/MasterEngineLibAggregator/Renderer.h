@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include "GameObject.h"
 #include "BatchDrawable.h"
+#include "VectorWrapper.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -45,7 +46,7 @@ namespace MasterEngine {
 			static sf::Vector2i* window_size;
 
 			static sf::Font font_;
-			static std::vector<sf::Text> text_vector_;
+			static VectorWrapper<sf::Text> text_vector_;
 
 			static std::mutex modify_batch_mutex_;
 		};

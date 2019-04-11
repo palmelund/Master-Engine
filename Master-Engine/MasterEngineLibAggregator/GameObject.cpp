@@ -23,8 +23,6 @@ namespace MasterEngine {
 
 		GameObject::~GameObject()
 		{
-			auto& state = GameEngine::get_gamestate();
-			state.erase(std::find(state.begin(), state.end(), this));
 			unset_sprite();
 			for (Collider* collider : colliders_)
 			{

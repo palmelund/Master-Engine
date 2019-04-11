@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Renderer.h"
 #include "SFML/Graphics.hpp"
+#include "VectorWrapper.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -9,7 +10,7 @@ namespace MasterEngine {
 		sf::RenderWindow Renderer::window_{};
 		sf::Vector2i* Renderer::window_size{};
 		sf::Font Renderer::font_{};
-		std::vector<sf::Text> Renderer::text_vector_{};
+		VectorWrapper<sf::Text> Renderer::text_vector_{};
 		std::mutex Renderer::modify_batch_mutex_{};
 
 		void Renderer::init(std::string window_name, int width, int height)
@@ -32,7 +33,7 @@ namespace MasterEngine {
 			batch_drawable_.update();
 			window_.draw(batch_drawable_);
 
-			for (auto& text : text_vector_)
+			for (sf::Text& text : text_vector_.get_value())
 			{
 				window_.draw(text);
 			}
@@ -93,7 +94,7 @@ namespace MasterEngine {
 
 			text.setPosition(static_cast<float>(x_pos), static_cast<float>(y_pos));
 
-			text_vector_.emplace_back(text);
+			text_vector_ += text;
 		}
 	}
 }
