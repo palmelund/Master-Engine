@@ -54,6 +54,12 @@
     <ClInclude Include="Vector2Delta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IntDelta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -87,6 +93,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector2Delta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IntDelta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IntWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

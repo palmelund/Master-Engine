@@ -152,6 +152,8 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IntDelta.h" />
+    <ClInclude Include="IntWrapper.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -167,6 +169,8 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IntDelta.cpp" />
+    <ClCompile Include="IntWrapper.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="stdafx.cpp">

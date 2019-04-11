@@ -5,7 +5,7 @@ namespace CaptainEverythingShared
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 500
 
-#define BACKGROUND_ELEMENT_COUNT 300
+#define BACKGROUND_ELEMENT_COUNT 30
 #define BOSS_SPAWN_THRESHOLD 50
 
 #define PLAYER_BULLET_SIZE 20

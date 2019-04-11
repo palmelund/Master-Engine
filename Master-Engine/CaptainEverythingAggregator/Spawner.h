@@ -1,5 +1,6 @@
 #pragma once
 #include "../MasterEngineLibAggregator/GameObject.h"
+#include "../MasterEngineLibAggregator/IntWrapper.h"
 #include <mutex>
 
 namespace CaptainEverythingAggregator {
@@ -23,14 +24,11 @@ namespace CaptainEverythingAggregator {
 		static Spawner* single_ton_;
 
 		int spawn_count_;
-		int player_hits_;
-		int enemy_kills_;
+		IntWrapper player_hits_;
+		IntWrapper enemy_kills_;
 
 		float internal_timer;
 		float spawn_time;
 		float spawn_position_;
-
-		std::mutex player_hit_mutex_;
-		std::mutex enemy_hit_mutex_;
 	};
 }

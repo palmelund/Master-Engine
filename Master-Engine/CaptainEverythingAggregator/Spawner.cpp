@@ -23,6 +23,8 @@ namespace CaptainEverythingAggregator {
 		enemy_kills_ = 0;
 		spawn_count_ = 0;
 		Spawner::single_ton_ = this;
+		enemy_kills_ = {};
+		player_hits_ = {};
 	}
 
 
@@ -56,20 +58,18 @@ namespace CaptainEverythingAggregator {
 				GameEngine::Instantiate(new Boss(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, Renderer::get_window_size()->y / 2.0f });
 			}
 		}
-		/*Renderer::draw_text("Kills: " + std::to_string(enemy_kills_), 10, 10, 20);
-		Renderer::draw_text("Damage: " + std::to_string(player_hits_), 10, 30, 20);*/
+		/*Renderer::draw_text("Kills: " + std::to_string(enemy_kills_.get_value()), 10, 10, 20);
+		Renderer::draw_text("Damage: " + std::to_string(player_hits_.get_value()), 10, 30, 20);*/
 	}
 
 	void Spawner::add_player_hit()
 	{
-		std::unique_lock<std::mutex> lock(player_hit_mutex_);
-		player_hits_++;
+		player_hits_ += 1;
 	}
 
 	void Spawner::add_enemy_hit()
 	{
-		std::unique_lock<std::mutex> lock(enemy_hit_mutex_);
-		enemy_kills_++;
+		enemy_kills_+=1;
 	}
 
 	Spawner* Spawner::get_single_ton()

@@ -36,11 +36,10 @@ void Vector2Delta::reduce(void* pointer)
 
 void Vector2Delta::merge()
 {
-	Vector2Wrapper* wrapper = static_cast<Vector2Wrapper*>(orginal_value);
 	if (assign_priority_ > 0)
 	{
-		wrapper->set_vector(assign_);
+		orginal_value->set_vector(assign_);
 		return;
 	}
-	wrapper->set_vector(sf::Vector2f{ wrapper->get_vector().x + additions_.x, wrapper->get_vector().y + additions_.y });
+	orginal_value->set_vector(sf::Vector2f{ orginal_value->get_vector().x + additions_.x, orginal_value->get_vector().y + additions_.y });
 }
