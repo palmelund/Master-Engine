@@ -23,15 +23,11 @@ namespace MasterEngine {
 
 		GameObject::~GameObject()
 		{
-			unset_sprite();
 			for (Collider* collider : colliders_)
 			{
 				delete collider;
 			}
-			if (collision_code_)
-			{
-				GameEngine::remove_collider(this);
-			}
+			
 		}
 
 
@@ -109,6 +105,15 @@ namespace MasterEngine {
 		unsigned long long GameObject::get_id() const noexcept
 		{
 			return id_;
+		}
+
+		void GameObject::remove_gameobject()
+		{
+			unset_sprite();
+			if (collision_code_)
+			{
+				GameEngine::remove_collider(this);
+			}
 		}
 
 		void GameObject::start_up()

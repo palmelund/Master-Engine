@@ -61,7 +61,7 @@ public:
 			const auto element = std::find(value_.begin(), value_.end(), value[i]);
 			if (element != value_.end()) {
 				value_.erase(element);
-				delete value[i];
+				
 			}
 		}
 		

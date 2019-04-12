@@ -179,6 +179,7 @@ namespace MasterEngine {
 		void GameEngine::remove_game_object(GameObject* game_object)
 		{
 			game_objects_ -= game_object;
+			game_object->remove_gameobject();
 		}
 
 		std::vector<GameObject*>& GameEngine::get_gamestate()

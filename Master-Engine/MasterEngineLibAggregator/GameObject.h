@@ -30,6 +30,8 @@ namespace MasterEngine
 
 			unsigned long long get_id() const noexcept;
 
+			void remove_gameobject();
+
 			virtual void start_up();
 			virtual void update();
 			virtual void OnCollision(GameObject* collider);
