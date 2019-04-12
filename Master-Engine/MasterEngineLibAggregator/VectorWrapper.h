@@ -56,10 +56,13 @@ public:
 
 	void removes_vector(std::vector<T> value)
 	{
-		for(T element : value)
+		for(int i = 0; i < value.size(); i++)
 		{
-			delete element;
-			value_.erase(std::find(value_.begin(), value_.end(), element));
+			const auto element = std::find(value_.begin(), value_.end(), value[i]);
+			if (element != value_.end()) {
+				value_.erase(element);
+				delete value[i];
+			}
 		}
 		
 	}

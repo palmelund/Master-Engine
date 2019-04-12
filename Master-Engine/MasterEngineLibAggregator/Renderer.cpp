@@ -10,7 +10,7 @@ namespace MasterEngine {
 		sf::RenderWindow Renderer::window_{};
 		sf::Vector2i* Renderer::window_size{};
 		sf::Font Renderer::font_{};
-		VectorWrapper<sf::Text> Renderer::text_vector_{};
+		VectorWrapper<sf::Text*> Renderer::text_vector_{};
 		std::mutex Renderer::modify_batch_mutex_{};
 
 		void Renderer::init(std::string window_name, int width, int height)
@@ -33,9 +33,10 @@ namespace MasterEngine {
 			batch_drawable_.update();
 			window_.draw(batch_drawable_);
 
-			for (sf::Text& text : text_vector_.get_value())
+			for (sf::Text* text : text_vector_.get_value())
 			{
-				window_.draw(text);
+				window_.draw(*text);
+				text_vector_ -= text;
 			}
 			text_vector_.clear();
 
@@ -86,13 +87,13 @@ namespace MasterEngine {
 
 		void Renderer::draw_text(const std::string& txt, int x_pos, int y_pos, int size)
 		{
-			sf::Text text;
-			text.setFont(font_);
-			text.setString(txt);
-			text.setCharacterSize(size);
-			text.setFillColor(sf::Color::Magenta);
+			sf::Text* text = new sf::Text{};
+			text->setFont(font_);
+			text->setString(txt);
+			text->setCharacterSize(size);
+			text->setFillColor(sf::Color::Magenta);
 
-			text.setPosition(static_cast<float>(x_pos), static_cast<float>(y_pos));
+			text->setPosition(static_cast<float>(x_pos), static_cast<float>(y_pos));
 
 			text_vector_ += text;
 		}

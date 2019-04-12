@@ -46,7 +46,7 @@ namespace MasterEngine {
 			static sf::Vector2i* window_size;
 
 			static sf::Font font_;
-			static VectorWrapper<sf::Text> text_vector_;
+			static VectorWrapper<sf::Text*> text_vector_;
 
 			static std::mutex modify_batch_mutex_;
 		};

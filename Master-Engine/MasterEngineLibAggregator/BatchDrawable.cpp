@@ -41,13 +41,13 @@ namespace MasterEngine {
 
 		void BatchDrawable::update()
 		{
-			const auto size = static_cast<int>(drawable_objects_.size());
+			const auto size = static_cast<int>(drawable_objects_.get_value().size());
 			vertices_.resize(static_cast<size_t>(size) * 4);
 
 			for (auto i = 0; i < size; i++)
 			{
 				auto* quad = &vertices_[static_cast<size_t>(i) * 4];
-				const auto& game_object = drawable_objects_[i];
+				const auto& game_object = drawable_objects_.get_value()[i];
 
 				const auto pos = game_object->get_position();
 

@@ -30,7 +30,12 @@ namespace MasterEngine {
 			thread_pool_.CreateThreadPool();
 			Time::StartUp();
 
-			MasterEngine::LibAggregator::GameEngine::Instantiate(new CaptainEverythingAggregator::Spawner(), sf::Vector2f{ 0,0 });
+
+			CaptainEverythingAggregator::Spawner* spawner = new CaptainEverythingAggregator::Spawner();
+			MasterEngine::LibAggregator::GameEngine::Instantiate(spawner, sf::Vector2f{ 0,0 });
+			std::vector<GameObject*> container = {};
+			container.emplace_back(spawner);
+			game_objects_.adds_vector(container);
 		}
 
 		void GameEngine::run()
