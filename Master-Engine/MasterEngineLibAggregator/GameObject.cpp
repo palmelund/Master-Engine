@@ -114,6 +114,7 @@ namespace MasterEngine {
 			{
 				GameEngine::remove_collider(this);
 			}
+			GameEngine::destroyed_game_objects_.insert(this);
 		}
 
 		void GameObject::start_up()

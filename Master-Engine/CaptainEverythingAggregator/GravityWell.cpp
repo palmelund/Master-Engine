@@ -9,11 +9,12 @@
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	GravityWell::GravityWell() : GameObject(true)
+	GravityWell::GravityWell(sf::Vector2f position) : GameObject(true)
 	{
 		GameObject::set_sprite(GRAVITY_WELL_SPRITE);
 		GameObject::set_size(GRAVITY_WELL_SIZE, GRAVITY_WELL_SIZE);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
+		GameObject::position_.set_vector(position);
 	}
 
 

@@ -37,7 +37,7 @@ namespace CaptainEverythingParallel {
 		}
 
 		GameEngine::Instantiate(new Player(), sf::Vector2f{ 50.0f, Renderer::get_window_size()->y / 2.0f });
-		GameEngine::Instantiate(new GravityWell(), sf::Vector2f{ Renderer::get_window_size()->x / 2.0f, Renderer::get_window_size()->y / 2.0f });
+		GameEngine::Instantiate(new GravityWell(),sf::Vector2f{ Renderer::get_window_size()->x / 2.0f, Renderer::get_window_size()->y / 2.0f });
 	}
 
 	void Spawner::update()

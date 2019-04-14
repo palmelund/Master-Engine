@@ -11,16 +11,16 @@ namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 	using namespace MasterEngine::LibShared;
 
-	BackgroundElement::BackgroundElement() : GameObject(true)
+	BackgroundElement::BackgroundElement(sf::Vector2f position) : GameObject(true)
 	{
 		size_ = BACKGROUND_ELEMENT_SIZE;
 		GameObject::set_velocity(sf::Vector2f{ 50.0f, -90.0f });
 		GameObject::set_sprite(BACKGROUND_SPRITE);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
+		GameObject::position_.set_vector(position);
 		GameObject::set_tag(Tags::Background);
 	}
-
 
 	BackgroundElement::~BackgroundElement()
 	{

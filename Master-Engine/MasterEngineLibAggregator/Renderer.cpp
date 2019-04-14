@@ -37,6 +37,7 @@ namespace MasterEngine {
 			{
 				window_.draw(*text);
 				text_vector_ -= text;
+				delete text;
 			}
 			text_vector_.clear();
 

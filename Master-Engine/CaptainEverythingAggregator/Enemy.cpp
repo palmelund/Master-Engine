@@ -11,7 +11,7 @@
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	Enemy::Enemy() : GameObject(false)
+	Enemy::Enemy(sf::Vector2f position) : GameObject(false)
 	{
 		size_ = ENEMY_SIZE;
 		fire_rate_ = ENEMY_FIRE_RATE;
@@ -21,6 +21,7 @@ namespace CaptainEverythingAggregator {
 		GameObject::set_size(size_, size_);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::Enemy);
+		GameObject::position_.set_vector(position);
 	}
 
 	Enemy::~Enemy()
@@ -44,7 +45,7 @@ namespace CaptainEverythingAggregator {
 		if (internal_timer > fire_rate_)
 		{
 			internal_timer -= fire_rate_;
-			GameEngine::Instantiate(new EnemyBullet(), GameObject::get_position());
+			GameEngine::Instantiate(new EnemyBullet(GameObject::get_position()));
 		}
 
 	}

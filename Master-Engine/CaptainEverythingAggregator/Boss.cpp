@@ -12,7 +12,7 @@
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	Boss::Boss() : GameObject(true)
+	Boss::Boss(sf::Vector2f position) : GameObject(true)
 	{
 		size_ = BOSS_SIZE;
 		shield_amount_ = BOSS_SHIELD_COUNT;
@@ -20,8 +20,8 @@ namespace CaptainEverythingAggregator {
 		GameObject::set_sprite(BOSS_SPRITE);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
+		GameObject::position_.set_vector(position);
 	}
-
 
 	Boss::~Boss()
 	{

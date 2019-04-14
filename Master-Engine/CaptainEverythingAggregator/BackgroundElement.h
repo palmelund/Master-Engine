@@ -9,7 +9,7 @@ namespace CaptainEverythingAggregator {
 		public GameObject
 	{
 	public:
-		BackgroundElement();
+		BackgroundElement(sf::Vector2f);
 		~BackgroundElement();
 
 		void update() override;

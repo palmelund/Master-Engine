@@ -12,7 +12,7 @@
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	PlayerBullet::PlayerBullet() : GameObject(true)
+	PlayerBullet::PlayerBullet(sf::Vector2f position) : GameObject(true)
 	{
 		size_ = PLAYER_BULLET_SIZE;
 	M_Transform:; set_velocity(sf::Vector2f{ 300.0f, 0.0f });
@@ -20,6 +20,7 @@ namespace CaptainEverythingAggregator {
 		GameObject::set_size(size_, size_);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::Bullet);
+		GameObject::position_.set_vector(position);
 	}
 
 

@@ -5,13 +5,13 @@ namespace CaptainEverythingShared
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 500
 
-#define BACKGROUND_ELEMENT_COUNT 30
+#define BACKGROUND_ELEMENT_COUNT 1000
 #define BOSS_SPAWN_THRESHOLD 50
 
 #define PLAYER_BULLET_SIZE 20
 #define PLAYER_SIZE 20
 #define PLAYER_SPEED 900.0f
-#define PLAYER_FIRE_RATE 0.3f
+#define PLAYER_FIRE_RATE 0.8f
 
 #define GRAVITY_WELL_SIZE 160
 #define GRAVITY_WELL_PULL_FORCE 1.0f
@@ -29,6 +29,6 @@ namespace CaptainEverythingShared
 
 #define BACKGROUND_ELEMENT_SIZE 20
 
-#define ENEMY_SPAWN_TIME 0.8f
+#define ENEMY_SPAWN_TIME 1.2f
 
 }

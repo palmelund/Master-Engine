@@ -32,7 +32,7 @@ namespace MasterEngine {
 
 
 			CaptainEverythingAggregator::Spawner* spawner = new CaptainEverythingAggregator::Spawner();
-			MasterEngine::LibAggregator::GameEngine::Instantiate(spawner, sf::Vector2f{ 0,0 });
+			MasterEngine::LibAggregator::GameEngine::Instantiate(spawner);
 			std::vector<GameObject*> container = {};
 			container.emplace_back(spawner);
 			game_objects_.adds_vector(container);
@@ -95,7 +95,7 @@ namespace MasterEngine {
 					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
-				//TODO Impement the aggregator step
+				///Aggregator step start
 				unsigned reducesteps = thread_pool_.thread_count;
 				while (reducesteps != 1)
 				{
@@ -122,6 +122,7 @@ namespace MasterEngine {
 					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
 					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
+
 				for (auto delta: ThreadPool::deltas[ThreadPool::threads_ids[0]])
 				{
 					delete delta.second;
@@ -130,7 +131,13 @@ namespace MasterEngine {
 				{
 					ThreadPool::deltas[ids].clear();
 				}
+				///Aggregator step End
 
+				for (auto* deleteobject: destroyed_game_objects_)
+				{
+					delete deleteobject;
+				}
+				destroyed_game_objects_.clear();
 				
 			}
 
@@ -155,15 +162,14 @@ namespace MasterEngine {
 			return ++incremental_id_;
 		}
 
-		void GameEngine::Instantiate(GameObject* game_object, sf::Vector2f position)
+		void GameEngine::Instantiate(GameObject* game_object)
 		{
-			game_object->set_position(position,10);
 			thread_pool_.AddJob(std::bind(&GameObject::start_up, game_object));
 		}
 
 		void GameEngine::add_game_object(GameObject* game_object)
 		{
-			game_objects_ += (game_object);
+			game_objects_ += game_object;
 		}
 
 		void GameEngine::add_collider(GameObject* game_object)

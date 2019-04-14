@@ -7,7 +7,7 @@ namespace CaptainEverythingAggregator {
 		public GameObject
 	{
 	public:
-		GravityWell();
+		GravityWell(sf::Vector2f);
 		~GravityWell();
 
 		void OnCollision(GameObject* collider) override;

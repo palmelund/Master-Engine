@@ -8,7 +8,7 @@ namespace CaptainEverythingAggregator {
 		public GameObject
 	{
 	public:
-		PlayerBullet();
+		PlayerBullet(sf::Vector2f);
 		~PlayerBullet();
 
 		void update() override;

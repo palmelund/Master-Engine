@@ -7,7 +7,7 @@ namespace CaptainEverythingAggregator {
 		public GameObject
 	{
 	public:
-		Player();
+		Player(sf::Vector2f);
 		~Player();
 
 		void start_up() override;
