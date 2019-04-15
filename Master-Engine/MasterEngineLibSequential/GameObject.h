@@ -1,8 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Collider.h"
-#include "Transform.h"
-#include "../MasterEngineLibShared/ThreadPool.h"
 
 namespace MasterEngine {
 	namespace LibShared {
@@ -14,12 +12,12 @@ namespace MasterEngine {
 	namespace LibSequential {
 		using namespace LibShared;
 
-		class Collider;//Needed to break cirkuler pointer.
+		class Collider;
 
 		class GameObject
 		{
 		public:
-			explicit GameObject(bool collision_code = false);
+			explicit GameObject(bool enable_collisions = false);
 			virtual ~GameObject();
 
 			GameObject(const GameObject&) = delete;
@@ -32,7 +30,7 @@ namespace MasterEngine {
 
 			virtual void start_up();
 			virtual void update();
-			virtual void OnCollision(GameObject* collider);
+			virtual void on_collision(GameObject* collider);
 			void collision_check();
 
 			void set_sprite(int sprite_position);
@@ -47,13 +45,13 @@ namespace MasterEngine {
 
 
 			void set_position(sf::Vector2f);
-			sf::Vector2f get_position();
+			sf::Vector2f get_position() const;
 
 			void set_tag(Tags);
-			Tags get_tag();
+			Tags get_tag() const;
 
-			float get_width_size();
-			float get_height_size();
+			float get_width_size() const;
+			float get_height_size() const;
 			void set_scale(float, float);
 			void set_size(float, float);
 			void add_velocity(sf::Vector2f);
@@ -61,7 +59,7 @@ namespace MasterEngine {
 
 			sf::Vector2f get_scaled_size() const;
 
-			sf::Vector2f get_velocity();
+			sf::Vector2f get_velocity() const;
 
 			int sprite_pos() const noexcept;
 
@@ -70,7 +68,7 @@ namespace MasterEngine {
 
 		private:
 			sf::Vector2f velocity_;
-			bool collision_code_;
+			bool enable_collisions_;
 			unsigned long long id_;
 
 
@@ -85,11 +83,5 @@ namespace MasterEngine {
 
 			sf::Vector2f size_;
 		};
-
-		template <typename CONTAINER>
-		void GameObject::add_colliders(const CONTAINER& collider)
-		{
-		}
-
 	}
 }

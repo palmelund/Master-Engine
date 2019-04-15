@@ -13,7 +13,7 @@ namespace CaptainEverythingAggregator {
 
 		void start_up() override;
 		void update() override;
-		void OnCollision(GameObject* collider) override;
+		void on_collision(GameObject* collider) override;
 
 		void loss_shield();
 

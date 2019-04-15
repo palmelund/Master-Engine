@@ -14,7 +14,7 @@ namespace CaptainEverythingAggregator {
 		size_ = ENEMY_BULLET_SIZE;
 		GameObject::set_velocity(sf::Vector2f{ -300.0f, 0.0f });
 		GameObject::set_sprite(BULLET_SPRITE);
-		GameObject::set_size(size_, size_);
+		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::EnemyBullet);
 		GameObject::position_.set_vector(position);
@@ -32,7 +32,7 @@ namespace CaptainEverythingAggregator {
 	void EnemyBullet::update()
 	{
 		sf::Vector2f velocity = GameObject::get_velocity();
-		GameObject::position_ += (sf::Vector2f{ (velocity.x * Time::DeltaTime()), (velocity.y * Time::DeltaTime()) });
+		GameObject::position_ += (sf::Vector2f{ (velocity.x * Time::delta_time()), (velocity.y * Time::delta_time()) });
 		
 		if (GameObject::get_position().x < 0.0f)
 		{

@@ -3,11 +3,10 @@
 
 namespace MasterEngine {
 	namespace LibShared {
-
 		std::array<KeyStatus, static_cast<size_t>(sf::Keyboard::KeyCount)> Input::key_statuses_;
 		std::vector<sf::Keyboard::Key> Input::enabled_keys_{};
 
-		void Input::process_key_input(sf::Keyboard::Key key)
+		void Input::process_key_input(const sf::Keyboard::Key key)
 		{
 			if (sf::Keyboard::isKeyPressed(key))
 			{
@@ -40,24 +39,24 @@ namespace MasterEngine {
 			enabled_keys_ = std::move(enabled_keys);
 		}
 
-		KeyStatus Input::get_input_state(sf::Keyboard::Key key_code)
+		KeyStatus Input::get_input_state(const sf::Keyboard::Key key)
 		{
-			return key_statuses_[static_cast<long long int>(key_code)];
+			return key_statuses_[static_cast<long long int>(key)];
 		}
 
-		bool Input::get_key_pressed(sf::Keyboard::Key key_code)
+		bool Input::get_key_pressed(const sf::Keyboard::Key key)
 		{
-			return get_input_state(key_code) == KeyStatus::pressed;
+			return get_input_state(key) == KeyStatus::pressed;
 		}
 
-		bool Input::get_key_hold(sf::Keyboard::Key key_code)
+		bool Input::get_key_hold(const sf::Keyboard::Key key)
 		{
-			return get_input_state(key_code) == KeyStatus::pressed || get_input_state(key_code) == KeyStatus::hold;
+			return get_input_state(key) == KeyStatus::pressed || get_input_state(key) == KeyStatus::hold;
 		}
 
-		bool Input::get_key_lift(sf::Keyboard::Key key_code)
+		bool Input::get_key_lift(const sf::Keyboard::Key key)
 		{
-			return get_input_state(key_code) == KeyStatus::lifted;
+			return get_input_state(key) == KeyStatus::lifted;
 		}
 
 
@@ -67,11 +66,6 @@ namespace MasterEngine {
 			{
 				process_key_input(key);
 			}
-
-			//process_key_input(sf::Keyboard::W);
-			//process_key_input(sf::Keyboard::A);
-			//process_key_input(sf::Keyboard::S);
-			//process_key_input(sf::Keyboard::D);
 		}
 
 	}

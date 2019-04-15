@@ -9,7 +9,7 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
-#define DETECT_MEMORY_LEAKS
+//#define DETECT_MEMORY_LEAKS
 
 #ifdef DETECT_MEMORY_LEAKS
 #define _CRTDBG_MAP_ALLOC

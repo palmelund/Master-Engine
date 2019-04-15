@@ -11,7 +11,7 @@ namespace CaptainEverythingSequential {
 		GravityWell();
 		~GravityWell();
 
-		void OnCollision(GameObject* collider) override;
+		void on_collision(GameObject* collider) override;
 	};
 
 }

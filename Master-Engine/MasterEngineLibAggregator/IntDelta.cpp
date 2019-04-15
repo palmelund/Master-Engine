@@ -1,50 +1,46 @@
 #include "stdafx.h"
 #include "IntDelta.h"
+#include <limits>
 
-IntDelta::IntDelta(IntWrapper * pointer) 
+IntDelta::IntDelta(IntWrapper * pointer) : original_value_(pointer), additions_(0), multiplications_(1), assign_(0), assign_priority_(std::numeric_limits<int>::min())
 {
-	orginal_value_ = pointer;
-	multiplys_ = 1;
+
 }
 
-IntDelta::~IntDelta()
+void IntDelta::assign(const int value, const int priority)
 {
-}
-
-void IntDelta::assign(int value, int priority)
-{
-	if (assing_priority_ < priority)
+	if (assign_priority_ < priority)
 	{
 		assign_ = value;
-		assing_priority_ = priority;
+		assign_priority_ = priority;
 	}
 }
 
-void IntDelta::addition(int value)
+void IntDelta::addition(const int value)
 {
 	additions_ += value;
 }
 
-void IntDelta::multiply(int value)
+void IntDelta::multiply(const int value)
 {
-	multiplys_ *= value;
+	multiplications_ *= value;
 }
 
 void IntDelta::reduce(void* pointer)
 {
-	IntDelta* target = static_cast<IntDelta*>(pointer);
+	const auto target = static_cast<IntDelta*>(pointer);
 	additions_ += target->additions_;
-	multiplys_ *= target->multiplys_;
-	assign(target->assign_, target->assing_priority_);
+	multiplications_ *= target->multiplications_;
+	assign(target->assign_, target->assign_priority_);
 }
 
 void IntDelta::merge()
 {
-	if (assing_priority_ > 0)
+	if (assign_priority_ > 0)
 	{
-		orginal_value_->set_value(assign_);
+		original_value_->set_value(assign_);
 		return;
 	}
-	orginal_value_->set_value(orginal_value_->get_value()*multiplys_ + additions_);
+	original_value_->set_value(original_value_->get_value()*multiplications_ + additions_);
 
 }

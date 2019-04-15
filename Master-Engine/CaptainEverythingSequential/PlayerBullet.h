@@ -12,7 +12,7 @@ namespace CaptainEverythingSequential {
 		~PlayerBullet();
 
 		void update() override;
-		void OnCollision(GameObject* collider) override;
+		void on_collision(GameObject* collider) override;
 
 	private:
 		int size_;

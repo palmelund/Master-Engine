@@ -7,16 +7,16 @@ namespace MasterEngine {
 
 		BatchDrawable Renderer::batch_drawable_{};
 		sf::RenderWindow Renderer::window_{};
-		sf::Vector2i* Renderer::window_size{};
+		sf::Vector2i* Renderer::window_size_{};
 		sf::Font Renderer::font_{};
 		std::vector<sf::Text> Renderer::text_vector_{};
 
-		void Renderer::init(std::string window_name, int width, int height)
+		void Renderer::init(const std::string& window_name, const int width, const int height)
 		{
 			const auto& v2 = sf::Vector2u(width, height);
 			window_.setSize(v2);
 			window_.setTitle(window_name);
-			Renderer::window_size = new sf::Vector2i(width, height);
+			window_size_ = new sf::Vector2i(width, height);
 			window_.create(sf::VideoMode(width, height), window_name);
 
 			if (!font_.loadFromFile("Roboto-Regular.ttf"))
@@ -67,10 +67,10 @@ namespace MasterEngine {
 
 		sf::Vector2i* Renderer::get_window_size()
 		{
-			return Renderer::window_size;
+			return window_size_;
 		}
 
-		void Renderer::set_sprite_sheet(const sf::Texture& sprite_sheet, int sprite_width, int sprite_height)
+		void Renderer::set_sprite_sheet(const sf::Texture& sprite_sheet, const int sprite_width, const int sprite_height)
 		{
 			batch_drawable_.set_texture(sprite_sheet, sprite_sheet.getSize().x, sprite_sheet.getSize().y, sprite_width, sprite_height);
 		}
@@ -80,7 +80,7 @@ namespace MasterEngine {
 			return sf::Vector2f{ static_cast<float>(batch_drawable_.get_sprite_width()), static_cast<float>(batch_drawable_.get_sprite_height()) };
 		}
 
-		void Renderer::draw_text(const std::string& txt, int x_pos, int y_pos, int size)
+		void Renderer::draw_text(const std::string& txt, int const x_pos, int const y_pos, int const size)
 		{
 			sf::Text text;
 			text.setFont(font_);

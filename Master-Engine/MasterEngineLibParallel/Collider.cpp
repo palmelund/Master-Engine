@@ -5,26 +5,19 @@
 namespace MasterEngine {
 	namespace LibParallel {
 
-		Collider::Collider(sf::Vector2f localPosition, sf::Vector2f size)
-		{
-			owner_ = nullptr;
-			LocalPosition = localPosition;
-			Size = size;
-		}
-
-		Collider::~Collider()
+		Collider::Collider(const sf::Vector2f local_position, const sf::Vector2f size) : owner_(nullptr), local_position(local_position), size(size)
 		{
 		}
 
-		Transform Collider::get_collider()
+		Transform Collider::get_collider() const
 		{
-			Transform myTransform{};
-			sf::Vector2f owner_pos = owner_->get_position();
-			myTransform.posX = LocalPosition.x + owner_pos.x;
-			myTransform.posY = LocalPosition.y + owner_pos.y;
-			myTransform.sizeX = Size.x;
-			myTransform.sizeY = Size.y;
-			return myTransform;
+			Transform transform{};
+			const auto owner_pos = owner_->get_position();
+			transform.pos_x = local_position.x + owner_pos.x;
+			transform.pos_y = local_position.y + owner_pos.y;
+			transform.size_x = size.x;
+			transform.size_y = size.y;
+			return transform;
 		}
 
 		void Collider::set_owner(GameObject* owner)
@@ -32,29 +25,29 @@ namespace MasterEngine {
 			owner_ = owner;
 		}
 
-		GameObject* Collider::get_owner()
+		GameObject* Collider::get_owner() const
 		{
 			return owner_;
 		}
 
-		bool Collider::ColliderOverLap(Transform object1, Transform Object2)
+		bool Collider::collider_overlap(const Transform transform1, const Transform transform2)
 		{
-			float l1x = object1.posX;
-			float l1y = object1.posY;
-			float r1x = object1.posX + object1.sizeX;
-			float r1y = object1.posY + object1.sizeY;
-			float l2x = Object2.posX;
-			float l2y = Object2.posY;
-			float r2x = Object2.posX + Object2.sizeX;
-			float r2y = Object2.posY + Object2.sizeY;
+			const auto l1_x = transform1.pos_x;
+			const auto l1_y = transform1.pos_y;
+			const auto r1_x = transform1.pos_x + transform1.size_x;
+			const auto r1_y = transform1.pos_y + transform1.size_y;
+			const auto l2_x = transform2.pos_x;
+			const auto l2_y = transform2.pos_y;
+			const auto r2_x = transform2.pos_x + transform2.size_x;
+			const auto r2_y = transform2.pos_y + transform2.size_y;
 
-			// If one rectangle is on left side of other 
-			if (l1x > r2x || l2x > r1x) {
+			// If one rectangle is on left side of other
+			if (l1_x > r2_x || l2_x > r1_x) {
 				return false;
 			}
 
-			// If one rectangle is above other 
-			if (l1y > r2y || l2y > r1y) {
+			// If one rectangle is above other
+			if (l1_y > r2_y || l2_y > r1_y) {
 
 				return false;
 			}

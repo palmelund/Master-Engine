@@ -1,23 +1,18 @@
 #pragma once
 #include "BaseDelta.h"
-#include "VectorWrapper.h"
 
 template <class T>
 class VectorWrapper;
 
 template <class T>
-class VectorDelta :
+class VectorDelta final :
 	public BaseDelta
 {
 public:
-	VectorDelta(VectorWrapper<T>* pointer)
+	explicit VectorDelta(VectorWrapper<T>* pointer) : original_value_(pointer)
 	{
-		orginal_value_ = pointer;
 		additions_ = {};
 		removes_ = {};
-	}
-	~VectorDelta()
-	{
 	}
 
 	void addition(T value)
@@ -32,18 +27,18 @@ public:
 
 	void reduce(void* pointer) override
 	{
-		VectorDelta<T>* target = static_cast<VectorDelta<T>*>(pointer);
+		auto* target = static_cast<VectorDelta<T>*>(pointer);
 		additions_.insert(additions_.end(), target->additions_.begin(), target->additions_.end());
 		removes_.insert(removes_.end(), target->removes_.begin(), target->removes_.end());
 	};
 	void merge() override
 	{
-		VectorWrapper<T>* target = static_cast<VectorWrapper<T>*>(orginal_value_);
+		auto* target = static_cast<VectorWrapper<T>*>(original_value_);
 		target->adds_vector(additions_);
 		target->removes_vector(removes_);
 	}
 private:
-	VectorWrapper<T>* orginal_value_;
+	VectorWrapper<T>* original_value_;
 
 	std::vector<T> additions_;
 	std::vector<T> removes_;

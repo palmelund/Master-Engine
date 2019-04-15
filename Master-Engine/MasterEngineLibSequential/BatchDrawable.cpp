@@ -5,14 +5,14 @@ namespace MasterEngine
 {
 	namespace LibSequential {
 
-		BatchDrawable::BatchDrawable() : style_sheet_width_(0), style_sheet_height_(0)
+		BatchDrawable::BatchDrawable()
 		{
 			vertices_.setPrimitiveType(sf::Quads);
 		}
 
 		BatchDrawable::~BatchDrawable() = default;
 
-		void BatchDrawable::set_texture(const sf::Texture& texture, int style_sheet_width, int style_sheet_height, int sprite_width, int sprite_height)
+		void BatchDrawable::set_texture(const sf::Texture& texture, const int style_sheet_width, const int style_sheet_height, const int sprite_width, const int sprite_height)
 		{
 			texture_ = texture;
 

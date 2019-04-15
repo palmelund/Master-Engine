@@ -2,11 +2,10 @@
 #include "BaseDelta.h"
 #include "Vector2Wrapper.h"
 
-class Vector2Delta : public BaseDelta
+class Vector2Delta final : public BaseDelta
 {
 public:
-	Vector2Delta(Vector2Wrapper*) ;
-	~Vector2Delta();
+	explicit Vector2Delta(Vector2Wrapper*);
 
 	void addition(sf::Vector2f);
 	void assign(sf::Vector2f, int);
@@ -14,7 +13,7 @@ public:
 	void merge() override;
 
 private:
-	Vector2Wrapper* orginal_value;
+	Vector2Wrapper* original_value_;
 	sf::Vector2f additions_;
 	sf::Vector2f assign_;
 	int assign_priority_;

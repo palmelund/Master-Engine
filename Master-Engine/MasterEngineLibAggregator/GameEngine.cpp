@@ -17,8 +17,15 @@ namespace MasterEngine {
 		unsigned long long GameEngine::incremental_id_{};
 		VectorWrapper<GameObject*> GameEngine::game_objects_{};
 		VectorWrapper<GameObject*> GameEngine::collision_game_objects_{};
-		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects_{};
+		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects{};
+
+#ifdef LOG_DELTA_TIMES
 		std::vector<float> GameEngine::delta_list_{};
+#endif
+#ifdef LOG_CUMULATIVE_TIME
+		long long GameEngine::frame_count_{};
+		float GameEngine::cumulative_time_{};
+#endif
 
 		ThreadPool GameEngine::thread_pool_{};
 
@@ -27,12 +34,12 @@ namespace MasterEngine {
 #ifdef LOG_DELTA_TIMES
 			delta_list_ = std::vector<float>{};
 #endif
-			thread_pool_.CreateThreadPool();
-			Time::StartUp();
+			thread_pool_.create_thread_pool();
+			Time::start_up();
 
 
-			CaptainEverythingAggregator::Spawner* spawner = new CaptainEverythingAggregator::Spawner();
-			MasterEngine::LibAggregator::GameEngine::Instantiate(spawner);
+			auto* spawner = new CaptainEverythingAggregator::Spawner();
+			instantiate(spawner);
 			std::vector<GameObject*> container = {};
 			container.emplace_back(spawner);
 			game_objects_.adds_vector(container);
@@ -44,15 +51,19 @@ namespace MasterEngine {
 			float com_delta = 0;
 			int framecount = 0;
 #endif
+#ifdef LOG_CUMULATIVE_TIME
+			frame_count_ = 0;
+			cumulative_time_ = 0;
+#endif
 
 			while (Renderer::is_open())
 			{
 				//Create delta for this frame
-				Time::Update();
+				Time::tick();
 
 #ifdef LOG_DELTA_TIMES
-				delta_list_.emplace_back(Time::DeltaTime());
-				com_delta += Time::DeltaTime();
+				delta_list_.emplace_back(Time::delta_time());
+				com_delta += Time::delta_time();
 				framecount++;
 				if (com_delta > 1.0f)
 				{
@@ -61,8 +72,12 @@ namespace MasterEngine {
 					framecount = 0;
 				}
 #endif
+#ifdef LOG_CUMULATIVE_TIME
+				++frame_count_;
+				cumulative_time_ += Time::delta_time();
+#endif
 
-				sf::Event event;
+				sf::Event event{};
 				while (Renderer::poll_event(event))
 				{
 					if (event.type == sf::Event::Closed)
@@ -73,72 +88,68 @@ namespace MasterEngine {
 
 				Input::process_input();
 
-				auto& game_state = get_gamestate();
+				auto& game_state = get_game_state();
 				for (auto i = 0; i < game_state.size(); i++) {
 					auto* object = game_state[i];
-
-					thread_pool_.AddJob(std::bind(&GameObject::update, object));
+					thread_pool_.add_job(std::bind(&GameObject::update, object));
 				}
 
 				for (auto i = 0; i < collision_game_objects_.get_value().size(); i++) {
-
-					GameObject* object = collision_game_objects_.get_value()[i];
-					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
+					auto object = collision_game_objects_.get_value()[i];
+					thread_pool_.add_job(std::bind(&GameObject::collision_check, object));
 				}
 
 				Renderer::render();
 
 				{
 					//Wait for every thing to be done
-					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
-					//std::cout << ThreadPool::working_threads_ << std::endl;
+					std::unique_lock<std::mutex> lock(thread_pool_.queue_mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.job_queue.empty() && thread_pool_.working_threads == 0; });
 				}
 
 				///Aggregator step start
-				unsigned reducesteps = thread_pool_.thread_count;
-				while (reducesteps != 1)
+				auto reduction_steps = thread_pool_.thread_count;
+				while (reduction_steps != 1)
 				{
-					unsigned halffloor = reducesteps / 2;
-					unsigned halfroff = (reducesteps + 1) / 2;
+					const auto floor = reduction_steps / 2;
+					const auto ceil = (reduction_steps + 1) / 2;
 
-					for (auto i = 0; i < halffloor; i++) {
-						thread_pool_.AddJob(std::bind(&GameEngine::mergelist, ThreadPool::threads_ids[i], ThreadPool::threads_ids[i+ halfroff]));
+					for (unsigned i = 0; i < floor; i++) {
+						const int index = i + ceil;
+						thread_pool_.add_job(std::bind(&GameEngine::merge_list, ThreadPool::threads_ids[i], ThreadPool::threads_ids[index]));
 					}
 
 					{
-						std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-						thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
-						//std::cout << ThreadPool::working_threads_ << std::endl;
+						std::unique_lock<std::mutex> lock(thread_pool_.queue_mutex);
+						thread_pool_.condition_done.wait(lock, [] {return thread_pool_.job_queue.empty() && thread_pool_.working_threads == 0; });
 					}
-					reducesteps = halfroff;
+					reduction_steps = ceil;
 				}
-				for (auto delta : thread_pool_.deltas[ThreadPool::threads_ids[0]]) {
-					BaseDelta* object = delta.second;
-					thread_pool_.AddJob(std::bind(&BaseDelta::merge, object));
+				for (const auto delta : ThreadPool::deltas[ThreadPool::threads_ids[0]]) {
+					auto object = delta.second;
+					thread_pool_.add_job(std::bind(&BaseDelta::merge, object));
 				}
 				{
-					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
-					//std::cout << ThreadPool::working_threads_ << std::endl;
+					std::unique_lock<std::mutex> lock(thread_pool_.queue_mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.job_queue.empty() && thread_pool_.working_threads == 0; });
 				}
 
 				for (auto delta: ThreadPool::deltas[ThreadPool::threads_ids[0]])
 				{
 					delete delta.second;
 				}
-				for (std::thread::id ids : ThreadPool::threads_ids)
+				for (auto id : ThreadPool::threads_ids)
 				{
-					ThreadPool::deltas[ids].clear();
+					ThreadPool::deltas[id].clear();
 				}
 				///Aggregator step End
 
-				for (auto* deleteobject: destroyed_game_objects_)
+				for (auto* game_object: destroyed_game_objects)
 				{
-					delete deleteobject;
+					delete game_object;
 				}
-				destroyed_game_objects_.clear();
-				
+				destroyed_game_objects.clear();
+
 			}
 
 			thread_pool_.terminate();
@@ -153,7 +164,11 @@ namespace MasterEngine {
 			std::cout << "Total Frames/second: " << frames_over_time << std::endl;
 
 #endif
-
+#ifdef LOG_CUMULATIVE_TIME
+			std::cout << "Total time: " << cumulative_time_ << std::endl;
+			std::cout << "Total frames: " << frame_count_ << std::endl;
+			std::cout << "Total frames/second: " << frame_count_ / cumulative_time_ << std::endl;
+#endif
 
 		}
 
@@ -162,9 +177,9 @@ namespace MasterEngine {
 			return ++incremental_id_;
 		}
 
-		void GameEngine::Instantiate(GameObject* game_object)
+		void GameEngine::instantiate(GameObject* game_object)
 		{
-			thread_pool_.AddJob(std::bind(&GameObject::start_up, game_object));
+			thread_pool_.add_job(std::bind(&GameObject::start_up, game_object));
 		}
 
 		void GameEngine::add_game_object(GameObject* game_object)
@@ -185,24 +200,24 @@ namespace MasterEngine {
 		void GameEngine::remove_game_object(GameObject* game_object)
 		{
 			game_objects_ -= game_object;
-			game_object->remove_gameobject();
+			game_object->remove_game_object();
 		}
 
-		std::vector<GameObject*>& GameEngine::get_gamestate()
+		std::vector<GameObject*>& GameEngine::get_game_state()
 		{
 			return game_objects_.get_value();
 		}
 
-		std::unordered_set<GameObject*>& GameEngine::get_destroyid_game_object()
+		std::unordered_set<GameObject*>& GameEngine::get_destroyed_game_object()
 		{
-			return destroyed_game_objects_;
+			return destroyed_game_objects;
 		}
 
-		void GameEngine::mergelist(std::thread::id deltas1, std::thread::id deltas2)
+		void GameEngine::merge_list(const std::thread::id delta_1, const std::thread::id delta_2)
 		{
-			auto* delta_list1 = &MasterEngine::LibAggregator::ThreadPool::deltas[deltas1];
+			auto* delta_list1 = &ThreadPool::deltas[delta_1];
 
-			for (auto deltas : ThreadPool::deltas[deltas2])
+			for (auto deltas : ThreadPool::deltas[delta_2])
 			{
 				if (delta_list1->find(deltas.first) != delta_list1->end())
 				{

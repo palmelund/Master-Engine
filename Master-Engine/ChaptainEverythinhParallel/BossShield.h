@@ -13,7 +13,7 @@ namespace CaptainEverythingParallel {
 		~BossShield();
 
 		void update() override;
-		void OnCollision(GameObject* collider) override;
+		void on_collision(GameObject* collider) override;
 	private:
 		Boss* boss_;
 		float position_;

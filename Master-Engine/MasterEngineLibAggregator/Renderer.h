@@ -14,13 +14,8 @@ namespace MasterEngine {
 		{
 		public:
 			Renderer() = delete;
-			Renderer(const Renderer&) = delete;
-			Renderer(Renderer&&) = delete;
-			Renderer& operator=(const Renderer&) = delete;
-			Renderer& operator=(Renderer&&) = delete;
-			~Renderer() = delete;
 
-			static void init(std::string window_name, int width, int height);
+			static void init(const std::string& window_name, int width, int height);
 
 			static void render();
 
@@ -43,7 +38,7 @@ namespace MasterEngine {
 		private:
 			static BatchDrawable batch_drawable_;
 			static sf::RenderWindow window_;
-			static sf::Vector2i* window_size;
+			static sf::Vector2i* window_size_;
 
 			static sf::Font font_;
 			static VectorWrapper<sf::Text*> text_vector_;

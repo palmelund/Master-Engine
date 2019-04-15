@@ -11,11 +11,11 @@
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	Player::Player(sf::Vector2f position) : GameObject(true)
+	Player::Player(sf::Vector2f position) : GameObject(true), internal_timer(0)
 	{
 		size_ = PLAYER_SIZE;
 		GameObject::set_sprite(PLAYER_SPRITE);
-		GameObject::set_size(size_, size_);
+		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		speed = PLAYER_SPEED;
 		fire_rate_ = PLAYER_FIRE_RATE;
@@ -34,17 +34,17 @@ namespace CaptainEverythingAggregator {
 	void Player::update()
 	{
 
-		internal_timer += Time::DeltaTime();
+		internal_timer += Time::delta_time();
 		if (internal_timer > fire_rate_)
 		{
 			internal_timer -= fire_rate_;
-			GameEngine::Instantiate(new PlayerBullet(GameObject::get_position()));
+			GameEngine::instantiate(new PlayerBullet(GameObject::get_position()));
 		}
 
 
 		float distance = 9999;
 		GameObject* closes = nullptr;
-		for (GameObject* game_object : GameEngine::get_gamestate())
+		for (GameObject* game_object : GameEngine::get_game_state())
 		{
 			if (game_object->get_tag() == Tags::Enemy && game_object->get_position().x < distance)
 			{
@@ -64,7 +64,7 @@ namespace CaptainEverythingAggregator {
 			{
 				velocity.y /= 2;
 			}
-			velocity.y += speed * Time::DeltaTime();
+			velocity.y += speed * Time::delta_time();
 		}
 
 		if (closes->get_position().y < GameObject::get_position().y)
@@ -73,13 +73,13 @@ namespace CaptainEverythingAggregator {
 			{
 				velocity.y /= 2;
 			}
-			velocity.y -= speed * Time::DeltaTime();
+			velocity.y -= speed * Time::delta_time();
 		}
-		GameObject::position_ += sf::Vector2f{ (velocity.x * Time::DeltaTime()), (velocity.y * Time::DeltaTime()) };
+		GameObject::position_ += sf::Vector2f{ (velocity.x * Time::delta_time()), (velocity.y * Time::delta_time()) };
 		GameObject::set_velocity(velocity);
 	}
 
-	void Player::OnCollision(GameObject * collider)
+	void Player::on_collision(GameObject * collider)
 	{
 		if (collider->get_tag() == Tags::Enemy || collider->get_tag() == Tags::EnemyBullet)
 		{

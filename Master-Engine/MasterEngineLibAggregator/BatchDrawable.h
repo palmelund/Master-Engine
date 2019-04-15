@@ -1,17 +1,15 @@
 #pragma once
 #include <SFML/Graphics/Drawable.hpp>
-#include <vector>
 #include "GameObject.h"
 #include "VectorWrapper.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
 
-		class BatchDrawable : public sf::Drawable, public sf::Transformable
+		class BatchDrawable final : public sf::Drawable, public sf::Transformable
 		{
 		public:
 			explicit BatchDrawable();
-			~BatchDrawable();
 
 			void set_texture(const sf::Texture& texture, int style_sheet_width, int style_sheet_height, int sprite_width, int sprite_height);
 

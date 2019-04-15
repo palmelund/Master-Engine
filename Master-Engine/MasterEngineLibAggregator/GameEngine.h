@@ -4,7 +4,6 @@
 #include "GameObject.h"
 #include <queue>
 #include <unordered_set>
-#include <set>
 #include "ThreadPool.h"
 #include "VectorWrapper.h"
 
@@ -12,19 +11,19 @@ namespace MasterEngine
 {
 	namespace LibAggregator {
 
-#define LOG_DELTA_TIMES
+//#define LOG_DELTA_TIMES
+#define LOG_CUMULATIVE_TIME
 
 		class GameEngine
 		{
 		public:
 			GameEngine() = delete;
-			~GameEngine() = delete;
 			static void init();
 			static void run();
 
 			static unsigned long long get_new_id();
 
-			static  void Instantiate(GameObject*);
+			static  void instantiate(GameObject*);
 
 			static void add_game_object(GameObject* game_object);
 			static void add_collider(GameObject* game_object);
@@ -32,10 +31,10 @@ namespace MasterEngine
 
 			static void remove_game_object(GameObject* game_object);
 
-			static std::vector<GameObject*>& get_gamestate();
-			static std::unordered_set<GameObject*>& get_destroyid_game_object();
-			static void mergelist(std::thread::id, std::thread::id);
-			static std::unordered_set<GameObject*> destroyed_game_objects_;
+			static std::vector<GameObject*>& get_game_state();
+			static std::unordered_set<GameObject*>& get_destroyed_game_object();
+			static void merge_list(std::thread::id, std::thread::id);
+			static std::unordered_set<GameObject*> destroyed_game_objects;
 		private:
 			static unsigned long long incremental_id_;
 			static VectorWrapper<GameObject*> game_objects_;
@@ -43,9 +42,13 @@ namespace MasterEngine
 #ifdef LOG_DELTA_TIMES
 			static std::vector<float> delta_list_;
 #endif
-			static ThreadPool thread_pool_;
 
-			
+#ifdef LOG_CUMULATIVE_TIME
+			static long long frame_count_;
+			static float cumulative_time_;
+#endif
+
+			static ThreadPool thread_pool_;
 		};
 	}
 }

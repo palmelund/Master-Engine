@@ -1,7 +1,6 @@
 #pragma once
 #include "../MasterEngineLibAggregator/GameObject.h"
 #include "../MasterEngineLibAggregator/IntWrapper.h"
-#include <mutex>
 
 namespace CaptainEverythingAggregator {
 	using namespace MasterEngine::LibAggregator;

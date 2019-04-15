@@ -7,7 +7,6 @@
 #include "../MasterEngineLibAggregator/Renderer.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../MasterEngineLibAggregator/ResourceManager.h"
-#include "Spawner.h"
 
 int main()
 {

@@ -6,10 +6,14 @@
 namespace MasterEngine {
 	namespace LibParallel {
 
-		class BatchDrawable : public sf::Drawable, public sf::Transformable
+		class BatchDrawable final : public sf::Drawable, public sf::Transformable
 		{
 		public:
 			explicit BatchDrawable();
+			BatchDrawable(const BatchDrawable& batch_drawable) = delete;
+			BatchDrawable(BatchDrawable&& batch_drawable) = delete;
+			BatchDrawable& operator=(const BatchDrawable& batch_drawable) = delete;
+			BatchDrawable& operator=(BatchDrawable&& batch_drawable) = delete;
 			~BatchDrawable();
 
 			void set_texture(const sf::Texture& texture, int style_sheet_width, int style_sheet_height, int sprite_width, int sprite_height);

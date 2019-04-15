@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "PlayerBullet.h"
-#include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../MasterEngineLibSequential/GameEngine.h"
 #include "../MasterEngineLibShared/Time.h"
 #include "../MasterEngineLibShared/Tags.h"
@@ -16,9 +15,9 @@ namespace CaptainEverythingSequential {
 	PlayerBullet::PlayerBullet() : GameObject(true)
 	{
 		size_ = PLAYER_BULLET_SIZE;
-	M_Transform:; set_velocity(sf::Vector2f{ 300.0f, 0.0f });
+		set_velocity(sf::Vector2f{ 300.0f, 0.0f });
 		GameObject::set_sprite(BULLET_SPRITE);
-		GameObject::set_size(size_, size_);
+		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::Bullet);
 	}
@@ -32,14 +31,14 @@ namespace CaptainEverythingSequential {
 	void PlayerBullet::update()
 	{
 		sf::Vector2f velocity = GameObject::get_velocity();
-		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::DeltaTime()), GameObject::get_position().y + (velocity.y * Time::DeltaTime()) });
+		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::delta_time()), GameObject::get_position().y + (velocity.y * Time::delta_time()) });
 		if (GameObject::get_position().x > Renderer::get_window_size()->x)
 		{
 			GameEngine::remove_game_object(this);
 		}
 	}
 
-	void PlayerBullet::OnCollision(GameObject* collider)
+	void PlayerBullet::on_collision(GameObject* collider)
 	{
 		switch (collider->get_tag())
 		{

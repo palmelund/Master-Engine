@@ -25,16 +25,16 @@ namespace MasterEngine
 			GameObject(const GameObject&) = delete;
 			GameObject& operator=(const GameObject&) = delete;
 
-			GameObject(GameObject&&) = default;
-			GameObject& operator=(GameObject&&) = default;
+			GameObject(GameObject&&) = delete;
+			GameObject& operator=(GameObject&&) = delete;
 
 			unsigned long long get_id() const noexcept;
 
-			void remove_gameobject();
+			void remove_game_object();
 
 			virtual void start_up();
 			virtual void update();
-			virtual void OnCollision(GameObject* collider);
+			virtual void on_collision(GameObject* collider);
 			void collision_check();
 
 			void set_sprite(int sprite_position);
@@ -49,14 +49,14 @@ namespace MasterEngine
 
 
 			void set_position(sf::Vector2f);
-			void set_position(sf::Vector2f newposition, int priorety);
+			void set_position(sf::Vector2f position, int priority);
 			sf::Vector2f get_position();
 
 			void set_tag(LibShared::Tags);
-			Tags get_tag();
+			Tags get_tag() const;
 
-			float get_width_size();
-			float get_height_size();
+			float get_width_size() const;
+			float get_height_size() const;
 			void set_scale(float, float);
 			void set_size(float, float);
 			void add_velocity(sf::Vector2f);
@@ -80,7 +80,7 @@ namespace MasterEngine
 
 			std::vector<Collider*> colliders_ = std::vector<Collider*>{};
 			Tags tag_;
-			
+
 
 			bool draw_ = false;
 
@@ -89,12 +89,7 @@ namespace MasterEngine
 
 			sf::Vector2f size_;
 
-			std::mutex collider_modify_mutex;
+			std::mutex collider_modify_mutex_;
 		};
-
-		template <typename CONTAINER>
-		void GameObject::add_colliders(const CONTAINER& collider)
-		{
-		}
 	}
 }

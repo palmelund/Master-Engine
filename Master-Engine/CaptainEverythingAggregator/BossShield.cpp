@@ -21,7 +21,7 @@ namespace CaptainEverythingAggregator {
 		GameObject::set_size(BOSS_SHIELD_SIZE, BOSS_SHIELD_SIZE);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 
-		position_ += (M_PI * 2) * (Time::DeltaTime() * BOSS_SHIELD_SPEED) / circumference_;
+		position_ += (M_PI * 2) * (Time::delta_time() * BOSS_SHIELD_SPEED) / circumference_;
 		float posx = std::cos(position_) * BOSS_SHIELD_DISTANCE;
 		float posy = std::sin(position_) * BOSS_SHIELD_DISTANCE;
 		GameObject::position_.set_vector(sf::Vector2f{ boss_->get_position().x + posx, boss_->get_position().y + posy });
@@ -35,14 +35,14 @@ namespace CaptainEverythingAggregator {
 
 	void BossShield::update()
 	{
-		position_ += (M_PI * 2) * (Time::DeltaTime() * BOSS_SHIELD_SPEED) / circumference_;
+		position_ += (M_PI * 2) * (Time::delta_time() * BOSS_SHIELD_SPEED) / circumference_;
 		float posx = std::cos(position_) * BOSS_SHIELD_DISTANCE;
 		float posy = std::sin(position_) * BOSS_SHIELD_DISTANCE;
 		GameObject::set_position(sf::Vector2f{ boss_->get_position().x + posx, boss_->get_position().y + posy });
 
 	}
 
-	void BossShield::OnCollision(GameObject * collider)
+	void BossShield::on_collision(GameObject * collider)
 	{
 		if (collider->get_tag() == Tags::Bullet)
 		{

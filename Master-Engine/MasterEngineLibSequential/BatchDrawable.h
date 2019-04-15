@@ -2,8 +2,6 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <vector>
 #include "GameObject.h"
-#include <unordered_set>
-#include <set>
 
 namespace MasterEngine {
 	namespace LibSequential {
@@ -12,6 +10,10 @@ namespace MasterEngine {
 		{
 		public:
 			explicit BatchDrawable();
+			BatchDrawable(const BatchDrawable& batch_drawable) = delete;
+			BatchDrawable(BatchDrawable&& batch_drawable) = delete;
+			BatchDrawable& operator=(const BatchDrawable& batch_drawable) = delete;
+			BatchDrawable& operator=(BatchDrawable&& batch_drawable) = delete;
 			~BatchDrawable();
 
 			void set_texture(const sf::Texture& texture, int style_sheet_width, int style_sheet_height, int sprite_width, int sprite_height);
@@ -35,8 +37,8 @@ namespace MasterEngine {
 			sf::VertexArray vertices_;
 			sf::Texture texture_;
 
-			int style_sheet_width_;
-			int style_sheet_height_;
+			int style_sheet_width_{};
+			int style_sheet_height_{};
 
 			int sprite_width_{};
 			int sprite_height_{};

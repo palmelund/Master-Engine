@@ -13,21 +13,17 @@ public:
 		value_ = {};
 	}
 
-	~VectorWrapper()
-	{
-	}
-
 	void operator+=(const T& rhs)
 	{
 		auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 		if (pointer_deltas->find(this) != pointer_deltas->end())
 		{
-			VectorDelta<T>* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
+			auto* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
 			delta->addition(rhs);
 		}
 		else
 		{
-			VectorDelta<T>* new_delta = new VectorDelta<T>{ this };
+			auto* new_delta = new VectorDelta<T>{ this };
 			new_delta->addition(rhs);
 			pointer_deltas->insert(std::pair<void*, BaseDelta*>(this, new_delta));
 		}
@@ -38,12 +34,12 @@ public:
 		auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 		if (pointer_deltas->find(this) != pointer_deltas->end())
 		{
-			VectorDelta<T>* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
+			auto* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
 			delta->remove(rhs);
 		}
 		else
 		{
-			VectorDelta<T>* new_delta = new VectorDelta<T>{ this };
+			auto* new_delta = new VectorDelta<T>{ this };
 			new_delta->remove(rhs);
 			pointer_deltas->insert(std::pair<void*, BaseDelta*>(this, new_delta));
 		}
@@ -56,17 +52,17 @@ public:
 
 	void removes_vector(std::vector<T> value)
 	{
-		for(int i = 0; i < value.size(); i++)
+		for(auto i = 0; i < value.size(); i++)
 		{
 			const auto element = std::find(value_.begin(), value_.end(), value[i]);
 			if (element != value_.end()) {
 				value_.erase(element);
-				
+
 			}
 		}
-		
+
 	}
-	
+
 
 	void clear()
 	{

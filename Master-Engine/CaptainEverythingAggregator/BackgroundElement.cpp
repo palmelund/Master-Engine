@@ -32,7 +32,7 @@ namespace CaptainEverythingAggregator {
 		sf::Vector2f position = GameObject::get_position();
 		sf::Vector2f velocity = GameObject::get_velocity();
 		sf::Vector2f force = {0,0};
-		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::DeltaTime()), position.y + (velocity.y * Time::DeltaTime()) });
+		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::delta_time()), position.y + (velocity.y * Time::delta_time()) });
 		position = GameObject::get_position();
 		if (position.x < 0 && velocity.x < 0)
 		{
@@ -54,7 +54,7 @@ namespace CaptainEverythingAggregator {
 
 	}
 
-	void BackgroundElement::OnCollision(GameObject * collider)
+	void BackgroundElement::on_collision(GameObject * collider)
 	{
 		if (collider->get_tag() == Tags::Background)
 		{

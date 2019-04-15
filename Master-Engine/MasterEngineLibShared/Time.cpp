@@ -5,44 +5,46 @@
 namespace MasterEngine {
 	namespace LibShared {
 
-		float Time::deltaTime{};
-		long long Time::startTime{};
-		long long Time::frameTime{ };
+		float Time::delta_time_{};
+		long long Time::start_time_{};
+		long long Time::frame_time_{ };
 
-#define NOW std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()
-
-		float Time::DeltaTime()
-		{
-			return deltaTime;
+		static long long current_time_stamp() {
+			return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		}
 
-		long long Time::StartupTime()
+		float Time::delta_time()
 		{
-			return startTime;
+			return delta_time_;
 		}
 
-		long long Time::SystemTime()
+		long long Time::startup_time()
 		{
-			return NOW;
+			return start_time_;
 		}
 
-		long long Time::FrameTime()
+		long long Time::system_time()
 		{
-			return frameTime;
+			return current_time_stamp();
 		}
 
-		void Time::Update()
+		long long Time::frame_time()
 		{
-			const auto now = NOW;
-
-			deltaTime = static_cast<float>(now - frameTime) / 1000;
-			frameTime = now;
+			return frame_time_;
 		}
 
-		void Time::StartUp()
+		void Time::tick()
 		{
-			startTime = NOW;
-			frameTime = startTime;
+			const auto now = current_time_stamp();
+
+			delta_time_ = static_cast<float>(now - frame_time_) / 1000;
+			frame_time_ = now;
+		}
+
+		void Time::start_up()
+		{
+			start_time_ = current_time_stamp();
+			frame_time_ = start_time_;
 		}
 
 	}

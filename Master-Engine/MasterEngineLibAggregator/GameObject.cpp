@@ -9,10 +9,10 @@ namespace MasterEngine {
 	namespace LibAggregator {
 
 		using namespace LibShared;
-		
+
 		GameObject::GameObject(const bool collision_code)
-			: sprite_pos_(-1), collision_code_(collision_code), id_(GameEngine::get_new_id()),
-			velocity_(Vector2Wrapper{}), tag_(Tags::Default), size_(Renderer::get_sprite_size())
+			: sprite_pos_(-1), velocity_(Vector2Wrapper{}), collision_code_(collision_code),
+			id_(GameEngine::get_new_id()), tag_(Tags::Default), size_(Renderer::get_sprite_size())
 		{
 			GameEngine::add_game_object(this);
 			if (collision_code)
@@ -23,11 +23,11 @@ namespace MasterEngine {
 
 		GameObject::~GameObject()
 		{
-			for (Collider* collider : colliders_)
+			for (auto collider : colliders_)
 			{
 				delete collider;
 			}
-			
+
 		}
 
 
@@ -42,7 +42,7 @@ namespace MasterEngine {
 
 		void GameObject::add_collider(Collider* collider)
 		{
-			std::unique_lock<std::mutex> lock(collider_modify_mutex);
+			std::unique_lock<std::mutex> lock(collider_modify_mutex_);
 			collider->set_owner(this);
 			colliders_.emplace_back(collider);
 		}
@@ -52,16 +52,16 @@ namespace MasterEngine {
 			return colliders_;
 		}
 
-		void GameObject::set_position(sf::Vector2f newposition)
+		void GameObject::set_position(const sf::Vector2f position)
 		{
 
-			position_ = newposition;
+			position_ = position;
 		}
 
-		void GameObject::set_position(sf::Vector2f newposition, int priorety)
+		void GameObject::set_position(const sf::Vector2f position, const int priority)
 		{
 
-			position_.assign( newposition, priorety);
+			position_.assign( position, priority);
 		}
 
 		sf::Vector2f GameObject::get_position()
@@ -69,35 +69,35 @@ namespace MasterEngine {
 			return position_.get_vector();
 		}
 
-		Tags GameObject::get_tag()
+		Tags GameObject::get_tag() const
 		{
 			return tag_;
 		}
 
 
-		float GameObject::get_width_size()
+		float GameObject::get_width_size() const
 		{
 			return size_.x* width_scale_;
 		}
 
-		float GameObject::get_height_size()
+		float GameObject::get_height_size() const
 		{
 			return size_.y* height_scale_;
 		}
 
-		void GameObject::set_scale(float h_scale, float w_scale)
+		void GameObject::set_scale(const float h_scale, const float w_scale)
 		{
 			height_scale_ = h_scale;
 			width_scale_ = w_scale;
 		}
 
-		void GameObject::set_size(float width, float height)
+		void GameObject::set_size(const float width, const float height)
 		{
 			height_scale_ = width / size_.y;
 			width_scale_ = height / size_.x;
 		}
 
-		void GameObject::set_tag(Tags tag)
+		void GameObject::set_tag(const Tags tag)
 		{
 			tag_ = tag;
 		}
@@ -107,14 +107,14 @@ namespace MasterEngine {
 			return id_;
 		}
 
-		void GameObject::remove_gameobject()
+		void GameObject::remove_game_object()
 		{
 			unset_sprite();
 			if (collision_code_)
 			{
 				GameEngine::remove_collider(this);
 			}
-			GameEngine::destroyed_game_objects_.insert(this);
+			GameEngine::destroyed_game_objects.insert(this);
 		}
 
 		void GameObject::start_up()
@@ -125,11 +125,11 @@ namespace MasterEngine {
 		{
 		}
 
-		void GameObject::OnCollision(GameObject* collider)
+		void GameObject::on_collision(GameObject* collider)
 		{
 		}
 
-		void GameObject::set_sprite(int sprite_position)
+		void GameObject::set_sprite(const int sprite_position)
 		{
 			sprite_pos_ = sprite_position;
 			if (!draw_)
@@ -139,45 +139,38 @@ namespace MasterEngine {
 			}
 		}
 
+		// TODO: fixme
 		void GameObject::collision_check()
 		{
-			auto& game_state = GameEngine::get_gamestate();
-			for(int i = 0; i < game_state.size(); i++)
-			{
-				auto* colliders = game_state[i];
-
-				GameObject* collisiondetected = nullptr;
-				if (this == colliders)
+			for (auto potential_colliding_game_object : GameEngine::get_game_state()) {
+				GameObject* colliding_game_object = nullptr;
+				if (this == potential_colliding_game_object)
 				{
 					continue;
 				}
-//				for (Collider* myCollider : get_colliders()) {
-				for(int j = 0; j < get_colliders().size(); j++) {
-					auto* myCollider = get_colliders()[j];
-//					for (Collider* collider : colliders->get_colliders()) {
-					for(int k = 0; k < colliders->get_colliders().size(); k++) {
-						auto* collider = colliders->get_colliders()[k];
-						if (Collider::ColliderOverLap(myCollider->get_collider(), collider->get_collider()))
+				for (auto colliders : get_colliders()) {
+					for (auto potential_colliders : potential_colliding_game_object->get_colliders()) {
+						if (Collider::collider_overlap(colliders->get_collider(), potential_colliders->get_collider()))
 						{
-							collisiondetected = colliders;
+							colliding_game_object = potential_colliding_game_object;
 							break;
 						}
 					}
-					if (collisiondetected != nullptr)
+					if (colliding_game_object != nullptr)
 					{
-						OnCollision(collisiondetected);
+						on_collision(colliding_game_object);
 						break;
 					}
 				}
 			}
 		}
 
-		void GameObject::add_velocity(sf::Vector2f force)
+		void GameObject::add_velocity(const sf::Vector2f force)
 		{
 			velocity_ += sf::Vector2f{  force.x, force.y };
 		}
 
-		void GameObject::set_velocity(sf::Vector2f velocity)
+		void GameObject::set_velocity(const sf::Vector2f velocity)
 		{
 			velocity_ = velocity;
 		}

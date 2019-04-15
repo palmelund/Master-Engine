@@ -9,16 +9,16 @@ namespace MasterEngine
 			Time() = delete;
 			~Time() = delete;
 
-			static float DeltaTime();
-			static long long StartupTime();
-			static long long SystemTime();
-			static long long FrameTime();
-			static void Update();
-			static void StartUp();
+			static float delta_time();
+			static long long startup_time();
+			static long long system_time();
+			static long long frame_time();
+			static void tick();
+			static void start_up();
 		private:
-			static float deltaTime;
-			static long long startTime;
-			static long long frameTime;
+			static float delta_time_;
+			static long long start_time_;
+			static long long frame_time_;
 		};
 
 	}

@@ -31,7 +31,7 @@ namespace CaptainEverythingParallel {
 		std::unique_lock<std::mutex> lock(GameObject::velocity_modify_mutex);
 		sf::Vector2f position = GameObject::get_position();
 		sf::Vector2f velocity = GameObject::get_velocity();
-		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::DeltaTime()), position.y + (velocity.y * Time::DeltaTime()) });
+		GameObject::set_position(sf::Vector2f{ position.x + (velocity.x * Time::delta_time()), position.y + (velocity.y * Time::delta_time()) });
 		position = GameObject::get_position();
 		if (position.x < 0)
 		{
@@ -53,7 +53,7 @@ namespace CaptainEverythingParallel {
 
 	}
 
-	void BackgroundElement::OnCollision(GameObject * collider)
+	void BackgroundElement::on_collision(GameObject * collider)
 	{
 		if (collider->get_tag() == Tags::Background)
 		{

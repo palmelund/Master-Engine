@@ -38,7 +38,7 @@ namespace CaptainEverythingAggregator {
 	void Boss::update()
 	{
 		sf::Vector2f velocity = GameObject::get_velocity();
-		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::DeltaTime()), GameObject::get_position().y + (velocity.y * Time::DeltaTime()) });
+		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::delta_time()), GameObject::get_position().y + (velocity.y * Time::delta_time()) });
 		if (GameObject::get_position().y < 50)
 		{
 			velocity.y = 50;
@@ -58,7 +58,7 @@ namespace CaptainEverythingAggregator {
 		GameObject::set_velocity(velocity);
 	}
 
-	void Boss::OnCollision(GameObject * collider)
+	void Boss::on_collision(GameObject * collider)
 	{
 		if (collider->get_tag() == Tags::Bullet && shield_amount_ == 0)
 		{

@@ -1,6 +1,5 @@
 #pragma once
 #include "../MasterEngineLibAggregator/GameObject.h"
-#include <mutex>
 
 namespace CaptainEverythingAggregator {
 	using namespace MasterEngine::LibAggregator;
@@ -13,7 +12,7 @@ namespace CaptainEverythingAggregator {
 		~BackgroundElement();
 
 		void update() override;
-		void OnCollision(GameObject* collider) override;
+		void on_collision(GameObject* collider) override;
 
 	private:
 		int size_;

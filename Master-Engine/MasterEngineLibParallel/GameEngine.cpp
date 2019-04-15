@@ -17,7 +17,15 @@ namespace MasterEngine {
 		std::vector<GameObject*> GameEngine::game_objects_{};
 		std::vector<GameObject*> GameEngine::collision_game_objects_{};
 		std::unordered_set<GameObject*> GameEngine::destroyed_game_objects_{};
+
+#ifdef LOG_DELTA_TIMES
 		std::vector<float> GameEngine::delta_list_{};
+#endif
+
+#ifdef LOG_CUMULATIVE_TIME
+		long long GameEngine::frame_count_{};
+		float GameEngine::cumulative_time_{};
+#endif
 
 		std::mutex GameEngine::add_game_object_mutex_{};
 		std::mutex GameEngine::remove_game_object_mutex_{};
@@ -29,33 +37,43 @@ namespace MasterEngine {
 #ifdef LOG_DELTA_TIMES
 			delta_list_ = std::vector<float>{};
 #endif
-			thread_pool_.CreateThreadPool();
-			Time::StartUp();
+			thread_pool_.create_thread_pool();
+			Time::start_up();
 
 		}
 
 		void GameEngine::run()
 		{
 #ifdef LOG_DELTA_TIMES
-			float com_delta = 0;
-			int framecount = 0;
+			auto com_delta = 0.0f;
+			auto frame_count = 0;
+#endif
+
+#ifdef LOG_CUMULATIVE_TIME
+			frame_count_ = 0;
+			cumulative_time_ = 0;
 #endif
 
 			while (Renderer::is_open())
 			{
 				//Create delta for this frame
-				Time::Update();
+				Time::tick();
 
 #ifdef LOG_DELTA_TIMES
-				delta_list_.emplace_back(Time::DeltaTime());
-				com_delta += Time::DeltaTime();
-				framecount++;
+				delta_list_.emplace_back(Time::delta_time());
+				com_delta += Time::delta_time();
+				frame_count++;
 				if (com_delta > 1.0f)
 				{
 					com_delta -= 1.0f;
-					std::cout << "Frame per second: " << framecount << std::endl;
-					framecount = 0;
+					std::cout << "Frame per second: " << frame_count << std::endl;
+					frame_count = 0;
 				}
+#endif
+
+#ifdef LOG_CUMULATIVE_TIME
+				++frame_count_;
+				cumulative_time_ += Time::delta_time();
 #endif
 
 				sf::Event event;
@@ -69,28 +87,28 @@ namespace MasterEngine {
 
 				Input::process_input();
 
-				//for (GameObject* object : get_gamestate()) {
-				auto& game_state = get_gamestate();
+				//for (GameObject* object : get_game_state()) {
+				auto& game_state = get_game_state();
 				for (auto i = 0; i < game_state.size(); i++) {
 					auto* object = game_state[i];
 
-					thread_pool_.AddJob(std::bind(&GameObject::update, object));
+					thread_pool_.add_job(std::bind(&GameObject::update, object));
 				}
 				{
-					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
+					std::unique_lock<std::mutex> lock(thread_pool_.queue_mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.job_queue.empty() && thread_pool_.working_threads_ == 0; });
 				}
 
 				//for (GameObject* object : collision_game_objects_) {
 				for (auto i = 0; i < collision_game_objects_.size(); i++) {
 				//object->collision_check();
 					auto* object = collision_game_objects_[i];
-					thread_pool_.AddJob(std::bind(&GameObject::collision_check, object));
+					thread_pool_.add_job(std::bind(&GameObject::collision_check, object));
 				}
 
 				{
-					std::unique_lock<std::mutex> lock(thread_pool_.Queue_Mutex);
-					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.JobQueue.empty() && thread_pool_.working_threads_ == 0; });
+					std::unique_lock<std::mutex> lock(thread_pool_.queue_mutex);
+					thread_pool_.condition_done.wait(lock, [] {return thread_pool_.job_queue.empty() && thread_pool_.working_threads_ == 0; });
 					//std::cout << ThreadPool::working_threads_ << std::endl;
 				}
 
@@ -103,7 +121,7 @@ namespace MasterEngine {
 				{
 					delete go;
 				}
-				get_destroyid_game_object().clear();
+				get_destroyed_game_objects().clear();
 
 				Renderer::render();
 			}
@@ -120,7 +138,11 @@ namespace MasterEngine {
 			std::cout << "Total Frames/second: " << frames_over_time << std::endl;
 
 #endif
-
+#ifdef LOG_CUMULATIVE_TIME
+			std::cout << "Total time: " << cumulative_time_ << std::endl;
+			std::cout << "Total frames: " << frame_count_ << std::endl;
+			std::cout << "Total frames/second: " << frame_count_ / cumulative_time_ << std::endl;
+#endif
 
 		}
 
@@ -129,7 +151,7 @@ namespace MasterEngine {
 			return ++incremental_id_;
 		}
 
-		void GameEngine::Instantiate(GameObject* game_object, sf::Vector2f position)
+		void GameEngine::instantiate(GameObject* game_object, const sf::Vector2f position)
 		{
 			game_object->set_position(position);
 			game_object->start_up();
@@ -159,12 +181,12 @@ namespace MasterEngine {
 			destroyed_game_objects_.insert(game_object);
 		}
 
-		std::vector<GameObject*>& GameEngine::get_gamestate()
+		std::vector<GameObject*>& GameEngine::get_game_state()
 		{
 			return game_objects_;
 		}
 
-		std::unordered_set<GameObject*>& GameEngine::get_destroyid_game_object()
+		std::unordered_set<GameObject*>& GameEngine::get_destroyed_game_objects()
 		{
 			return destroyed_game_objects_;
 		}

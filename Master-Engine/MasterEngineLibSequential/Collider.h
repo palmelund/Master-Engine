@@ -12,19 +12,23 @@ namespace MasterEngine
 		class Collider
 		{
 		public:
-			Collider(sf::Vector2f localPosition, sf::Vector2f size);
+			Collider(sf::Vector2f local_position, sf::Vector2f size);
+			Collider(const Collider& collider) = delete;
+			Collider(Collider&& collider) noexcept;
+			Collider& operator=(const Collider& collider) = delete;
+			Collider& operator=(Collider&& collider) noexcept;
 			~Collider();
-			sf::Vector2f LocalPosition;
-			sf::Vector2f Size;
+			sf::Vector2f local_position;
+			sf::Vector2f size;
 
-			Transform get_collider();
+			Transform get_collider() const;
 
 			void set_owner(GameObject*);
-			GameObject* get_owner();
-			static bool ColliderOverLap(Transform object1, Transform Object2);
+			GameObject* get_owner() const;
+			static bool collider_overlap(Transform transform1, Transform transform2);
 
 		private:
-			GameObject* owner_;
+			GameObject* owner_{};
 
 		};
 	}

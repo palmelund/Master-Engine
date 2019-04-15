@@ -21,7 +21,7 @@ namespace CaptainEverythingParallel {
 	{
 	}
 
-	void GravityWell::OnCollision(GameObject* collider)
+	void GravityWell::on_collision(GameObject* collider)
 	{
 		std::unique_lock<std::mutex> lock(collider->velocity_modify_mutex);
 		float side_a = (get_position().x + (GRAVITY_WELL_SIZE / 2.0f)) - (collider->get_position().x + (collider->get_width_size() / 2.0f));
@@ -30,6 +30,6 @@ namespace CaptainEverythingParallel {
 		float cal_pullforce = (GRAVITY_WELL_SIZE - side_c) * GRAVITY_WELL_PULL_FORCE;
 		sf::Vector2f direction_vector{ side_a / side_c , side_b / side_c };
 
-		collider->add_velocity(sf::Vector2f{ direction_vector.x * cal_pullforce * Time::DeltaTime() ,direction_vector.x * cal_pullforce * Time::DeltaTime() });
+		collider->add_velocity(sf::Vector2f{ direction_vector.x * cal_pullforce * Time::delta_time() ,direction_vector.x * cal_pullforce * Time::delta_time() });
 	}
 }

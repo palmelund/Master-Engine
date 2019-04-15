@@ -4,10 +4,10 @@ namespace MasterEngine {
 	namespace LibAggregator {
 
 		struct Transform {
-			float posX;
-			float posY;
-			float sizeX;
-			float sizeY;
+			float pos_x;
+			float pos_y;
+			float size_x;
+			float size_y;
 		};
 	}
 }

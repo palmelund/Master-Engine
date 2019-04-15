@@ -22,13 +22,13 @@ namespace MasterEngine {
 			static void init(const std::vector<sf::Keyboard::Key>& enabled_keys);
 			static void init(std::vector<sf::Keyboard::Key>&& enabled_keys);
 
-			static KeyStatus get_input_state(sf::Keyboard::Key key_code);
-			static bool get_key_pressed(sf::Keyboard::Key key_code);
-			static bool get_key_hold(sf::Keyboard::Key key_code);
-			static bool get_key_lift(sf::Keyboard::Key key_code);
+			static KeyStatus get_input_state(sf::Keyboard::Key key);
+			static bool get_key_pressed(sf::Keyboard::Key key);
+			static bool get_key_hold(sf::Keyboard::Key key);
+			static bool get_key_lift(sf::Keyboard::Key key);
 
 			static void process_input();
-			static void process_key_input(sf::Keyboard::Key gl_key);
+			static void process_key_input(sf::Keyboard::Key key);
 
 		private:
 			static std::vector<sf::Keyboard::Key> enabled_keys_;

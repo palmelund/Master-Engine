@@ -18,7 +18,7 @@ int main()
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
 
 	GameEngine::init();
-	GameEngine::Instantiate(new Spawner(), sf::Vector2f{ 0,0 });
+	GameEngine::instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();
 }
