@@ -2,14 +2,19 @@
 
 namespace CaptainEverythingShared
 {
-#define SPRITE_WIDTH 200
-#define SPRITE_HEIGHT 200
+	class SpriteIndexes
+	{
+	public:
+		SpriteIndexes() = delete;
+		constexpr static int sprite_width = 200;
+		constexpr static int sprite_height = 200;
 
-#define PLAYER_SPRITE 0
-#define ENEMY_SPRITE 1
-#define GRAVITY_WELL_SPRITE 2
-#define BULLET_SPRITE 3
-#define SHIELD_SPRITE 4
-#define BACKGROUND_SPRITE 5
-#define BOSS_SPRITE 6
+		constexpr static int player_sprite = 0;
+		constexpr static int enemy_sprite = 1;
+		constexpr static int gravity_well_sprite = 2;
+		constexpr static int bullet_sprite = 3;
+		constexpr static int shield_sprite = 4;
+		constexpr static int background_sprite = 5;
+		constexpr static int boss_sprite = 6;
+	};
 }

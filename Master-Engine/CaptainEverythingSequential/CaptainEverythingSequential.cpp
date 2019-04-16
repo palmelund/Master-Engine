@@ -11,6 +11,7 @@
 
 using namespace MasterEngine::LibSequential;
 using namespace CaptainEverythingSequential;
+using namespace CaptainEverythingShared;
 
 int main()
 {
@@ -18,8 +19,8 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	Renderer::init("Master Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
-	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
+	Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
+	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
 
 	GameEngine::init();
 	GameEngine::instantiate(new Spawner(), sf::Vector2f{ 0,0 });
@@ -32,7 +33,7 @@ int main()
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages
