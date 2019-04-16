@@ -37,7 +37,7 @@ namespace CaptainEverythingSequential {
 		for (int i = 0; i < BACKGROUND_ELEMENT_COUNT; i++)
 		{
 			;
-			GameEngine::instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((70 * i) % Renderer::get_window_size()->x),(float)((30 * i) % Renderer::get_window_size()->y) });
+			GameEngine::instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((BACKGROUND_ELEMENT_SIZE * i) % Renderer::get_window_size()->x),(float)((BACKGROUND_ELEMENT_SIZE * i) / Renderer::get_window_size()->x) });
 		}
 
 		GameEngine::instantiate(new Player(), sf::Vector2f{ 50.0f, Renderer::get_window_size()->y / 2.0f });
