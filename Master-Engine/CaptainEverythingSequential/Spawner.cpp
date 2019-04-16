@@ -12,13 +12,14 @@
 
 namespace CaptainEverythingSequential {
 	using namespace MasterEngine::LibShared;
+	using namespace CaptainEverythingShared;
 
 	Spawner* Spawner::single_ton_ = nullptr;
 
 	Spawner::Spawner() : GameObject(false)
 	{
 		internal_timer = 0;
-		spawn_time = ENEMY_SPAWN_TIME;
+		spawn_time = CaptainEverythingShared::Constants::enemy_spawn_time;
 		spawn_position_ = 0.0f;
 		player_hits_ = 0;
 		enemy_kills_ = 0;
@@ -34,7 +35,7 @@ namespace CaptainEverythingSequential {
 
 	void Spawner::start_up()
 	{
-		for (int i = 0; i < BACKGROUND_ELEMENT_COUNT; i++)
+		for (int i = 0; i < Constants::background_element_count; i++)
 		{
 			;
 			GameEngine::instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((70 * i) % Renderer::get_window_size()->x),(float)((30 * i) % Renderer::get_window_size()->y) });
@@ -54,7 +55,7 @@ namespace CaptainEverythingSequential {
 			spawn_position_ = static_cast<float>(int(spawn_position_) % (Renderer::get_window_size()->y - 30));
 			GameEngine::instantiate(new Enemy(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, spawn_position_ });
 			spawn_count_++;
-			if (spawn_count_ > BOSS_SPAWN_THRESHOLD)
+			if (spawn_count_ > Constants::boss_spawn_threshold)
 			{
 				spawn_count_ = 0;
 				GameEngine::instantiate(new Boss(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, Renderer::get_window_size()->y / 2.0f });

@@ -2,33 +2,38 @@
 
 namespace CaptainEverythingShared
 {
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 500
+	class Constants
+	{
+	public:
+		Constants() = delete;
 
-#define BACKGROUND_ELEMENT_COUNT 1000
-#define BOSS_SPAWN_THRESHOLD 50
+		constexpr static int screen_width = 800;
+		constexpr static int screen_height = 500;
 
-#define PLAYER_BULLET_SIZE 20
-#define PLAYER_SIZE 20
-#define PLAYER_SPEED 900.0f
-#define PLAYER_FIRE_RATE 0.8f
+		constexpr static int background_element_count = 1000;
+		constexpr static int boss_spawn_threshold = 50;
 
-#define GRAVITY_WELL_SIZE 160
-#define GRAVITY_WELL_PULL_FORCE 1.0f
+		constexpr static int player_bullet_size = 20;
+		constexpr static int player_size = 20;
+		constexpr static float player_speed = 900.0f;
+		constexpr static float player_fire_rate = 0.8f;
 
-#define ENEMY_BULLET_SIZE 20
-#define ENEMY_SIZE 20
-#define ENEMY_FIRE_RATE 1.3f
+		constexpr static int gravity_well_size = 160;
+		constexpr static float gravity_well_pull_force = 1.0f;
 
-#define BOSS_SHIELD_DISTANCE 75.0f
-#define BOSS_SHIELD_SPEED 100
-#define BOSS_SHIELD_SIZE 50
+		constexpr static int enemy_bullet_size = 20;
+		constexpr static int enemy_size = 20;
+		constexpr static float enemy_fire_rate = 1.3f;
 
-#define BOSS_SIZE 50
-#define BOSS_SHIELD_COUNT 3
+		constexpr static float boss_shield_distance = 75.0f;
+		constexpr static int boss_shield_speed = 100;
+		constexpr static int boss_shield_size = 50;
 
-#define BACKGROUND_ELEMENT_SIZE 20
+		constexpr static int boss_size = 50;
+		constexpr static int boss_shield_count = 3;
 
-#define ENEMY_SPAWN_TIME 1.2f
+		constexpr static int background_element_size = 20;
 
+		constexpr static float enemy_spawn_time = 1.2f;
+	};
 }

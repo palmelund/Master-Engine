@@ -14,10 +14,10 @@ namespace CaptainEverythingSequential {
 
 	Boss::Boss() : GameObject(true)
 	{
-		size_ = BOSS_SIZE;
-		shield_amount_ = BOSS_SHIELD_COUNT;
+		size_ = Constants::boss_size;
+		shield_amount_ = Constants::boss_shield_count;
 		GameObject::set_velocity(sf::Vector2f{ 0.0f, 100.0f });
-		GameObject::set_sprite(BOSS_SPRITE);
+		GameObject::set_sprite(SpriteIndexes::boss_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		//GameObject::set_tag(Tags::Enemy);

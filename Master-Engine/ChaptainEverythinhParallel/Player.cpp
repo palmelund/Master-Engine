@@ -13,12 +13,12 @@ namespace CaptainEverythingParallel {
 
 	Player::Player() : GameObject(true), internal_timer(0)
 	{
-		size_ = PLAYER_SIZE;
-		GameObject::set_sprite(PLAYER_SPRITE);
+		size_ = Constants::player_size;
+		GameObject::set_sprite(SpriteIndexes::player_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
-		speed = PLAYER_SPEED;
-		fire_rate_ = PLAYER_FIRE_RATE;
+		speed = Constants::player_speed;
+		fire_rate_ = Constants::player_fire_rate;
 	}
 
 

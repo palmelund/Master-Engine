@@ -7,11 +7,14 @@
 #include "../MasterEngineLibAggregator/Renderer.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../MasterEngineLibAggregator/ResourceManager.h"
+#include "../MasterEngineLibShared/KeyStatus.h"
 
 int main()
 {
-	MasterEngine::LibAggregator::Renderer::init("Master Engine", SCREEN_WIDTH, SCREEN_HEIGHT);
-	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SPRITE_WIDTH, SPRITE_HEIGHT);
+	using namespace CaptainEverythingShared;
+
+	MasterEngine::LibAggregator::Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
+	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
 
 	MasterEngine::LibAggregator::GameEngine::init();
 
@@ -21,7 +24,7 @@ int main()
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages

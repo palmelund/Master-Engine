@@ -11,9 +11,9 @@ namespace CaptainEverythingParallel {
 
 	EnemyBullet::EnemyBullet() : GameObject(false)
 	{
-		size_ = ENEMY_BULLET_SIZE;
+		size_ = Constants::enemy_bullet_size;
 		GameObject::set_velocity(sf::Vector2f{ -300.0f, 0.0f });
-		GameObject::set_sprite(BULLET_SPRITE);
+		GameObject::set_sprite(SpriteIndexes::bullet_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::EnemyBullet);

@@ -13,11 +13,11 @@ namespace CaptainEverythingParallel {
 
 	Enemy::Enemy() : GameObject(false)
 	{
-		size_ = ENEMY_SIZE;
-		fire_rate_ = ENEMY_FIRE_RATE;
+		size_ = Constants::enemy_size;
+		fire_rate_ = Constants::enemy_fire_rate;
 		internal_timer = 0;
 		GameObject::set_velocity(sf::Vector2f{ -100.0f, 0.0f });
-		GameObject::set_sprite(ENEMY_SPRITE);
+		GameObject::set_sprite(SpriteIndexes::enemy_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::Enemy);
