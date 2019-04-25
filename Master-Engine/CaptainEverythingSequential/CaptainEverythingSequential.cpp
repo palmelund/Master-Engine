@@ -8,6 +8,7 @@
 #include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include <iostream>
 
 using namespace MasterEngine::LibSequential;
 using namespace CaptainEverythingSequential;
@@ -26,6 +27,9 @@ int main()
 	GameEngine::instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();
+
+	std::string str;
+	std::getline(std::cin, str);
 
 	return EXIT_SUCCESS;
 }

@@ -8,6 +8,7 @@
 #include "../MasterEngineLibParallel/Renderer.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include <iostream>
 
 using namespace MasterEngine::LibParallel;
 using namespace CaptainEverythingParallel;
@@ -22,6 +23,11 @@ int main()
 	GameEngine::instantiate(new Spawner(), sf::Vector2f{ 0,0 });
 
 	GameEngine::run();
+
+	std::string str;
+	std::getline(std::cin, str);
+
+	return  EXIT_SUCCESS;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

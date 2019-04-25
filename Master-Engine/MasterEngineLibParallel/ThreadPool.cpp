@@ -14,7 +14,12 @@ namespace MasterEngine {
 
 		void ThreadPool::create_thread_pool()
 		{
+#ifdef SINGLE_CORE_TEST
+			const auto thread_count = 1;
+#else
 			const auto thread_count = std::thread::hardware_concurrency();
+#endif
+
 
 			for (unsigned t = 0; t < thread_count; t++)
 			{
