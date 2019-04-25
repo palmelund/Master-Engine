@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include <numeric>
 #include "../CaptainEverythingAggregator/Spawner.h"
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace MasterEngine {
 	namespace LibAggregator {
@@ -73,8 +74,11 @@ namespace MasterEngine {
 				}
 #endif
 #ifdef LOG_CUMULATIVE_TIME
-				++frame_count_;
 				cumulative_time_ += Time::delta_time();
+				if (cumulative_time_ > CaptainEverythingShared::Constants::record_time_start)
+				{
+					++frame_count_;
+				}
 #endif
 
 				sf::Event event{};
@@ -85,18 +89,45 @@ namespace MasterEngine {
 						Renderer::close();
 					}
 				}
+				if (cumulative_time_ > CaptainEverythingShared::Constants::record_time_end)
+				{
+					Renderer::close();
+				}
 
-				Input::process_input();
+				
 
 				auto& game_state = get_game_state();
 				for (auto i = 0; i < game_state.size(); i++) {
 					auto* object = game_state[i];
-					thread_pool_.add_job(std::bind(&GameObject::update, object));
+					if (!object->need_input())
+					{
+						thread_pool_.add_job(std::bind(&GameObject::update, object));
+					}
 				}
 
 				for (auto i = 0; i < collision_game_objects_.get_value().size(); i++) {
 					auto object = collision_game_objects_.get_value()[i];
-					thread_pool_.add_job(std::bind(&GameObject::collision_check, object));
+					if (!object->need_input())
+					{
+						thread_pool_.add_job(std::bind(&GameObject::collision_check, object));
+					}
+				}
+				Input::process_input();
+
+				for (auto i = 0; i < game_state.size(); i++) {
+					auto* object = game_state[i];
+					if (object->need_input())
+					{
+						thread_pool_.add_job(std::bind(&GameObject::update, object));
+					}
+				}
+
+				for (auto i = 0; i < collision_game_objects_.get_value().size(); i++) {
+					auto object = collision_game_objects_.get_value()[i];
+					if (object->need_input())
+					{
+						thread_pool_.add_job(std::bind(&GameObject::collision_check, object));
+					}
 				}
 
 				Renderer::render();
@@ -166,8 +197,9 @@ namespace MasterEngine {
 #endif
 #ifdef LOG_CUMULATIVE_TIME
 			std::cout << "Total time: " << cumulative_time_ << std::endl;
+			std::cout << "Recording time: " << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 			std::cout << "Total frames: " << frame_count_ << std::endl;
-			std::cout << "Total frames/second: " << frame_count_ / cumulative_time_ << std::endl;
+			std::cout << "Total frames/second: " << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 #endif
 
 		}

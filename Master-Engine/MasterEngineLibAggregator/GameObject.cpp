@@ -10,9 +10,9 @@ namespace MasterEngine {
 
 		using namespace LibShared;
 
-		GameObject::GameObject(const bool collision_code)
+		GameObject::GameObject(const bool collision_code, const bool takes_input)
 			: sprite_pos_(-1), velocity_(Vector2Wrapper{}), collision_code_(collision_code),
-			id_(GameEngine::get_new_id()), tag_(Tags::Default), size_(Renderer::get_sprite_size())
+			id_(GameEngine::get_new_id()), tag_(Tags::Default), size_(Renderer::get_sprite_size()), takes_input_(takes_input)
 		{
 			GameEngine::add_game_object(this);
 			if (collision_code)
@@ -188,6 +188,10 @@ namespace MasterEngine {
 		int GameObject::sprite_pos() const noexcept
 		{
 			return sprite_pos_;
+		}
+		bool GameObject::need_input()
+		{
+			return takes_input_;
 		}
 	}
 }

@@ -14,7 +14,7 @@ void IntWrapper::operator+=(const int & rhs)
 	auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 	if (pointer_deltas->find(this) != pointer_deltas->end())
 	{
-		auto delta = dynamic_cast<IntDelta*>(pointer_deltas->at(this));
+		auto delta = static_cast<IntDelta*>(pointer_deltas->at(this));
 		delta->addition(rhs);
 	}
 	else
@@ -30,7 +30,7 @@ void IntWrapper::operator*=(const int & rhs)
 	auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 	if (pointer_deltas->find(this) != pointer_deltas->end())
 	{
-		auto delta = dynamic_cast<IntDelta*>(pointer_deltas->at(this));
+		auto delta = static_cast<IntDelta*>(pointer_deltas->at(this));
 		delta->multiply(rhs);
 	}
 	else
@@ -51,7 +51,7 @@ void IntWrapper::assign(const int & rhs, const int priority)
 	auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 	if (pointer_deltas->find(this) != pointer_deltas->end())
 	{
-		auto delta = dynamic_cast<IntDelta*>(pointer_deltas->at(this));
+		auto delta = static_cast<IntDelta*>(pointer_deltas->at(this));
 		delta->assign(rhs, priority);
 	}
 	else

@@ -35,5 +35,8 @@ namespace CaptainEverythingShared
 		constexpr static int background_element_size = 20;
 
 		constexpr static float enemy_spawn_time = 1.2f;
+
+		constexpr static float record_time_start = 5.0f;
+		constexpr static float record_time_end = 300.0f+record_time_start;
 	};
 }
