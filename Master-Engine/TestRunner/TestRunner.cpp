@@ -9,6 +9,7 @@
 #include <array>
 #include <vector>
 #include <sstream>
+#include <fstream>
 
 std::string exe(const char* cmd)
 {
@@ -29,16 +30,19 @@ int main()
 	std::vector<std::string> res{};
 
 	std::vector<int> test_sizes_single_core = { 30,300,1000 };
+	std::vector<int> test_sizes_background_element = { 30,300,1000, 2000 };
+	std::vector<int> test_sizes_gravity_well = { 1, 5, 10, 25 };
 	std::vector<std::string> test_engine_names = { "CaptainEverythingSequential", "CaptainEverythingParallel", "CaptainEverythingAggregator" };
 
-	int test_iterations = 1;
+	int test_iterations = 5;
 
-	res.emplace_back("Single-Core test");
+#pragma region Single_Core
+	res.emplace_back("Single-Core test\n");
 	for (auto& engine : test_engine_names)
 	{
 		std::string start_string;
 		start_string += engine;
-		start_string += " START";
+		start_string += " START\n";
 		res.emplace_back(start_string);
 		for (auto test_size : test_sizes_single_core)
 		{
@@ -46,7 +50,7 @@ int main()
 			test_title += engine;
 			test_title += " - ";
 			test_title += std::to_string(test_size);
-			test_title += " background elements";
+			test_title += " background elements\n";
 			res.emplace_back(test_title);
 
 			for (auto iteration = 0; iteration < test_iterations; iteration++)
@@ -62,11 +66,78 @@ int main()
 			}
 		}
 	}
+#pragma endregion
+#pragma region Background_element
+	res.emplace_back("Background_element test\n");
+	for (int i = 1; i < 3; i++)
+	{
+		std::string start_string;
+		start_string += test_engine_names[i];
+		start_string += " START\n";
+		res.emplace_back(start_string);
+		for (auto test_size : test_sizes_background_element)
+		{
+			std::string test_title{};
+			test_title += test_engine_names[i];
+			test_title += " - ";
+			test_title += std::to_string(test_size);
+			test_title += " background elements\n";
+			res.emplace_back(test_title);
+
+			for (auto iteration = 0; iteration < test_iterations; iteration++)
+			{
+				std::string command{};
+				command += test_engine_names[i];
+				command += " ";
+				command += std::to_string(test_size);
+				command += " 1 0";
+
+				std::string result = exe(command.c_str());
+				res.emplace_back(result);
+			}
+
+		}
+	}
+#pragma endregion
+#pragma region Gravity_well
+	res.emplace_back("Background_element test\n");
+	for (int i = 0; i < 3; i++)
+	{
+		std::string start_string;
+		start_string += test_engine_names[i];
+		start_string += " START\n";
+		res.emplace_back(start_string);
+		for (auto test_size : test_sizes_gravity_well)
+		{
+			std::string test_title{};
+			test_title += test_engine_names[i];
+			test_title += " - ";
+			test_title += std::to_string(test_size);
+			test_title += " background elements\n";
+			res.emplace_back(test_title);
+
+			for (auto iteration = 0; iteration < test_iterations; iteration++)
+			{
+				std::string command{};
+				command += test_engine_names[i];
+				command += " 1000 ";
+				command += std::to_string(test_size);
+				command += " 0";
+
+				std::string result = exe(command.c_str());
+				res.emplace_back(result);
+			}
+		}
+	}
+#pragma endregion
+	std::ofstream myfile;
+	myfile.open("test_resualt.txt", std::ios::out | std::ios::trunc);
 
 	for (auto& s : res)
 	{
-		std::cout << s << std::endl;
+		myfile << s;
 	}
+	myfile.close();
 
 	return EXIT_SUCCESS;
 }

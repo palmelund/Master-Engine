@@ -196,10 +196,12 @@ namespace MasterEngine {
 
 #endif
 #ifdef LOG_CUMULATIVE_TIME
-			std::cout << "Total time: " << cumulative_time_ << std::endl;
+			/*std::cout << "Total time: " << cumulative_time_ << std::endl;
 			std::cout << "Recording time: " << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 			std::cout << "Total frames: " << frame_count_ << std::endl;
 			std::cout << "Total frames/second: " << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
+*/
+			std::cout << cumulative_time_ << ";" << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << frame_count_ << ";" << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << std::endl;
 #endif
 
 		}

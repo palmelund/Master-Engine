@@ -34,9 +34,6 @@ int main(int argc, char* argv[])
 
 	GameEngine::run();
 
-	std::string str;
-	std::getline(std::cin, str);
-
 	return  EXIT_SUCCESS;
 }
 

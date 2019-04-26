@@ -9,8 +9,8 @@ namespace CaptainEverythingShared
 	public:
 		Constants() = delete;
 
-		constexpr static int screen_width = 800;
-		constexpr static int screen_height = 500;
+		constexpr static int screen_width = 1200;
+		constexpr static int screen_height = 900;
 
 		constexpr static int boss_spawn_threshold = 50;
 
@@ -38,7 +38,7 @@ namespace CaptainEverythingShared
 		constexpr static float enemy_spawn_time = 1.2f;
 
 		constexpr static float record_time_start = 5.0f;
-		constexpr static float record_time_end = 5.0f + record_time_start;
+		constexpr static float record_time_end = 60.0f + record_time_start;
 
 		static int background_elements();
 

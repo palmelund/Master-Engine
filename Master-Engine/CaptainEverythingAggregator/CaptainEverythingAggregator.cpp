@@ -30,9 +30,6 @@ int main(int argc, char* argv[])
 
 	MasterEngine::LibAggregator::GameEngine::run();
 
-	std::string str;
-	std::getline(std::cin, str);
-
 	return  EXIT_SUCCESS;
 }
 
