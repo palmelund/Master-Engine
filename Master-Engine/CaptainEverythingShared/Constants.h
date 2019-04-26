@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 
 namespace CaptainEverythingShared
 {
@@ -10,7 +11,6 @@ namespace CaptainEverythingShared
 		constexpr static int screen_width = 800;
 		constexpr static int screen_height = 500;
 
-		constexpr static int background_element_count = 1000;
 		constexpr static int boss_spawn_threshold = 50;
 
 		constexpr static int player_bullet_size = 20;
@@ -35,5 +35,14 @@ namespace CaptainEverythingShared
 		constexpr static int background_element_size = 20;
 
 		constexpr static float enemy_spawn_time = 1.2f;
+
+		static int background_elements();
+
+		static int gravity_wells();
+
+		static void set_changeable_constants(char* background_elements, char* gravity_wells);
+	private:
+		static int background_element_count_;
+		static int gravity_well_count_;
 	};
 }

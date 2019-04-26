@@ -8,16 +8,27 @@
 #include "../MasterEngineLibSequential/ResourceManager.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
+#include <iostream>
 
 using namespace MasterEngine::LibSequential;
 using namespace CaptainEverythingSequential;
 using namespace CaptainEverythingShared;
 
-int main()
+int main(int argc, char* argv[])
 {
 #ifdef DETECT_MEMORY_LEAKS
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
+
+	if(argc != 1 && argc != 3)
+	{
+		std::cout << "Expected either none or 2 arguments" << std::endl;
+	}
+
+	if(argc == 3)
+	{
+		Constants::set_changeable_constants(argv[1], argv[2]);
+	}
 
 	Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);

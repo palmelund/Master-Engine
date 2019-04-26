@@ -14,7 +14,7 @@ namespace CaptainEverythingParallel {
 	{
 		size_ = Constants::background_element_size;
 		GameObject::set_velocity(sf::Vector2f{ 50.0f, -90.0f });
-		GameObject::set_sprite(SpriteIndexes::shield_sprite);
+		GameObject::set_sprite(SpriteIndexes::background_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 		GameObject::set_tag(Tags::Background);

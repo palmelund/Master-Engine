@@ -31,7 +31,7 @@ namespace CaptainEverythingParallel {
 
 	void Spawner::start_up()
 	{
-		for (int i = 0; i < Constants::background_element_count; i++)
+		for (int i = 0; i < Constants::background_elements(); i++)
 		{
 			;
 			GameEngine::instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((Constants::background_element_size * i) % Renderer::get_window_size()->x),(float)((Constants::background_element_size * i) / Renderer::get_window_size()->x) });
