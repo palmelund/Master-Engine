@@ -9,9 +9,19 @@
 #include "../MasterEngineLibAggregator/ResourceManager.h"
 #include <iostream>
 
-int main()
+using namespace CaptainEverythingShared;
+
+int main(int argc, char* argv[])
 {
-	using namespace CaptainEverythingShared;
+	if (argc != 1 && argc != 4)
+	{
+		std::cout << "Expected either none or 2 arguments" << std::endl;
+	}
+
+	if (argc == 4)
+	{
+		Constants::set_changeable_constants(argv[1], argv[2], argv[3]);
+	}
 
 	MasterEngine::LibAggregator::Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
 	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);

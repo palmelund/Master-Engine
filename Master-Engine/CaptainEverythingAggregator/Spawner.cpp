@@ -36,11 +36,14 @@ namespace CaptainEverythingAggregator {
 		for (int i = 0; i < Constants::background_elements(); i++)
 		{
 			;
-			GameEngine::instantiate(new BackgroundElement(sf::Vector2f{ static_cast<float>((Constants::background_element_size * i) % Renderer::get_window_size()->x),(float)((Constants::background_element_size * i) / Renderer::get_window_size()->x)}));
+			GameEngine::instantiate(new BackgroundElement(sf::Vector2f{ static_cast<float>((Constants::background_element_size * i) % Renderer::get_window_size()->x),(float)((Constants::background_element_size * i) / Renderer::get_window_size()->x) }));
 		}
 
 		GameEngine::instantiate(new Player(sf::Vector2f{ 50.0f, Renderer::get_window_size()->y / 2.0f }));
-		GameEngine::instantiate(new GravityWell(sf::Vector2f{ Renderer::get_window_size()->x / 2.0f, Renderer::get_window_size()->y / 2.0f }));
+		for (int i = 0; i < Constants::gravity_wells(); i++)
+		{
+			GameEngine::instantiate(new GravityWell(sf::Vector2f{ Renderer::get_window_size()->x / 2.0f, Renderer::get_window_size()->y / 2.0f }));
+		}
 	}
 
 	void Spawner::update()

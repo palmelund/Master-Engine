@@ -37,16 +37,19 @@ namespace CaptainEverythingShared
 
 		constexpr static float enemy_spawn_time = 1.2f;
 
+		constexpr static float record_time_start = 5.0f;
+		constexpr static float record_time_end = 5.0f + record_time_start;
+
 		static int background_elements();
 
 		static int gravity_wells();
 
-		static void set_changeable_constants(char* background_elements, char* gravity_wells);
+		static int thread_count();
+
+		static void set_changeable_constants(char* background_elements, char* gravity_wells, char* thread_count);
 	private:
 		static int background_element_count_;
 		static int gravity_well_count_;
-
-		constexpr static float record_time_start = 5.0f;
-		constexpr static float record_time_end = 60.0f + record_time_start;
+		static int thread_count_;
 	};
 }

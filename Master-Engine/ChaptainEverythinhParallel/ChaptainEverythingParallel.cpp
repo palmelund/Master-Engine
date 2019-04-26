@@ -14,8 +14,18 @@ using namespace MasterEngine::LibParallel;
 using namespace CaptainEverythingParallel;
 using namespace CaptainEverythingShared;
 
-int main()
+int main(int argc, char* argv[])
 {
+	if (argc != 1 && argc != 4)
+	{
+		std::cout << "Expected either none or 2 arguments" << std::endl;
+	}
+
+	if (argc == 4)
+	{
+		Constants::set_changeable_constants(argv[1], argv[2], argv[3]);
+	}
+
 	Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
 

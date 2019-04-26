@@ -5,6 +5,7 @@
 #include <mutex>
 #include "ThreadPool.h"
 #include <map>
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace MasterEngine {
 	namespace LibParallel {
@@ -14,12 +15,7 @@ namespace MasterEngine {
 
 		void ThreadPool::create_thread_pool()
 		{
-#ifdef SINGLE_CORE_TEST
-			const auto thread_count = 1;
-#else
-			const auto thread_count = std::thread::hardware_concurrency();
-#endif
-
+			const auto thread_count = CaptainEverythingShared::Constants::thread_count();
 
 			for (unsigned t = 0; t < thread_count; t++)
 			{
