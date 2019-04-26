@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "GameObject.h"
 #include <numeric>
+#include "../CaptainEverythingShared/Constants.h"
 
 namespace MasterEngine {
 	namespace LibParallel {
@@ -72,8 +73,11 @@ namespace MasterEngine {
 #endif
 
 #ifdef LOG_CUMULATIVE_TIME
-				++frame_count_;
 				cumulative_time_ += Time::delta_time();
+				if (cumulative_time_ > CaptainEverythingShared::Constants::record_time_start)
+				{
+					++frame_count_;
+				}
 #endif
 
 				sf::Event event;
@@ -83,6 +87,11 @@ namespace MasterEngine {
 					{
 						Renderer::close();
 					}
+				}
+
+				if (cumulative_time_ > CaptainEverythingShared::Constants::record_time_end)
+				{
+					Renderer::close();
 				}
 
 				Input::process_input();
@@ -140,8 +149,9 @@ namespace MasterEngine {
 #endif
 #ifdef LOG_CUMULATIVE_TIME
 			std::cout << "Total time: " << cumulative_time_ << std::endl;
+			std::cout << "Recording time: " << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 			std::cout << "Total frames: " << frame_count_ << std::endl;
-			std::cout << "Total frames/second: " << frame_count_ / cumulative_time_ << std::endl;
+			std::cout << "Total frames/second: " << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 #endif
 
 		}

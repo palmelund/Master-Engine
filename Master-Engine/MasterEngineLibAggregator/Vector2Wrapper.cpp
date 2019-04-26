@@ -16,7 +16,7 @@ void Vector2Wrapper::operator+=(const sf::Vector2f& rhs)
 	auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 	if (pointer_deltas->find(this) != pointer_deltas->end())
 	{
-		auto delta = dynamic_cast<Vector2Delta*>(pointer_deltas->at(this));
+		auto delta = static_cast<Vector2Delta*>(pointer_deltas->at(this));
 		delta->addition(rhs);
 	}
 	else
@@ -37,7 +37,7 @@ void Vector2Wrapper::assign(const sf::Vector2f& rhs, const int priority)
 	auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
 	if (pointer_deltas->find(this) != pointer_deltas->end())
 	{
-		auto delta = dynamic_cast<Vector2Delta*>(pointer_deltas->at(this));
+		auto delta = static_cast<Vector2Delta*>(pointer_deltas->at(this));
 		delta->assign(rhs, priority);
 	}
 	else

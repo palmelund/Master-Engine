@@ -7,7 +7,7 @@
 #include "../MasterEngineLibAggregator/Renderer.h"
 #include "../CaptainEverythingShared/Constants.h"
 #include "../MasterEngineLibAggregator/ResourceManager.h"
-#include "../MasterEngineLibShared/KeyStatus.h"
+#include <iostream>
 
 int main()
 {
@@ -19,6 +19,11 @@ int main()
 	MasterEngine::LibAggregator::GameEngine::init();
 
 	MasterEngine::LibAggregator::GameEngine::run();
+
+	std::string str;
+	std::getline(std::cin, str);
+
+	return  EXIT_SUCCESS;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

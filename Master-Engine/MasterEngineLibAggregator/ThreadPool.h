@@ -27,7 +27,11 @@ namespace MasterEngine {
 
 			static std::map<std::thread::id, std::map<void*, BaseDelta*>> deltas;
 			static std::vector<std::thread::id> threads_ids;
+#ifdef SINGLE_CORE_TEST
+			const unsigned thread_count = 1;
+#else
 			const unsigned thread_count = std::thread::hardware_concurrency();
+#endif
 		private:
 			void worker_thread_loop();
 			std::condition_variable condition_;

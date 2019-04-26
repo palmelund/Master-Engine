@@ -19,7 +19,7 @@ namespace MasterEngine
 		class GameObject
 		{
 		public:
-			explicit GameObject(bool collision_code = false);
+			explicit GameObject(bool collision_code = false, bool takes_input=false);
 			virtual ~GameObject();
 
 			GameObject(const GameObject&) = delete;
@@ -68,6 +68,8 @@ namespace MasterEngine
 
 			int sprite_pos() const noexcept;
 
+			bool need_input();
+
 		protected:
 			int sprite_pos_{};
 			Vector2Wrapper velocity_;
@@ -75,6 +77,7 @@ namespace MasterEngine
 
 		private:
 			bool collision_code_;
+			bool takes_input_;
 			unsigned long long id_;
 
 

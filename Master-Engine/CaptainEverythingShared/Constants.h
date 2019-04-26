@@ -1,5 +1,6 @@
 #pragma once
 #include <sstream>
+#include <thread>
 
 namespace CaptainEverythingShared
 {
@@ -44,5 +45,8 @@ namespace CaptainEverythingShared
 	private:
 		static int background_element_count_;
 		static int gravity_well_count_;
+
+		constexpr static float record_time_start = 5.0f;
+		constexpr static float record_time_end = 60.0f + record_time_start;
 	};
 }
