@@ -36,37 +36,37 @@ int main()
 
 	int test_iterations = 5;
 
-#pragma region Single_Core
-	res.emplace_back("Single-Core test\n");
-	for (auto& engine : test_engine_names)
-	{
-		std::string start_string;
-		start_string += engine;
-		start_string += " START\n";
-		res.emplace_back(start_string);
-		for (auto test_size : test_sizes_single_core)
-		{
-			std::string test_title{};
-			test_title += engine;
-			test_title += " - ";
-			test_title += std::to_string(test_size);
-			test_title += " background elements\n";
-			res.emplace_back(test_title);
-
-			for (auto iteration = 0; iteration < test_iterations; iteration++)
-			{
-				std::string command{};
-				command += engine;
-				command += " ";
-				command += std::to_string(test_size);
-				command += " 1 1";
-
-				std::string result = exe(command.c_str());
-				res.emplace_back(result);
-			}
-		}
-	}
-#pragma endregion
+//#pragma region Single_Core
+//	res.emplace_back("Single-Core test\n");
+//	for (auto& engine : test_engine_names)
+//	{
+//		std::string start_string;
+//		start_string += engine;
+//		start_string += " START\n";
+//		res.emplace_back(start_string);
+//		for (auto test_size : test_sizes_single_core)
+//		{
+//			std::string test_title{};
+//			test_title += engine;
+//			test_title += " - ";
+//			test_title += std::to_string(test_size);
+//			test_title += " background elements\n";
+//			res.emplace_back(test_title);
+//
+//			for (auto iteration = 0; iteration < test_iterations; iteration++)
+//			{
+//				std::string command{};
+//				command += engine;
+//				command += " ";
+//				command += std::to_string(test_size);
+//				command += " 1 1";
+//
+//				std::string result = exe(command.c_str());
+//				res.emplace_back(result);
+//			}
+//		}
+//	}
+//#pragma endregion
 #pragma region Background_element
 	res.emplace_back("Background_element test\n");
 	for (int i = 1; i < 3; i++)
