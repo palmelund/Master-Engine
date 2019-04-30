@@ -17,7 +17,7 @@ namespace CaptainEverythingParallel {
 	private:
 		int size_;
 		float fire_rate_;
-		float internal_timer;
+		float fire_rate_cooldown_;
 		float speed;
 	};
 }

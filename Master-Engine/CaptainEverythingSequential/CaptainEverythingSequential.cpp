@@ -9,6 +9,7 @@
 #include "../CaptainEverythingShared/Constants.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
 #include <iostream>
+#include "../MasterEngineLibShared/Input.h"
 
 using namespace MasterEngine::LibSequential;
 using namespace CaptainEverythingSequential;
@@ -32,6 +33,8 @@ int main(int argc, char* argv[])
 
 	Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
+
+	Input::init(std::vector<sf::Keyboard::Key>{sf::Keyboard::Key::Space, sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D, sf::Keyboard::Key::Q});
 
 	GameEngine::init();
 	GameEngine::instantiate(new Spawner(), sf::Vector2f{ 0,0 });

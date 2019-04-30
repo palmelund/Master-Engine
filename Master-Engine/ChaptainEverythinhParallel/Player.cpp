@@ -7,17 +7,19 @@
 #include "Spawner.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
 #include "../CaptainEverythingShared/Constants.h"
+#include "../MasterEngineLibShared/Input.h"
+#include "../MasterEngineLibParallel/Renderer.h"
 
 namespace CaptainEverythingParallel {
 	using namespace CaptainEverythingShared;
 
-	Player::Player() : GameObject(true), internal_timer(0)
+	Player::Player() : GameObject(true), fire_rate_cooldown_(0)
 	{
 		size_ = Constants::player_size;
 		GameObject::set_sprite(SpriteIndexes::player_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
-		speed = Constants::player_speed;
+		speed = Constants::player_acceleration;
 		fire_rate_ = Constants::player_fire_rate;
 	}
 
@@ -30,48 +32,67 @@ namespace CaptainEverythingParallel {
 
 	void Player::update()
 	{
-
-		internal_timer += Time::delta_time();
-		if (internal_timer > fire_rate_)
+		fire_rate_cooldown_ += Time::delta_time();
+		if (fire_rate_cooldown_ > fire_rate_ && Input::get_key_hold(sf::Keyboard::Key::Space))
 		{
-			internal_timer -= fire_rate_;
+			fire_rate_cooldown_ = 0;
 			GameEngine::instantiate(new PlayerBullet(), GameObject::get_position());
 		}
 
+		sf::Vector2f velocity = get_velocity();
 
-		float distance = 9999;
-		GameObject* closes = nullptr;
-		for (auto game_object : GameEngine::get_game_state())
+		if (Input::get_key_hold(sf::Keyboard::Key::Q))
 		{
-			if (game_object->get_tag() == Tags::Enemy && game_object->get_position().x < distance)
-			{
-				distance = game_object->get_position().x;
-				closes = game_object;
-			}
+			velocity.x = 0;
+			velocity.y = 0;
 		}
-		if (closes == nullptr)
+
+		if (Input::get_key_hold(sf::Keyboard::Key::W))
 		{
-			return;
+			velocity.y -= speed * Time::delta_time();
 		}
-		auto velocity = GameObject::get_velocity();
-		if (closes->get_position().y > GameObject::get_position().y)
+		else if (Input::get_key_hold(sf::Keyboard::Key::S))
 		{
-			if (velocity.y < 0)
-			{
-				velocity.y /= 2;
-			}
 			velocity.y += speed * Time::delta_time();
 		}
 
-		if (closes->get_position().y < GameObject::get_position().y)
+		if (Input::get_key_hold(sf::Keyboard::Key::A))
 		{
-			if (velocity.y > 0)
-			{
-				velocity.y /= 2;
-			}
-			velocity.y -= speed * Time::delta_time();
+			velocity.x -= speed * Time::delta_time();
 		}
-		GameObject::set_position(sf::Vector2f{ GameObject::get_position().x + (velocity.x * Time::delta_time()), GameObject::get_position().y + (velocity.y * Time::delta_time()) });
+		else if (Input::get_key_hold(sf::Keyboard::Key::D))
+		{
+			velocity.x += speed * Time::delta_time();
+		}
+
+		sf::Vector2f position = get_position();
+		position = position + velocity * Time::delta_time();
+
+		const auto* window_size = Renderer::get_window_size();
+
+		if (position.x < 0)
+		{
+			position.x = 0;
+			velocity.x = 0;
+		}
+		else if (position.x >= window_size->x - Constants::player_size)
+		{
+			position.x = window_size->x - Constants::player_size;
+			velocity.x = 0;
+		}
+
+		if (position.y < 0)
+		{
+			position.y = 0;
+			velocity.y = 0;
+		}
+		else if (position.y >= window_size->y - Constants::player_size)
+		{
+			position.y = window_size->y - Constants::player_size;
+			velocity.y = 0;
+		}
+
+		GameObject::set_position(position);
 		GameObject::set_velocity(velocity);
 	}
 

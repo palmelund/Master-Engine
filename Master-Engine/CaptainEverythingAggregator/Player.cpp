@@ -7,17 +7,19 @@
 #include "Spawner.h"
 #include "../CaptainEverythingShared/SpriteIndexes.h"
 #include "../CaptainEverythingShared/Constants.h"
+#include "../MasterEngineLibAggregator/Renderer.h"
+#include "../MasterEngineLibShared/Input.h"
 
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
 
-	Player::Player(sf::Vector2f position) : GameObject(true), internal_timer(0)
+	Player::Player(sf::Vector2f position) : GameObject(true), fire_rate_cooldown_(0)
 	{
 		size_ = Constants::player_size;
 		GameObject::set_sprite(SpriteIndexes::player_sprite);
 		GameObject::set_size(static_cast<float>(size_), static_cast<float>(size_));
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
-		speed = Constants::player_speed;
+		speed = Constants::player_acceleration;
 		fire_rate_ = Constants::player_fire_rate;
 		GameObject::position_.set_vector(position);
 	}
@@ -33,50 +35,86 @@ namespace CaptainEverythingAggregator {
 
 	void Player::update()
 	{
-
-		internal_timer += Time::delta_time();
-		if (internal_timer > fire_rate_)
+		fire_rate_cooldown_ += Time::delta_time();
+		if (fire_rate_cooldown_ > fire_rate_ && Input::get_key_hold(sf::Keyboard::Key::Space))
 		{
-			internal_timer -= fire_rate_;
+			fire_rate_cooldown_ = 0;
 			GameEngine::instantiate(new PlayerBullet(GameObject::get_position()));
 		}
 
+		auto position = get_position();
+		
+		set_position(position + velocity_.get_vector() * Time::delta_time());
 
-		float distance = 9999;
-		GameObject* closes = nullptr;
-		for (GameObject* game_object : GameEngine::get_game_state())
+		sf::Vector2f velocity = sf::Vector2f();
+
+		std::ostringstream ss;
+		ss << "x: ";
+		ss << velocity.x;
+		ss << " y: ";
+		ss << velocity.y;
+
+		Renderer::draw_text(ss.str(), 100, 100, 14);
+
+		if (Input::get_key_hold(sf::Keyboard::Key::Q))
 		{
-			if (game_object->get_tag() == Tags::Enemy && game_object->get_position().x < distance)
-			{
-				distance = game_object->get_position().x;
-				closes = game_object;
-			}
+			velocity_.assign(sf::Vector2f{}, std::numeric_limits<int>::max());
 		}
-		if (closes == nullptr)
+
+		if (Input::get_key_hold(sf::Keyboard::Key::W))
 		{
-			return;
+			velocity.y -= speed * Time::delta_time();
 		}
-		//TODO Could be change to use addition instead of assign
-		sf::Vector2f velocity = GameObject::get_velocity();
-		if (closes->get_position().y > GameObject::get_position().y)
+		else if (Input::get_key_hold(sf::Keyboard::Key::S))
 		{
-			if (velocity.y < 0)
-			{
-				velocity.y /= 2;
-			}
 			velocity.y += speed * Time::delta_time();
 		}
 
-		if (closes->get_position().y < GameObject::get_position().y)
+		if (Input::get_key_hold(sf::Keyboard::Key::A))
 		{
-			if (velocity.y > 0)
-			{
-				velocity.y /= 2;
-			}
-			velocity.y -= speed * Time::delta_time();
+			velocity.x -= speed * Time::delta_time();
 		}
-		GameObject::position_ += sf::Vector2f{ (velocity.x * Time::delta_time()), (velocity.y * Time::delta_time()) };
-		GameObject::set_velocity(velocity);
+		else if (Input::get_key_hold(sf::Keyboard::Key::D))
+		{
+			velocity.x += speed * Time::delta_time();
+		}
+
+		const auto* window_size = Renderer::get_window_size();
+
+		bool clamped{ false };
+
+		if (position.x < 0)
+		{
+			position.x = 0;
+			velocity.x = 0;
+			clamped = true;
+		}
+		else if (position.x >= window_size->x - Constants::player_size)
+		{
+			position.x = window_size->x - Constants::player_size;
+			velocity.x = 0;
+			clamped = true;
+		}
+
+		if (position.y < 0)
+		{
+			position.y = 0;
+			velocity.y = 0;
+			clamped = true;
+		}
+		else if (position.y >= window_size->y - Constants::player_size)
+		{
+			position.y = window_size->y - Constants::player_size;
+			velocity.y = 0;
+			clamped = true;
+		}
+
+		if(clamped)
+		{
+			position_.assign(position, std::numeric_limits<int>::max());
+		}
+
+		velocity_ += velocity;
 	}
 
 	void Player::on_collision(GameObject * collider)

@@ -8,6 +8,7 @@
 #include "../CaptainEverythingShared/Constants.h"
 #include "../MasterEngineLibAggregator/ResourceManager.h"
 #include <iostream>
+#include "../MasterEngineLibShared/Input.h"
 
 using namespace CaptainEverythingShared;
 
@@ -25,6 +26,8 @@ int main(int argc, char* argv[])
 
 	MasterEngine::LibAggregator::Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
 	MasterEngine::LibAggregator::Renderer::set_sprite_sheet(MasterEngine::LibAggregator::ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
+
+	MasterEngine::LibShared::Input::init(std::vector<sf::Keyboard::Key>{sf::Keyboard::Key::Space, sf::Keyboard::Key::W, sf::Keyboard::Key::S, sf::Keyboard::Key::A, sf::Keyboard::Key::D, sf::Keyboard::Key::Q});
 
 	MasterEngine::LibAggregator::GameEngine::init();
 

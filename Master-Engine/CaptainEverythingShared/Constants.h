@@ -16,7 +16,7 @@ namespace CaptainEverythingShared
 
 		constexpr static int player_bullet_size = 20;
 		constexpr static int player_size = 20;
-		constexpr static float player_speed = 900.0f;
+		constexpr static float player_acceleration = 900.0f;
 		constexpr static float player_fire_rate = 0.8f;
 
 		constexpr static int gravity_well_size = 160;
@@ -24,7 +24,7 @@ namespace CaptainEverythingShared
 
 		constexpr static int enemy_bullet_size = 20;
 		constexpr static int enemy_size = 20;
-		constexpr static float enemy_fire_rate = 1.3f;
+		constexpr static float enemy_fire_rate = 3.0f;
 
 		constexpr static float boss_shield_distance = 75.0f;
 		constexpr static int boss_shield_speed = 100;
@@ -37,8 +37,8 @@ namespace CaptainEverythingShared
 
 		constexpr static float enemy_spawn_time = 1.2f;
 
-		constexpr static float record_time_start = 5.0f;
-		constexpr static float record_time_end = 60.0f + record_time_start;
+		constexpr static float record_time_start =1.0f;
+		constexpr static float record_time_end = 1000.0f + record_time_start;
 
 		static int background_elements();
 
