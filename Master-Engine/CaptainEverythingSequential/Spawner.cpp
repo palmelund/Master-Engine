@@ -35,38 +35,23 @@ namespace CaptainEverythingSequential {
 
 	void Spawner::start_up()
 	{
+		for (int i = 0; i < Constants::gravity_wells(); i++)
+		{
+			GameEngine::instantiate(new GravityWell(), sf::Vector2f{ 0, 0 });
+		}
+
 		for (int i = 0; i < Constants::background_elements(); i++)
 		{
 			;
 			GameEngine::instantiate(new BackgroundElement(), sf::Vector2f{ static_cast<float>((Constants::background_element_size * i) % Renderer::get_window_size()->x),(float)((Constants::background_element_size * i) / Renderer::get_window_size()->x) });
 		}
 
-		GameEngine::instantiate(new Player(), sf::Vector2f{ 50.0f, Renderer::get_window_size()->y / 2.0f });
-
-		for(int i = 0; i < Constants::gravity_wells(); i++)
-		{
-			GameEngine::instantiate(new GravityWell(), sf::Vector2f{ Renderer::get_window_size()->x / 2.0f, Renderer::get_window_size()->y / 2.0f });
-		}
 	}
 
 	void Spawner::update()
 	{
-		internal_timer += Time::delta_time();
-		if (internal_timer > spawn_time)
-		{
-			internal_timer -= spawn_time;
-			spawn_position_ += 300.0f;
-			spawn_position_ = static_cast<float>(int(spawn_position_) % (Renderer::get_window_size()->y - 30));
-			GameEngine::instantiate(new Enemy(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, spawn_position_ });
-			spawn_count_++;
-			if (spawn_count_ > Constants::boss_spawn_threshold)
-			{
-				spawn_count_ = 0;
-				GameEngine::instantiate(new Boss(), sf::Vector2f{ Renderer::get_window_size()->x + 100.0f, Renderer::get_window_size()->y / 2.0f });
-			}
-		}
-		Renderer::draw_text("Kills: " + std::to_string(enemy_kills_), 10, 10, 20);
-		Renderer::draw_text("Damage: " + std::to_string(player_hits_), 10, 30, 20);
+
+		
 	}
 
 	void Spawner::add_player_hit()

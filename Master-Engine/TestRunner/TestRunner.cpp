@@ -31,10 +31,12 @@ int main()
 
 	std::vector<int> test_sizes_single_core = { 30,300,1000 };
 	std::vector<int> test_sizes_background_element = { 30,300,1000, 2000 };
-	std::vector<int> test_sizes_gravity_well = { 1, 5, 10, 25 };
+	std::vector<int> test_sizes_gravity_well = { 0, 1, 5, 10, 25, 100, 250 };
 	std::vector<std::string> test_engine_names = { "CaptainEverythingSequential", "CaptainEverythingParallel", "CaptainEverythingAggregator" };
 
 	int test_iterations = 5;
+	int current_iteration = 0;
+	int max_iterations = ((test_sizes_background_element.size()*test_engine_names.size())+(test_engine_names.size()*test_sizes_gravity_well.size())*test_iterations);
 
 //#pragma region Single_Core
 //	res.emplace_back("Single-Core test\n");
@@ -69,7 +71,7 @@ int main()
 //#pragma endregion
 #pragma region Background_element
 	res.emplace_back("Background_element test\n");
-	for (int i = 1; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		std::string start_string;
 		start_string += test_engine_names[i];
@@ -86,21 +88,28 @@ int main()
 
 			for (auto iteration = 0; iteration < test_iterations; iteration++)
 			{
+				current_iteration++;
+				const char base_string[] = "";
+				char out_string[10];
+				sprintf_s(out_string, " %d/%d", current_iteration, max_iterations);
+
 				std::string command{};
 				command += test_engine_names[i];
 				command += " ";
 				command += std::to_string(test_size);
-				command += " 1 0";
+				command += " 0 0";
+				command += out_string;
 
 				std::string result = exe(command.c_str());
 				res.emplace_back(result);
+
 			}
 
 		}
 	}
 #pragma endregion
 #pragma region Gravity_well
-	res.emplace_back("Background_element test\n");
+	res.emplace_back("gravity_well test\n");
 	for (int i = 0; i < 3; i++)
 	{
 		std::string start_string;
@@ -113,16 +122,23 @@ int main()
 			test_title += test_engine_names[i];
 			test_title += " - ";
 			test_title += std::to_string(test_size);
-			test_title += " background elements\n";
+			test_title += " gravity_well\n";
 			res.emplace_back(test_title);
 
 			for (auto iteration = 0; iteration < test_iterations; iteration++)
 			{
+				current_iteration++;
+				const char base_string[] = "";
+				char out_string[10];
+				sprintf_s(out_string, " %d/%d", current_iteration, max_iterations);
+
+
 				std::string command{};
 				command += test_engine_names[i];
-				command += " 1000 ";
+				command += " 100 ";
 				command += std::to_string(test_size);
 				command += " 0";
+				command += out_string;
 
 				std::string result = exe(command.c_str());
 				res.emplace_back(result);

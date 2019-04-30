@@ -20,7 +20,7 @@ namespace CaptainEverythingShared
 		constexpr static float player_fire_rate = 0.8f;
 
 		constexpr static int gravity_well_size = 160;
-		constexpr static float gravity_well_pull_force = 1.0f;
+		constexpr static float gravity_well_pull_force = 0.2f;
 
 		constexpr static int enemy_bullet_size = 20;
 		constexpr static int enemy_size = 20;

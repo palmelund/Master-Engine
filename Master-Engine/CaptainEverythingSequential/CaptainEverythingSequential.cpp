@@ -20,17 +20,19 @@ int main(int argc, char* argv[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-	if(argc != 1 && argc != 4)
+	if(argc != 1 && argc != 5)
 	{
 		std::cout << "Expected either none or 2 arguments" << std::endl;
 	}
 
-	if(argc == 4)
+	if(argc == 5)
 	{
 		Constants::set_changeable_constants(argv[1], argv[2], argv[3]);
+		MasterEngine::LibSequential::Renderer::init(argv[4], Constants::screen_width, Constants::screen_height);
 	}
-
-	Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
+	else {
+		MasterEngine::LibSequential::Renderer::init("Master Engine", Constants::screen_width, Constants::screen_height);
+	}
 	Renderer::set_sprite_sheet(ResourceManager::load_texture("spritesheet.png"), SpriteIndexes::sprite_width, SpriteIndexes::sprite_height);
 
 	GameEngine::init();
