@@ -16,9 +16,10 @@ public:
 	void operator+=(const T& rhs)
 	{
 		auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
-		if (pointer_deltas->find(this) != pointer_deltas->end())
+		auto pointer = pointer_deltas->find(this);
+		if (pointer != pointer_deltas->end())
 		{
-			auto* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
+			auto delta = static_cast<VectorDelta<T>*>((*pointer).second);
 			delta->addition(rhs);
 		}
 		else
@@ -32,9 +33,10 @@ public:
 	void operator-=(const T& rhs)
 	{
 		auto* pointer_deltas = &MasterEngine::LibAggregator::ThreadPool::deltas[std::this_thread::get_id()];
-		if (pointer_deltas->find(this) != pointer_deltas->end())
+		auto pointer = pointer_deltas->find(this);
+		if (pointer != pointer_deltas->end())
 		{
-			auto* delta = static_cast<VectorDelta<T>*>(pointer_deltas->at(this));
+			auto delta = static_cast<VectorDelta<T>*>((*pointer).second);
 			delta->remove(rhs);
 		}
 		else
