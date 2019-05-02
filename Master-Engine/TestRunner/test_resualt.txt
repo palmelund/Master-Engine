@@ -1,0 +1,41 @@
+Background_element test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 30 background elements
+CaptainEverythingSequential.exe - 300 background elements
+CaptainEverythingSequential.exe - 1000 background elements
+CaptainEverythingSequential.exe - 2000 background elements
+CaptainEverythingParallel.exe START
+CaptainEverythingParallel.exe - 30 background elements
+CaptainEverythingParallel.exe - 300 background elements
+CaptainEverythingParallel.exe - 1000 background elements
+CaptainEverythingParallel.exe - 2000 background elements
+CaptainEverythingAggregator.exe START
+CaptainEverythingAggregator.exe - 30 background elements
+CaptainEverythingAggregator.exe - 300 background elements
+CaptainEverythingAggregator.exe - 1000 background elements
+CaptainEverythingAggregator.exe - 2000 background elements
+gravity_well test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 0 gravity_well
+CaptainEverythingSequential.exe - 1 gravity_well
+CaptainEverythingSequential.exe - 5 gravity_well
+CaptainEverythingSequential.exe - 10 gravity_well
+CaptainEverythingSequential.exe - 25 gravity_well
+CaptainEverythingSequential.exe - 100 gravity_well
+CaptainEverythingSequential.exe - 250 gravity_well
+CaptainEverythingParallel.exe START
+CaptainEverythingParallel.exe - 0 gravity_well
+CaptainEverythingParallel.exe - 1 gravity_well
+CaptainEverythingParallel.exe - 5 gravity_well
+CaptainEverythingParallel.exe - 10 gravity_well
+CaptainEverythingParallel.exe - 25 gravity_well
+CaptainEverythingParallel.exe - 100 gravity_well
+CaptainEverythingParallel.exe - 250 gravity_well
+CaptainEverythingAggregator.exe START
+CaptainEverythingAggregator.exe - 0 gravity_well
+CaptainEverythingAggregator.exe - 1 gravity_well
+CaptainEverythingAggregator.exe - 5 gravity_well
+CaptainEverythingAggregator.exe - 10 gravity_well
+CaptainEverythingAggregator.exe - 25 gravity_well
+CaptainEverythingAggregator.exe - 100 gravity_well
+CaptainEverythingAggregator.exe - 250 gravity_well
