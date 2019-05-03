@@ -25,6 +25,17 @@ std::string exe(const char* cmd)
 	return result;
 }
 
+void write_results(std::string content, std::string file_name)
+{
+	std::ofstream myfile;
+	myfile.open(file_name, std::ios::out | std::ios::app);
+
+
+	myfile << content;
+
+	myfile.close();
+}
+
 int main(int argc, char* argv[])
 {
 	std::vector<std::string> res{};
@@ -39,40 +50,30 @@ int main(int argc, char* argv[])
 	int max_iterations = (((test_sizes_background_element.size()*test_engine_names.size())+(test_engine_names.size()*test_sizes_gravity_well.size()))*test_iterations);
 
 #pragma region Single_Core
-	if (argc > 1 && argv[1] ==  "1")
+	std::istringstream argument{argv[1]};
+	int testing;
+	argument >> testing;
+	if (testing == 1)
 	{
 		max_iterations += (test_sizes_single_core.size()*test_engine_names.size()) * test_iterations;
-		{
-			std::ofstream myfile;
-			myfile.open("test_results.txt", std::ios::out | std::ios::app);
-			myfile << "Single - Core test\n";
-			myfile.close();
-		}
+		write_results("Single - Core test\n", "test_results.txt");
+
 		for (auto& engine : test_engine_names)
 		{
-			{
-				std::ofstream myfile;
-				myfile.open("test_results.txt", std::ios::out | std::ios::app);
-				std::string start_string;
-				start_string += engine;
-				start_string += " START\n";
-				myfile << start_string;
-				myfile.close();
-			}
-			;
+			std::string start_string;
+			start_string += engine;
+			start_string += " START\n";
+			write_results(start_string, "test_results.txt");
+
 			for (auto test_size : test_sizes_single_core)
 			{
-				{
-					std::ofstream myfile;
-					myfile.open("test_results.txt", std::ios::out | std::ios::app);
-					std::string test_title{};
-					test_title += engine;
-					test_title += " - ";
-					test_title += std::to_string(test_size);
-					test_title += " background elements\n";
-					myfile << test_title;
-					myfile.close();
-				}
+				std::string test_title{};
+				test_title += engine;
+				test_title += " - ";
+				test_title += std::to_string(test_size);
+				test_title += " background elements\n";
+				write_results(test_title, "test_results.txt");
+			
 				for (auto iteration = 0; iteration < test_iterations; iteration++)
 				{
 					current_iteration++;
@@ -89,9 +90,7 @@ int main(int argc, char* argv[])
 					command += " 1 1 ";
 					command += out_string;
 
-
-					std::string result = exe(command.c_str());
-					res.emplace_back(result);
+					system(command.c_str());
 				}
 			}
 		}
@@ -100,43 +99,26 @@ int main(int argc, char* argv[])
 #pragma endregion
 
 #pragma region Background_element
-	{
-		std::ofstream myfile;
-		myfile.open("test_results.txt", std::ios::out | std::ios::app);
-		myfile << "Background_element test\n";
-		myfile.close();
-	}
+	write_results("Background_element test\n", "test_results.txt");
 	for (int i = 0; i < 3; i++)
 	{
-		{
-			std::ofstream myfile;
-			myfile.open("test_results.txt", std::ios::out | std::ios::app);
+		
 
-			std::string start_string;
-			start_string += test_engine_names[i];
-			start_string += " START\n";
-			
-			myfile << start_string;
+		std::string start_string;
+		start_string += test_engine_names[i];
+		start_string += " START\n";
 
-			myfile.close();
-		}
+		write_results(start_string, "test_results.txt");
+		
 		for (auto test_size : test_sizes_background_element)
 		{
-			{
-				std::ofstream myfile;
-				myfile.open("test_results.txt", std::ios::out | std::ios::app);
 
-				std::string test_title{};
-				test_title += test_engine_names[i];
-				test_title += " - ";
-				test_title += std::to_string(test_size);
-				test_title += " background elements\n";
-
-				myfile << test_title;
-
-				myfile.close();
-			}
-
+			std::string test_title{};
+			test_title += test_engine_names[i];
+			test_title += " - ";
+			test_title += std::to_string(test_size);
+			test_title += " background elements\n";
+			write_results(test_title, "test_results.txt");
 			
 
 			for (auto iteration = 0; iteration < test_iterations; iteration++)
@@ -147,7 +129,7 @@ int main(int argc, char* argv[])
 				sprintf_s(out_string, " %d/%d", current_iteration, max_iterations);
 
 				std::string command{};
-				command += "start /wait";
+				command += "start /wait ";
 				command += test_engine_names[i];
 				command += " ";
 				command += std::to_string(test_size);
@@ -163,13 +145,13 @@ int main(int argc, char* argv[])
 	}
 #pragma endregion
 #pragma region Gravity_well
-	res.emplace_back("gravity_well test\n");
+	write_results("gravity_well test\n", "test_results.txt");
 	for (int i = 0; i < 3; i++)
 	{
 		std::string start_string;
 		start_string += test_engine_names[i];
 		start_string += " START\n";
-		res.emplace_back(start_string);
+		write_results(start_string, "test_results.txt");
 		for (auto test_size : test_sizes_gravity_well)
 		{
 			std::string test_title{};
@@ -177,8 +159,7 @@ int main(int argc, char* argv[])
 			test_title += " - ";
 			test_title += std::to_string(test_size);
 			test_title += " gravity_well\n";
-			res.emplace_back(test_title);
-
+			write_results(test_title, "test_results.txt");
 			for (auto iteration = 0; iteration < test_iterations; iteration++)
 			{
 				current_iteration++;
@@ -199,17 +180,11 @@ int main(int argc, char* argv[])
 		}
 	}
 #pragma endregion
-	std::ofstream myfile;
-	myfile.open("test_resualt.txt", std::ios::out | std::ios::trunc);
-
-	for (auto& s : res)
-	{
-		myfile << s;
-	}
-	myfile.close();
 
 	return EXIT_SUCCESS;
 }
+
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

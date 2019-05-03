@@ -5,7 +5,7 @@
 #include "../MasterEngineLibShared/Input.h"
 #include <iostream>
 #include "../CaptainEverythingShared/Constants.h"
-
+#include <fstream>
 namespace MasterEngine {
 	namespace LibSequential {
 
@@ -119,8 +119,14 @@ namespace MasterEngine {
 			//std::cout << "Total frames: " << frame_count_ << std::endl;
 			//std::cout << "Total frames/second: " << frame_count_ / (cumulative_time_- CaptainEverythingShared::Constants::record_time_start) << std::endl;
 
-			std::cout << cumulative_time_ << ";" << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << frame_count_ << ";" << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << std::endl;
-#endif
+			std::ofstream myfile;
+			myfile.open("test_results.txt", std::ios::out | std::ios::app);
+
+
+			myfile << cumulative_time_ << ";" << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << frame_count_ << ";" << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << std::endl;
+
+			myfile.close();
+#endif#endif
 		}
 
 		unsigned long long GameEngine::get_new_id()

@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "GameObject.h"
 #include <numeric>
+#include <fstream>
 #include "../CaptainEverythingShared/Constants.h"
 
 namespace MasterEngine {
@@ -153,7 +154,13 @@ namespace MasterEngine {
 			std::cout << "Total frames: " << frame_count_ << std::endl;
 			std::cout << "Total frames/second: " << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << std::endl;
 */
-			std::cout << cumulative_time_ << ";" << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << frame_count_ << ";" << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << std::endl;
+			std::ofstream myfile;
+			myfile.open("test_results.txt", std::ios::out | std::ios::app);
+
+
+			myfile << cumulative_time_ << ";" << (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << frame_count_ << ";" << frame_count_ / (cumulative_time_ - CaptainEverythingShared::Constants::record_time_start) << ";" << std::endl;
+
+			myfile.close(); 
 #endif
 
 		}
