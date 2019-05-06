@@ -135,7 +135,6 @@ int main(int argc, char* argv[])
 				command += std::to_string(test_size);
 				command += " 0 0";
 				command += out_string;
-				command += " >> test_results.txt";
 
 				system(command.c_str());
 

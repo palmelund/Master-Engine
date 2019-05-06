@@ -11,7 +11,7 @@ namespace CaptainEverythingSequential {
 
 	GravityWell::GravityWell() : GameObject(true)
 	{
-		GameObject::set_sprite(SpriteIndexes::gravity_well_sprite);
+		//GameObject::set_sprite(SpriteIndexes::gravity_well_sprite);
 		GameObject::set_size(Constants::screen_height, Constants::screen_width);
 		GameObject::add_collider(new Collider{ sf::Vector2f{0,0}, get_scaled_size() });
 	}
