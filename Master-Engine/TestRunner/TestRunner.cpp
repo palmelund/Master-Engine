@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 
 	std::vector<int> test_sizes_single_core = { 30,300,1000 };
 	std::vector<int> test_sizes_background_element = { 30,300,1000, 2000 };
-	std::vector<int> test_sizes_gravity_well = { 0, 1, 5, 10, 25, 100, 250 };
+	std::vector<int> test_sizes_gravity_well = { 0, 1, 5, 10, 25, 100, 250, 300, 350, 400 , 450, 500 ,550 ,600 };
 	std::vector<std::string> test_engine_names = { "CaptainEverythingSequential.exe", "CaptainEverythingParallel.exe", "CaptainEverythingAggregator.exe" };
 
 	int test_iterations = 5;
@@ -50,9 +50,12 @@ int main(int argc, char* argv[])
 	int max_iterations = (((test_sizes_background_element.size()*test_engine_names.size())+(test_engine_names.size()*test_sizes_gravity_well.size()))*test_iterations);
 
 #pragma region Single_Core
-	std::istringstream argument{argv[1]};
-	int testing;
-	argument >> testing;
+	int testing = 0;
+	if (argc == 2) {
+
+		std::istringstream argument{ argv[1] };
+		argument >> testing;
+	}
 	if (testing == 1)
 	{
 		max_iterations += (test_sizes_single_core.size()*test_engine_names.size()) * test_iterations;
