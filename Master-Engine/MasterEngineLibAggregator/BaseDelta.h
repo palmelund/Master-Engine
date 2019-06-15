@@ -1,4 +1,6 @@
 #pragma once
+#include "BaseWrapper.h"
+
 class BaseDelta
 {
 public:
@@ -11,6 +13,9 @@ public:
 
 	void virtual reduce(void*) = 0;
 	void virtual merge() = 0;
+
+	BaseWrapper* original_value_;
+
 private:
 };
 

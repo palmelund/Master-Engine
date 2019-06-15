@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseDelta.h"
-
+#include "BaseWrapper.h"
 template <class T>
 class VectorWrapper;
 
@@ -9,10 +9,11 @@ class VectorDelta final :
 	public BaseDelta
 {
 public:
-	explicit VectorDelta(VectorWrapper<T>* pointer) : original_value_(pointer)
+	explicit VectorDelta(BaseWrapper* pointer)
 	{
 		additions_ = {};
 		removes_ = {};
+		original_value_ = pointer;
 	}
 
 	void addition(T value)
@@ -38,8 +39,6 @@ public:
 		target->removes_vector(removes_);
 	}
 private:
-	VectorWrapper<T>* original_value_;
-
 	std::vector<T> additions_;
 	std::vector<T> removes_;
 };

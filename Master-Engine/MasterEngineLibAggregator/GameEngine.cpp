@@ -168,6 +168,9 @@ namespace MasterEngine {
 
 				for (auto delta: ThreadPool::deltas[ThreadPool::threads_ids[0]])
 				{
+
+					delta.second->original_value_->reset();
+
 					delete delta.second;
 				}
 				for (auto id : ThreadPool::threads_ids)

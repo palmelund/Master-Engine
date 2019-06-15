@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseDelta.h" />
+    <ClInclude Include="BaseWrapper.h" />
     <ClInclude Include="BatchDrawable.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="GameEngine.h" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseDelta.cpp" />
+    <ClCompile Include="BaseWrapper.cpp" />
     <ClCompile Include="BatchDrawable.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="GameEngine.cpp" />

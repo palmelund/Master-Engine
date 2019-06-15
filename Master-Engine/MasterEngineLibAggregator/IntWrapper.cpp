@@ -63,6 +63,10 @@ void IntWrapper::assign(const int & rhs, const int priority)
 	}
 }
 
+void IntWrapper::reset()
+{
+}
+
 int IntWrapper::get_value() const
 {
 	return value_;

@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "IntDelta.h"
 #include <limits>
+#include "BaseWrapper.h"
+#include "IntWrapper.h"
 
-IntDelta::IntDelta(IntWrapper * pointer) : original_value_(pointer), additions_(0), multiplications_(1), assign_(0), assign_priority_(std::numeric_limits<int>::min())
+IntDelta::IntDelta(BaseWrapper * pointer) :  additions_(0), multiplications_(1), assign_(0), assign_priority_(std::numeric_limits<int>::min())
 {
-
+	original_value_ = pointer;
 }
 
 void IntDelta::assign(const int value, const int priority)
@@ -36,11 +38,12 @@ void IntDelta::reduce(void* pointer)
 
 void IntDelta::merge()
 {
+	IntWrapper* original_pointer = static_cast<IntWrapper*>(original_value_);
 	if (assign_priority_ > 0)
 	{
-		original_value_->set_value(assign_);
+		original_pointer->set_value(assign_);
 		return;
 	}
-	original_value_->set_value(original_value_->get_value()*multiplications_ + additions_);
+	original_pointer->set_value(original_pointer->get_value()*multiplications_ + additions_);
 
 }

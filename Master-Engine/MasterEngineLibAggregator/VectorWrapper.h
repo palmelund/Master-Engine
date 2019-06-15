@@ -1,11 +1,12 @@
 #pragma once
 #include <vector>
 #include "BaseDelta.h"
+#include "BaseWrapper.h"
 #include "ThreadPool.h"
 #include "VectorDelta.h"
 
 template <class T>
-class VectorWrapper
+class VectorWrapper final : public BaseWrapper
 {
 public:
 	VectorWrapper()
@@ -65,6 +66,7 @@ public:
 
 	}
 
+	void reset() override {}
 
 	void clear()
 	{

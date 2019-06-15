@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseDelta.h"
-#include "IntWrapper.h"
+#include "BaseWrapper.h"
 class IntDelta final :
 	public BaseDelta
 {
 public:
-	explicit IntDelta(IntWrapper*);
+	explicit IntDelta(BaseWrapper*);
 
 	void assign(int value, int priority);
 	void addition(int value);
@@ -14,7 +14,6 @@ public:
 	void reduce(void*) override;
 	void merge() override;
 private:
-	IntWrapper* original_value_;
 
 	int additions_;
 	int multiplications_;
