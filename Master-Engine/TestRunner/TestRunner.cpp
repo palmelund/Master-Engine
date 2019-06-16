@@ -49,6 +49,50 @@ int main(int argc, char* argv[])
 	int current_iteration = 0;
 	int max_iterations = (((test_sizes_background_element.size()*test_engine_names.size())+(test_engine_names.size()*test_sizes_gravity_well.size()))*test_iterations);
 
+#pragma region Test_Time
+	write_results("Time_test\n", "test_results.txt");
+	for(int engine_index = 0; engine_index < 3; engine_index++)
+	{
+		std::string start_string;
+		start_string += test_engine_names[engine_index];
+		start_string += " START\n";
+
+		write_results(start_string, "test_results.txt");
+
+		for (int test_current_duration = 5; test_current_duration <= 60; test_current_duration += 5)
+		{
+			std::string test_title{};
+			test_title += test_engine_names[engine_index];
+			test_title += " - ";
+			test_title += std::to_string(test_current_duration);
+			test_title += " seconds\n";
+			write_results(test_title, "test_results.txt");
+
+			for (auto iteration = 0; iteration < test_iterations; iteration++)
+			{
+				current_iteration++;
+				const char base_string[] = "";
+				char out_string[10];
+				sprintf_s(out_string, " %d/%d", current_iteration, max_iterations);
+
+				std::string command{};
+				command += "start /wait ";
+				command += test_engine_names[engine_index];
+				command += " 100 0 0 ";
+				command += out_string;
+				command += " ";
+				command += std::to_string(test_current_duration);
+
+				std::cout << command << std::endl;
+				system(command.c_str());
+
+			}
+		}
+	}
+#pragma endregion 
+
+	return EXIT_SUCCESS;
+
 #pragma region Single_Core
 	int testing = 0;
 	if (argc == 2) {
@@ -92,6 +136,7 @@ int main(int argc, char* argv[])
 					command += std::to_string(test_size);
 					command += " 1 1 ";
 					command += out_string;
+					command += " 60";
 
 					system(command.c_str());
 				}
@@ -136,8 +181,9 @@ int main(int argc, char* argv[])
 				command += test_engine_names[i];
 				command += " ";
 				command += std::to_string(test_size);
-				command += " 0 0";
+				command += " 0 0 ";
 				command += out_string;
+				command += " 60";
 
 				system(command.c_str());
 
@@ -174,8 +220,9 @@ int main(int argc, char* argv[])
 				command += test_engine_names[i];
 				command += " 100 ";
 				command += std::to_string(test_size);
-				command += " 0";
+				command += " 0 ";
 				command += out_string;
+				command += " 60";
 
 				system(command.c_str());
 			}

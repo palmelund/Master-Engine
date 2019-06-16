@@ -1,3 +1,46 @@
 Background_element test
 CaptainEverythingSequential.exe START
 CaptainEverythingSequential.exe - 30 background elements
+Time_test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 5 seconds
+CaptainEverythingSequential.exe - 10 seconds
+Time_test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 5 seconds
+CaptainEverythingSequential.exe - 10 seconds
+Background_element test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 30 background elements
+CaptainEverythingSequential.exe - 300 background elements
+CaptainEverythingSequential.exe - 1000 background elements
+CaptainEverythingSequential.exe - 2000 background elements
+CaptainEverythingParallel.exe START
+CaptainEverythingParallel.exe - 30 background elements
+CaptainEverythingParallel.exe - 300 background elements
+CaptainEverythingParallel.exe - 1000 background elements
+CaptainEverythingParallel.exe - 2000 background elements
+CaptainEverythingAggregator.exe START
+CaptainEverythingAggregator.exe - 30 background elements
+CaptainEverythingAggregator.exe - 300 background elements
+CaptainEverythingAggregator.exe - 1000 background elements
+CaptainEverythingAggregator.exe - 2000 background elements
+gravity_well test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 0 gravity_well
+CaptainEverythingSequential.exe - 1 gravity_well
+CaptainEverythingSequential.exe - 5 gravity_well
+CaptainEverythingSequential.exe - 10 gravity_well
+CaptainEverythingSequential.exe - 25 gravity_well
+CaptainEverythingSequential.exe - 100 gravity_well
+CaptainEverythingSequential.exe - 250 gravity_well
+CaptainEverythingSequential.exe - 300 gravity_well
+CaptainEverythingSequential.exe - 350 gravity_well
+CaptainEverythingSequential.exe - 400 gravity_well
+CaptainEverythingSequential.exe - 450 gravity_well
+CaptainEverythingSequential.exe - 500 gravity_well
+CaptainEverythingSequential.exe - 550 gravity_well
+CaptainEverythingSequential.exe - 600 gravity_well
+Background_element test
+CaptainEverythingSequential.exe START
+CaptainEverythingSequential.exe - 30 background elements

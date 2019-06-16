@@ -79,7 +79,7 @@ namespace MasterEngine {
 						Renderer::close();
 					}
 				}
-				if (cumulative_time_ > CaptainEverythingShared::Constants::record_time_end)
+				if (cumulative_time_ > static_cast<float>(CaptainEverythingShared::Constants::test_duration()))
 				{
 					Renderer::close();
 				}

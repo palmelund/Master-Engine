@@ -16,14 +16,15 @@ using namespace CaptainEverythingShared;
 
 int main(int argc, char* argv[])
 {
-	if (argc != 1 && argc != 5)
+	if (argc != 1 && argc != 6)
 	{
 		std::cout << "Expected either none or 2 arguments" << std::endl;
+		return 0;
 	}
 
-	if (argc == 5)
+	if (argc == 6)
 	{
-		Constants::set_changeable_constants(argv[1], argv[2], argv[3]);
+		Constants::set_changeable_constants(argv[1], argv[2], argv[3], argv[5]);
 		MasterEngine::LibParallel::Renderer::init(argv[4], Constants::screen_width, Constants::screen_height);
 	}
 	else {
