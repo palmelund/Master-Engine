@@ -153,11 +153,15 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GenericHelper.h" />
+    <ClInclude Include="halton.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SpriteIndexes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="GenericHelper.cpp" />
+    <ClCompile Include="halton.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -9,6 +9,7 @@
 #include "Boss.h"
 #include "GravityWell.h"
 #include "../CaptainEverythingShared/Constants.h"
+#include "../CaptainEverythingShared/GenericHelper.h"
 
 namespace CaptainEverythingAggregator {
 	using namespace CaptainEverythingShared;
@@ -40,8 +41,16 @@ namespace CaptainEverythingAggregator {
 
 		for (int i = 0; i < Constants::background_elements(); i++)
 		{
-			;
-			GameEngine::instantiate(new BackgroundElement(sf::Vector2f{ static_cast<float>((Constants::background_element_size * i) % Renderer::get_window_size()->x),(float)((Constants::background_element_size * i) / Renderer::get_window_size()->x) }));
+			auto pos = GenericHelper::get_position(i);
+			pos.x *= Renderer::get_window_size()->x;
+			pos.y *= Renderer::get_window_size()->y;
+
+			auto vel = GenericHelper::get_velocity();
+
+			auto* bge = new BackgroundElement(pos);
+			bge->set_velocity(vel);
+
+			GameEngine::instantiate(bge);
 		}
 
 	}
